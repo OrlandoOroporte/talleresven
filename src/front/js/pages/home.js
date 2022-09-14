@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
-import "../../styles/home.css";
+import oferta1 from "../../img/oferta1.jpg";
+import oferta2 from "../../img/oferta2.jpg";
+import oferta3 from "../../img/oferta3.jpg";
+import "../../styles/index.css";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
@@ -16,19 +18,22 @@ export const Home = () => {
         <div className="carousel-inner">
           <div className="carousel-item active">
             <img
-              src="..."
-              className="d-block w-100 h-25"
+              src={oferta1}
+              className="d-block w-100 "
               alt="..."
             />
           </div>
           <div className="carousel-item">
             <img
-              src="..."
+              src={oferta2}
               alt="..."
+              className="d-block w-100 "
             />
           </div>
           <div className="carousel-item">
-            <img src="..." className="d-block w-100 h-25" alt="..." />
+            <img src={oferta3}
+            className="d-block w-100"
+             alt="..." />
           </div>
         </div>
         <button
