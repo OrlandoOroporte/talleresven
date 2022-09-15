@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import oferta1 from "../../img/oferta1.jpg";
-import oferta2 from "../../img/oferta2.jpg";
+import { Link } from "react-router-dom";
+import logo_taller from "../../img/Logo_taller2.jpg";
 import oferta3 from "../../img/oferta3.jpg";
 import "../../styles/index.css";
 
@@ -9,7 +9,46 @@ export const Home = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <div classNameName="container-fluid">
+    <>
+    <div className="container-fluid">
+      <nav className="navbar bg-light">
+        <Link className="navbar-brand" to="/">
+          <img
+            src={logo_taller}
+            alt="Logo"
+            width="50"
+            height="50"
+            className="d-inline-block align-text-top"
+          />
+          <h6>TalleresVenAPP</h6>
+        </Link>
+        <ul className="nav justify-content-end">
+          <li className="nav-item">
+            <Link className="nav-link active" aria-current="page" to="/worksheet">
+              Talleres
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/">
+              Servicios
+            </Link>
+          </li>
+		  <li class="nav-item dropdown">
+          <Link class="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Usuarios
+          </Link>
+          <ul class="dropdown-menu">
+            <li><Link class="dropdown-item" to="/register">Registro</Link></li>
+            <li><Link class="dropdown-item" to="/login">Iniciar Sesión</Link></li>
+            <li><hr class="dropdown-divider"/></li>
+            <li><Link class="dropdown-item" to="/">Something else here</Link></li>
+          </ul>
+        </li>
+        </ul>
+      </nav>
+    </div>
+    <div className="container-fluid">
+    <div className="row col-12 justify-content-center">
       <div
         id="carouselExampleControls"
         className="carousel slide"
@@ -18,14 +57,14 @@ export const Home = () => {
         <div className="carousel-inner">
           <div className="carousel-item active">
             <img
-              src={oferta1}
+              src="https://pbs.twimg.com/media/DwezUrmWsAI9bv8.jpg"
               className="d-block w-100 "
               alt="..."
             />
           </div>
           <div className="carousel-item">
             <img
-              src={oferta2}
+              src="https://www.leioamotor.es/uploads/cms/con_contenido/plataforma_2/01/28/88/images/carga%20de%20aire%20acondicionado.jpg"
               alt="..."
               className="d-block w-100 "
             />
@@ -62,6 +101,8 @@ export const Home = () => {
         </button>
       </div>
     </div>
+    </div>
+    </>
 
     // <div classNameName="text-center mt-5">
     // 	<h1>Hello Rigo!!</h1>
