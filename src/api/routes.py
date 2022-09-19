@@ -41,7 +41,7 @@ def add_user():                                 # declaro mi funcion para agrega
         password = body.get('password', None)   # declaro una variable password, y guardo la contraseña en ella y en caso de no conseguirla la creo en None
         name = body.get('name', None)           # declaro una variable name, y guarde el nombre de usuario y en caso de no conseguirla la creo en None
         numero = body.get('numero', None)       # declaro una variable numero, y guarde el nombre de usuario y en caso de no conseguirla la creo en None
-        avatar = body.get('avatar', None)       # declaro una variable avatar, y guarde el nombre de usuario y en caso de no conseguirla la creo en None
+        # avatar = body.get('avatar', None)       # declaro una variable avatar, y guarde el nombre de usuario y en caso de no conseguirla la creo en None
 
                                                 # hacemos las Validaciones
         if email is None or password is None:               # verifico si existe una propiedad email 
@@ -50,7 +50,7 @@ def add_user():                                 # declaro mi funcion para agrega
             salt = b64encode(os.urandom(32)).decode('utf-8')                       # creo el salt en base a b64code aleatorio
             password = set_password(password, salt)                                      # antes de registrar el usuario, hasheo mi contrase;a 
             print (f"debo guardar al usuario con el pass: ${password}"), 200       # imprimo el mensaje y paso el codigo 200 (Ok)
-            request_user = User(name = name, email=email, password=password, salt=salt)   # Instancio mi variable request_user
+            request_user = User(name = name, email=email, numero=numero, password=password, salt=salt)   # Instancio mi variable request_user
             db.session.add(request_user)                                            # inicio la session en BD con los datos de usuario
             
             try:                                    # realizo un try except            

@@ -2,6 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       token:localStorage.getItem("token") || "",
+      urlBase:"https://3001-orlandoorop-talleresven-x19c2v9l66z.ws-us65.gitpod.io"
 
       // message: null,
       // demo: [
@@ -22,12 +23,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         let store = getStore();
         try {
           let response = await fetch(
-            `https://3001-orlandoorop-talleresven-utpvsan1ajn.ws-us65.gitpod.io/?vscodeBrowserReqId=1663603611654/api/user`,
+            `${store.urlBase}/api/user`,
             {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
-                Authorization: `Bearer ${store.token}`,
+                // Authorization: `Bearer ${store.token}`,
               },
               body: JSON.stringify(user),
             }
