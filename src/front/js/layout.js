@@ -7,7 +7,7 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import { Register } from "./pages/Register.jsx";
 import { Login } from "./pages/Login.jsx";
-import { Worksheet } from "./pages/Worksheet.js";
+import { Worksheet } from "./pages/Worksheet.jsx";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";

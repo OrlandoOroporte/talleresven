@@ -33,15 +33,15 @@ export const Home = () => {
               Servicios
             </Link>
           </li>
-		  <li class="nav-item dropdown">
-          <Link class="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+		  <li className="nav-item dropdown">
+          <Link className="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Usuarios
           </Link>
-          <ul class="dropdown-menu">
-            <li><Link class="dropdown-item" to="/register">Registro</Link></li>
-            <li><Link class="dropdown-item" to="/login">Iniciar Sesión</Link></li>
-            <li><hr class="dropdown-divider"/></li>
-            <li><Link class="dropdown-item" to="/">Something else here</Link></li>
+          <ul className="dropdown-menu">
+            <li><Link className="dropdown-item" to="/register">Registro</Link></li>
+            <li><Link className="dropdown-item" to="/login">Iniciar Sesión</Link></li>
+            <li><hr className="dropdown-divider"/></li>
+            <li><Link className="dropdown-item" to="/">Something else here</Link></li>
           </ul>
         </li>
         </ul>

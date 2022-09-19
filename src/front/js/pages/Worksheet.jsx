@@ -21,7 +21,9 @@ export const Worksheet = () => {
             />
             <h6>TalleresVenAPP</h6>
           </Link>
-          <button className="btn btn-primary" type="button">
+          <button className="btn btn-primary" type="button"  onClick={() => {
+              actions.logout();
+            }}>
             Salir
           </button>
         </nav>
