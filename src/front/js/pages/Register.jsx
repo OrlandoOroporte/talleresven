@@ -58,9 +58,9 @@ export const Register = () => {
                 Servicios
               </Link>
             </li>
-            <li class="nav-item dropdown">
+            <li className="nav-item dropdown">
               <Link
-                class="nav-link dropdown-toggle"
+                className="nav-link dropdown-toggle"
                 to="/"
                 role="button"
                 data-bs-toggle="dropdown"
@@ -68,22 +68,22 @@ export const Register = () => {
               >
                 Usuarios
               </Link>
-              <ul class="dropdown-menu">
+              <ul className="dropdown-menu">
                 <li>
-                  <Link class="dropdown-item" to="/register">
+                  <Link className="dropdown-item" to="/register">
                     Registro
                   </Link>
                 </li>
                 <li>
-                  <Link class="dropdown-item" to="/login">
+                  <Link className="dropdown-item" to="/login">
                     Iniciar Sesión
                   </Link>
                 </li>
                 <li>
-                  <hr class="dropdown-divider" />
+                  <hr className="dropdown-divider" />
                 </li>
                 <li>
-                  <Link class="dropdown-item" to="/">
+                  <Link className="dropdown-item" to="/">
                     Something else here
                   </Link>
                 </li>
@@ -97,7 +97,7 @@ export const Register = () => {
           <h1 className="text-center">Registrase </h1>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
-              <label for="exampleInputEmail1" className="form-label">
+              <label htmlFor="exampleInputEmail1" className="form-label">
                 Email address
               </label>
               <input
@@ -113,7 +113,7 @@ export const Register = () => {
               </div>
             </div>
             <div className="mb-3">
-              <label for="exampleInputPassword1" className="form-label">
+              <label htmlFor="exampleInputPassword1" className="form-label">
                 Password
               </label>
               <input
@@ -130,7 +130,7 @@ export const Register = () => {
                 className="form-check-input"
                 id="exampleCheck1"
               />
-              <label className="form-check-label" for="exampleCheck1">
+              <label className="form-check-label" htmlFor="exampleCheck1">
                 Check me out
               </label>
             </div>
