@@ -8,7 +8,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=True )
     email = db.Column(db.String(120), unique=True, nullable=False)
-    numero = db.Column(db.Integer, unique=False, nullable=True)
+    numero = db.Column(db.BigInteger, unique=False, nullable=True)
     avatar = db.Column(db.String(150), unique=False, nullable=True)
     password = db.Column(db.String(150), unique=False, nullable=False)
     salt = db.Column(db.String(80), unique=False, nullable=False)        # declaro el atributo salt que me va a ayudar a encriptar mi password
@@ -46,12 +46,9 @@ class Taller(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "name": self.name,
-            "email": self.email,
             "direccion": self.direccion,
             "rif": self.rif,
-            "avatar":self.avatar,
-            "numero":self.numero,
+            "razon_social":self.razon_social,
             # do not serialize the password, its a security breach
         }
         
@@ -59,7 +56,7 @@ class Taller(db.Model):
 
 class Servicio(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
+    name = db.Column(db.String(80), unique=False, nullable=False)
     precio = db.Column(db.Integer, unique=False, nullable=False)
     
     taller_id = db.Column(db.Integer, db.ForeignKey('taller.id'))
@@ -72,4 +69,5 @@ class Servicio(db.Model):
             "id": self.id,
             "name": self.name,
             "precio": self.precio,
+            "taller_id": self.taller_id
         }
