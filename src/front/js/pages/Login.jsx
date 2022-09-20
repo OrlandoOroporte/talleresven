@@ -59,7 +59,7 @@ export const Login = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/">
+            <Link className="nav-link" to="/services">
               Servicios
             </Link>
           </li>
