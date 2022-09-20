@@ -8,7 +8,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=False, nullable=True )
     email = db.Column(db.String(120), unique=True, nullable=False)
-    numero = db.Column(db.BigInteger, unique=False, nullable=True)
+    numero = db.Column(db.String(20), unique=False, nullable=True)
     avatar = db.Column(db.String(150), unique=False, nullable=True)
     password = db.Column(db.String(150), unique=False, nullable=False)
     salt = db.Column(db.String(80), unique=False, nullable=False)        # declaro el atributo salt que me va a ayudar a encriptar mi password

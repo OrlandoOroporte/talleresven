@@ -1,13 +1,53 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import rigoImageUrl from "../../img/rigo-baby.jpg";
-import "../../styles/home.css";
+import { Link } from "react-router-dom";
+import logo_taller from "../../img/Logo_taller2.jpg";
+import "../../styles/index.css";
 
 export const Home = () => {
   const { store, actions } = useContext(Context);
 
   return (
-    <div classNameName="container-fluid">
+    <>
+    <div className="container-fluid">
+      <nav className="navbar bg-light">
+        <Link className="navbar-brand" to="/">
+          <img
+            src={logo_taller}
+            alt="Logo"
+            width="50"
+            height="50"
+            className="d-inline-block align-text-top"
+          />
+          <h6>TalleresVenAPP</h6>
+        </Link>
+        <ul className="nav justify-content-end">
+          <li className="nav-item">
+            <Link className="nav-link active" aria-current="page" to="/worksheet">
+              Talleres
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/">
+              Servicios
+            </Link>
+          </li>
+		  <li className="nav-item dropdown">
+          <Link className="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Usuarios
+          </Link>
+          <ul className="dropdown-menu">
+            <li><Link className="dropdown-item" to="/register">Registro</Link></li>
+            <li><Link className="dropdown-item" to="/login">Iniciar Sesión</Link></li>
+            <li><hr className="dropdown-divider"/></li>
+            <li><Link className="dropdown-item" to="/">Something else here</Link></li>
+          </ul>
+        </li>
+        </ul>
+      </nav>
+    </div>
+    <div className="container-fluid">
+    <div className="row col-12 justify-content-center">
       <div
         id="carouselExampleControls"
         className="carousel slide"
@@ -16,19 +56,22 @@ export const Home = () => {
         <div className="carousel-inner">
           <div className="carousel-item active">
             <img
-              src="..."
-              className="d-block w-100 h-25"
+              src="https://pbs.twimg.com/media/DwezUrmWsAI9bv8.jpg"
+              className="d-block w-100 "
               alt="..."
             />
           </div>
           <div className="carousel-item">
             <img
-              src="..."
+              src="https://www.leioamotor.es/uploads/cms/con_contenido/plataforma_2/01/28/88/images/carga%20de%20aire%20acondicionado.jpg"
               alt="..."
+              className="d-block w-100 "
             />
           </div>
           <div className="carousel-item">
-            <img src="..." className="d-block w-100 h-25" alt="..." />
+            <img src="http://serviciosautomotrices.mx/wp-content/uploads/2020/04/WhatsApp-Image-2020-04-14-at-5.58.56-PM-e1586906593786.jpeg"
+            className="d-block w-100"
+             alt="..." />
           </div>
         </div>
         <button
@@ -57,6 +100,8 @@ export const Home = () => {
         </button>
       </div>
     </div>
+    </div>
+    </>
 
     // <div classNameName="text-center mt-5">
     // 	<h1>Hello Rigo!!</h1>
