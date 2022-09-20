@@ -2,7 +2,6 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 import logo_taller from "../../img/Logo_taller2.jpg";
-import oferta3 from "../../img/oferta3.jpg";
 import "../../styles/index.css";
 
 export const Home = () => {
@@ -70,7 +69,7 @@ export const Home = () => {
             />
           </div>
           <div className="carousel-item">
-            <img src={oferta3}
+            <img src="http://serviciosautomotrices.mx/wp-content/uploads/2020/04/WhatsApp-Image-2020-04-14-at-5.58.56-PM-e1586906593786.jpeg"
             className="d-block w-100"
              alt="..." />
           </div>

@@ -90,6 +90,7 @@ export const Login = () => {
                 className="form-control"
                 id="exampleInputEmail1"
                 aria-describedby="emailHelp"
+                name="email"
                 onChange={handleChange}
                 value={userLogin.email}
               />
@@ -106,6 +107,7 @@ export const Login = () => {
                 className="form-control"
                 id="exampleInputPassword1"
                 onChange={handleChange}
+                name="password"
                 value={userLogin.password}
               />
             </div>

@@ -5,4 +5,15 @@
     height: 500px;
 }
 .card {
-    width: 18rem}
+    width: 18rem;
+    margin-top: 15px;
+    margin-left: 30px;
+}
+.card-father {
+    display: flex;
+}
+.card-img-top {
+
+height: 250px;
+width: 286px;
+}

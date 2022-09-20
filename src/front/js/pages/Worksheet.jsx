@@ -1,10 +1,11 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import logo_taller from "../../img/Logo_taller2.jpg";
 
 export const Worksheet = () => {
   const { store, actions } = useContext(Context);
+  let navigate = useNavigate()
   //   let rol = "XXXX"
 
   return (
@@ -23,6 +24,7 @@ export const Worksheet = () => {
           </Link>
           <button className="btn btn-primary" type="button"  onClick={() => {
               actions.logout();
+              navigate("/");
             }}>
             Salir
           </button>
@@ -119,13 +121,109 @@ export const Worksheet = () => {
           aria-labelledby="nav-profile-tab"
           tabIndex="0"
         >
+          <div className="card-father">
           <div className="card">
             <img src="https://media.istockphoto.com/photos/car-repairair-conditioner-picture-id495341914?k=20&m=495341914&s=612x612&w=0&h=VIAFCTsf4xKzI7naa4Tdi1E4aFJgPos7LxKSt1GQfy4=" className="card-img-top" alt="..."/>
             <div className="card-body">
               <h5 className="card-title">Revision aire acondicionado</h5>
-              <p className="card-text">Revision de los 5 puntos de sistema aire acondicionado.</p>
+              <p className="card-text">Revision de los 5 puntos de sistema aire acondicionado. </p>
                 <a href="#" className="card-link">Añadir a mis servicios</a>
             </div>
+          </div>
+          <div className="card">
+            <img src="https://cdn.autoproyecto.com/wp-content/uploads/2017/12/top_10_autos_decepcion_2017_main.jpg" className="card-img-top" alt="..."/>
+            <div className="card-body">
+              <h5 className="card-title">Cambio aceite carro pequeño</h5>
+              <p className="card-text">
+                <ul>
+                  <li>4 litros aceite</li>
+                  <li>Filtro  aceite/aire</li>
+                  <li>Revision de fluidos</li>
+                </ul>
+              </p>
+                <a href="#" className="card-link">Añadir a mis servicios</a>
+            </div>
+          </div>
+          <div className="card">
+            <img src="https://conduciendo.com/wp-content/uploads/2017/10/Camionetas2013Colombia-18102013-01.jpg" className="card-img-top" alt="..."/>
+            <div className="card-body">
+              <h5 className="card-title">Cambio aceite carro grande</h5>
+              <p className="card-text">
+                <ul>
+                  <li>8 litros aceite</li>
+                  <li>Filtro  aceite/aire</li>
+                  <li>Revision de fluidos</li>
+                </ul>
+              </p>
+                <a href="#" className="card-link">Añadir a mis servicios</a>
+            </div>
+          </div>
+          <div className="card">
+            <img src="https://articulos.elclasificado.com/wp-content/uploads/2022/02/Mecanico-revisando-el-motor-de-un-carro-696x363.jpg" className="card-img-top" alt="..."/>
+            <div className="card-body">
+              <h5 className="card-title">Servicio de entonacion</h5>
+              <p className="card-text">
+                <ul>
+                  <li>Limpieza de inyectores</li>
+                  <li>Cambio Bujias</li>
+                  <li>Mantenimiento Bomba de gasolina</li>
+                </ul>
+              </p>
+                <a href="#" className="card-link">Añadir a mis servicios</a>
+            </div>
+          </div>
+          </div>
+          <div className="card-father">
+          <div className="card">
+            <img src="https://media.istockphoto.com/photos/car-repairair-conditioner-picture-id495341914?k=20&m=495341914&s=612x612&w=0&h=VIAFCTsf4xKzI7naa4Tdi1E4aFJgPos7LxKSt1GQfy4=" className="card-img-top" alt="..."/>
+            <div className="card-body">
+              <h5 className="card-title">Revision aire acondicionado</h5>
+              <p className="card-text">Revision de los 5 puntos de sistema aire acondicionado. </p>
+                <a href="#" className="card-link">Añadir a mis servicios</a>
+            </div>
+          </div>
+          <div className="card">
+            <img src="https://cdn.autoproyecto.com/wp-content/uploads/2017/12/top_10_autos_decepcion_2017_main.jpg" className="card-img-top" alt="..."/>
+            <div className="card-body">
+              <h5 className="card-title">Cambio aceite carro pequeño</h5>
+              <p className="card-text">
+                <ul>
+                  <li>4 litros aceite</li>
+                  <li>Filtro  aceite/aire</li>
+                  <li>Revision de fluidos</li>
+                </ul>
+              </p>
+                <a href="#" className="card-link">Añadir a mis servicios</a>
+            </div>
+          </div>
+          <div className="card">
+            <img src="https://conduciendo.com/wp-content/uploads/2017/10/Camionetas2013Colombia-18102013-01.jpg" className="card-img-top" alt="..."/>
+            <div className="card-body">
+              <h5 className="card-title">Cambio aceite carro grande</h5>
+              <p className="card-text">
+                <ul>
+                  <li>8 litros aceite</li>
+                  <li>Filtro  aceite/aire</li>
+                  <li>Revision de fluidos</li>
+                </ul>
+              </p>
+                <a href="#" className="card-link">Añadir a mis servicios</a>
+            </div>
+          </div>
+          <div className="card">
+            <img src="https://articulos.elclasificado.com/wp-content/uploads/2022/02/Mecanico-revisando-el-motor-de-un-carro-696x363.jpg" className="card-img-top" alt="..."/>
+            <div className="card-body">
+              <h5 className="card-title">Servicio de entonacion</h5>
+              <p className="card-text">
+                <ul>
+                  <li>Limpieza de inyectores</li>
+                  <li>Cambio Bujias</li>
+                  <li>Mantenimiento Bomba de gasolina</li>
+                </ul>
+              </p>
+                <a href="#" className="card-link">Añadir a mis servicios</a>
+            </div>
+          </div>
           </div>
           </div>
   
