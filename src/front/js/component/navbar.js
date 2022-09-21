@@ -40,7 +40,7 @@ export const Navbar = () => {
           </Link>
           <ul className="dropdown-menu">
             <li><Link className="dropdown-item" to="/register">Registro</Link></li>
-            <li><Link className="dropdown-item" to="/login">Iniciar Sesión</Link></li>
+            {store.token == "" &&  <li><Link className="dropdown-item" to="/login">Iniciar Sesión</Link></li>}
             <li><hr className="dropdown-divider"/></li>
             <li><Link className="dropdown-item" to="/">Something else here</Link></li>
           </ul>

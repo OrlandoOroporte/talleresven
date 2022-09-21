@@ -1,43 +1,41 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      token:localStorage.getItem("token") || "",
+      token: localStorage.getItem("token") || "",
       // urlBase:"https://talleresvenapp.herokuapp.com/",
-      urlBase:"https://3001-orlandoorop-talleresven-c1f72pvbgve.ws-us67.gitpod.io",
+      urlBase:
+        "https://3001-orlandoorop-talleresven-c1f72pvbgve.ws-us67.gitpod.io",
 
-      taller:[
+      taller: [
         {
-            razon_social:"",
-            rif:"",
-            direccion:"",
-            servicio:""
-        }],
+          razon_social: "",
+          rif: "",
+          direccion: "",
+          servicio: "",
+        },
+      ],
 
-        service: [
-          {
-              image: "",
-              name:"",
-              descripcion:"",
-              precio:""
-          },
-      
-      ]
+      service: [
+        {
+          image: "",
+          name: "",
+          descripcion: "",
+          precio: "",
+        },
+      ],
     },
     actions: {
       userRegister: async (user) => {
         let store = getStore();
         try {
-          let response = await fetch(
-            `${store.urlBase}/api/user`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                // Authorization: `Bearer ${store.token}`,
-              },
-              body: JSON.stringify(user),
-            }
-          );
+          let response = await fetch(`${store.urlBase}/api/user`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              // "Authorization": `Bearer ${store.token}`,
+            },
+            body: JSON.stringify(user),
+          });
           if (response.ok) {
             return true;
           }
@@ -47,12 +45,12 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
       login: async (user) => {
+        let store = getStore();
         try {
           let response = await fetch(`${store.urlBase}/api/login`, {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
-              "Authorization": `Bearer ${store.token}`
             },
             body: JSON.stringify(user),
           });
@@ -67,42 +65,44 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(`Error: ${error}`);
         }
       },
-	  logout: () => {
+      logout: () => {
+        let store = getStore()
         localStorage.removeItem("token");
 
-        setStore({ token: "" });
-      }, 
+        setStore({ ...store, token: "" });
+      },
 
       ////lo que agregue:
-    getService: async () => {
-      let store = getStore();
-      try{
-        let response = await fetch(`${store.urlBase}/api/services`);
-        let data = await response.json();
-        if (response.ok){
-          setStore({
-            ...store,
-            service: data,
-          })
+      getService: async () => {
+        let store = getStore();
+        try {
+          let response = await fetch(`${store.urlBase}/api/services`);
+          let data = await response.json();
+          if (response.ok) {
+            setStore({
+              ...store,
+              service: data,
+            });
+          }
+        } catch (error) {
+          console.log(`Error: ${error}`);
         }
-      }catch (error) {
-        console.log(`Error: ${error}`);
-      }
-    },
-    getTaller: async () => {
-      let store = getStore();
-      try{
-        let response = await fetch(`${store.urlBase}/api/talleres`);
-        let data = await response.json();
-        if (response.ok){
-          setStore({
-            ...store,
-            taller: data,
-          })
+      },
+      getTaller: async () => {
+        let store = getStore();
+        try {
+          let response = await fetch(`${store.urlBase}/api/talleres`);
+          let data = await response.json();
+          if (response.ok) {
+            setStore({
+              ...store,
+              taller: data,
+            });
+          }
+        } catch (error) {
+          console.log(`Error: ${error}`);
         }
-      }catch (error) {console.log(`Error: ${error}`);}
-    },
-	  
+      },
 
       // // Use getActions to call a function within a fuction
       // exampleFunction: () => {
