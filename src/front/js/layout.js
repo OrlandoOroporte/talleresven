@@ -14,6 +14,7 @@ import injectContext from "./store/appContext";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
 import AllService from "./component/AllServices.jsx";
+import AllTaller from "./component/AllTaller.jsx";
 
 //create your first component
 const Layout = () => {
@@ -32,6 +33,7 @@ const Layout = () => {
                         <Route element={<Register />} path="/register" />
                         <Route element={<Login />} path="/login" />
                         <Route element={<AllService />} path="/services" />
+                        <Route element={<AllTaller />} path="/taller" />
                         <Route element={<Worksheet />} path="/worksheet" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />

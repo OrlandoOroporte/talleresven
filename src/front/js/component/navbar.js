@@ -24,7 +24,7 @@ export const Navbar = () => {
         </Link>
         <ul className="nav justify-content-end">
           <li className="nav-item">
-            <Link className="nav-link active" aria-current="page" to="/worksheet">
+            <Link className="nav-link active" aria-current="page" to="/taller">
               Talleres
             </Link>
           </li>
