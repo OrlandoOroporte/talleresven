@@ -66,6 +66,23 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         setStore({ token: "" });
       }, 
+
+
+
+      ////lo que se agregue:
+    getService: async () => {
+      let store = getStore();
+      try{
+        let response = await fetch("`${store.urlBase}/api/services`");
+        let data = await response.json();
+        if (response.ok){
+          setStore({
+            ...store,
+            service: data,
+          })
+        }
+      }catch (error) {}
+    },
 	  
 
       // // Use getActions to call a function within a fuction
