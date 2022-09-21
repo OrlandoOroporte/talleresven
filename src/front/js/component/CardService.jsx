@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 const CardService = (props) => {
     return (
         <>
+        <div className="card-father"> 
         <div className="card">
             <img src={props.image} className="card-img-top" alt="..."/>
             <div className="card-body">
@@ -15,6 +16,7 @@ const CardService = (props) => {
               <p className="card-text">{props.precio}</p>
                 <a href="#" className="card-link">Talleres</a>
             </div>
+          </div>
           </div>
         </>
     )
