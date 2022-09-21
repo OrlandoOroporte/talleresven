@@ -9,7 +9,7 @@ export const Home = () => {
 
   return (
     <>
-    <div className="container-fluid">
+    {/* <div className="container-fluid">
       <nav className="navbar bg-light">
         <Link className="navbar-brand" to="/">
           <img
@@ -45,7 +45,7 @@ export const Home = () => {
         </li>
         </ul>
       </nav>
-    </div>
+    </div> */}
     <div className="container-fluid">
     <div className="row col-12 justify-content-center">
       <div

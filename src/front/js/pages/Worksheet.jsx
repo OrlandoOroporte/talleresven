@@ -10,7 +10,7 @@ export const Worksheet = () => {
 
   return (
     <>
-      <div className="container-fluid">
+      {/* <div className="container-fluid">
         <nav className="navbar bg-light">
           <Link className="navbar-brand" to="/">
             <img
@@ -29,7 +29,7 @@ export const Worksheet = () => {
             Salir
           </button>
         </nav>
-      </div>
+      </div> */}
       {/* {rol==="taller"?
         
         <nav>

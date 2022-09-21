@@ -4,49 +4,50 @@ import { Link } from "react-router-dom";
 import logo_taller from "../../img/Logo_taller2.jpg";
 import "../../styles/index.css";
 
-export const Services = () => {
-    const { store, actions } = useContext(Context);
-    return (
-        <>
-        <div className="container-fluid">
-      <nav className="navbar bg-light">
-        <Link className="navbar-brand" to="/">
-          <img
-            src={logo_taller}
-            alt="Logo"
-            width="50"
-            height="50"
-            className="d-inline-block align-text-top"
-          />
-          <h6>TalleresVenAPP</h6>
-        </Link>
-        <ul className="nav justify-content-end">
-          <li className="nav-item">
-            <Link className="nav-link active" aria-current="page" to="/worksheet">
-              Talleres
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/services">
-              Servicios
-            </Link>
-          </li>
-		  <li className="nav-item dropdown">
-          <Link className="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Usuarios
-          </Link>
-          <ul className="dropdown-menu">
-            <li><Link className="dropdown-item" to="/register">Registro</Link></li>
-            <li><Link className="dropdown-item" to="/login">Iniciar Sesión</Link></li>
-            <li><hr className="dropdown-divider"/></li>
-            <li><Link className="dropdown-item" to="/">Something else here</Link></li>
-          </ul>
-        </li>
-        </ul>
-      </nav>
-    </div>
-    <div className="card-father">
-          <div className="card">
+// export const Services = () => {
+//     const { store, actions } = useContext(Context);
+//     return (
+//         <>
+//         <div className="container-fluid">
+//       <nav className="navbar bg-light">
+//         <Link className="navbar-brand" to="/">
+//           <img
+//             src={logo_taller}
+//             alt="Logo"
+//             width="50"
+//             height="50"
+//             className="d-inline-block align-text-top"
+//           />
+//           <h6>TalleresVenAPP</h6>
+//         </Link>
+//         <ul className="nav justify-content-end">
+//           <li className="nav-item">
+//             <Link className="nav-link active" aria-current="page" to="/worksheet">
+//               Talleres
+//             </Link>
+//           </li>
+//           <li className="nav-item">
+//             <Link className="nav-link" to="/services">
+//               Servicios
+//             </Link>
+//           </li>
+// 		  <li className="nav-item dropdown">
+//           <Link className="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+//             Usuarios
+//           </Link>
+//           <ul className="dropdown-menu">
+//             <li><Link className="dropdown-item" to="/register">Registro</Link></li>
+//             <li><Link className="dropdown-item" to="/login">Iniciar Sesión</Link></li>
+//             <li><hr className="dropdown-divider"/></li>
+//             <li><Link className="dropdown-item" to="/">Something else here</Link></li>
+//           </ul>
+//         </li>
+//         </ul>
+//       </nav>
+//     </div>
+
+    {/* <div className="card-father"> */}
+          {/* <div className="card">
             <img src="https://media.istockphoto.com/photos/car-repairair-conditioner-picture-id495341914?k=20&m=495341914&s=612x612&w=0&h=VIAFCTsf4xKzI7naa4Tdi1E4aFJgPos7LxKSt1GQfy4=" className="card-img-top" alt="..."/>
             <div className="card-body">
               <h5 className="card-title">Revision aire acondicionado</h5>
@@ -147,8 +148,9 @@ export const Services = () => {
               </p>
                 <a href="#" className="card-link">Añadir a mis servicios</a>
             </div>
-          </div>
-          </div>
-        </>
-    )
-}
+          </div> */}
+          {/* </div> */}
+//         </>
+
+//     )
+// }

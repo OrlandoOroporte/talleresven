@@ -35,7 +35,7 @@ export const Register = () => {
 
   return (
     <>
-      <div className="container-fluid">
+      {/* <div className="container-fluid">
         <nav className="navbar bg-light">
           <Link className="navbar-brand" to="/">
             <img
@@ -91,7 +91,7 @@ export const Register = () => {
             </li>
           </ul>
         </nav>
-      </div>
+      </div> */}
       <div className="container">
         <div className="row col-8 justify-content-center">
           <h1 className="text-center">Registrarse</h1>
