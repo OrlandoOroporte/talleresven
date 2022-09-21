@@ -33,50 +33,13 @@ export const Login = () => {
         alert("Algo salio mal, intentalo de nuevo");
       }
     } else {
-      alert("todos los campso son obligatorios");
+      alert("Todos los campos son obligatorios");
     }
   };
 
   return (
   
     <>
-    {/* <div className="container-fluid">
-      <nav className="navbar bg-light">
-        <Link className="navbar-brand" to="/">
-          <img
-            src={logo_taller}
-            alt="Logo"
-            width="50"
-            height="50"
-            className="d-inline-block align-text-top"
-          />
-          <h6>TalleresVenAPP</h6>
-        </Link>
-        <ul className="nav justify-content-end">
-          <li className="nav-item">
-            <Link className="nav-link active" aria-current="page" to="/">
-              Talleres
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/services">
-              Servicios
-            </Link>
-          </li>
-		  <li className="nav-item dropdown">
-          <Link className="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Usuarios
-          </Link>
-          <ul className="dropdown-menu">
-            <li><Link className="dropdown-item" to="/register">Registro</Link></li>
-            <li><Link className="dropdown-item" to="/login">Iniciar Sesión</Link></li>
-            <li><hr className="dropdown-divider"/></li>
-            <li><Link className="dropdown-item" to="/">Something else here</Link></li>
-          </ul>
-        </li>
-        </ul>
-      </nav>
-    </div> */}
       <div className="container">
         <div className="row col-8 justify-content-center">
         <h1 className="text-center">Inicion Sesion </h1>

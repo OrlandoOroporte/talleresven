@@ -8,7 +8,6 @@ import "../../styles/index.css";
 const CardService = (props) => {
     return (
         <>
-        
         <div className="card">
             <img src={props.image} className="card-img-top" alt="..."/>
             <div className="card-body">
@@ -18,7 +17,6 @@ const CardService = (props) => {
                 <a href="#" className="card-link">Talleres</a>
             </div>
           </div>
-        
         </>
     )
 

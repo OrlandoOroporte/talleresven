@@ -11,6 +11,7 @@ export const Navbar = () => {
   return (
   <>
     <div className="container-fluid">
+    
       <nav className="navbar bg-light">
         <Link className="navbar-brand" to="/">
           <img
