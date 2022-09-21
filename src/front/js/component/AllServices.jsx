@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
-import {CardService} from "./CardService";
+import CardService from "./CardService.jsx";
 
 const AllService = (props) => {
 
@@ -13,3 +13,5 @@ const AllService = (props) => {
         </>
     )
 }
+
+export default AllService
