@@ -13,16 +13,19 @@ const AllService = (props) => {
             name:"Talleres Fulanito",
             descripcion:"Servicio Aire Acondicionado",
             precio:"50 USD"
-        }
+        },
+    
     ]
 
     return (
         <>
+        <div className="card-father"> 
         {service.map((service,index)=>{
             return(
                 <CardService image={service.image} name={service.name} descripcion={service.descripcion} precio={service.precio}/>
             )
         })}
+        </div>
         </>
     )
 }
