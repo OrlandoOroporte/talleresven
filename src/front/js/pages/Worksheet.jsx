@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import logo_taller from "../../img/Logo_taller2.jpg";
@@ -6,6 +6,10 @@ import logo_taller from "../../img/Logo_taller2.jpg";
 export const Worksheet = () => {
   const { store, actions } = useContext(Context);
   let navigate = useNavigate()
+  useEffect(()=>{
+    actions.getUserToke()
+
+  },[])
   //   let rol = "XXXX"
 
   return (
@@ -105,7 +109,7 @@ export const Worksheet = () => {
           tabIndex="0"
         >
           <div className="card-body">
-            <h5 className="card-title">Taller fulanito</h5>
+            <h5 className="card-title">{store.user?.name}</h5>
             <p className="card-text">J22222333</p>
             <p className="card-text">AV. principal ...</p>
             <p className="card-text">Fulanito detal</p>

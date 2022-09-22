@@ -25,6 +25,7 @@ class User(db.Model):
             "email": self.email,
             "numero":self.numero,
             "avatar":self.avatar,
+            "taller_id":[element.serialize() for element in  self.taller_id ]
             # do not serialize the password, its a security breach
         }
 

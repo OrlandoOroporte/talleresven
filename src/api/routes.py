@@ -95,6 +95,20 @@ def update_user():                                   # declaro la funcion para a
         return jsonify([]), 200                          # retorno un jsonify 200 Ok   ?????
     return jsonify ([]), 405                             # retorno un jsonify vacio con el codigo 405 (metodo no permitido)
 
+
+#####consulta de usuarios#####
+
+@api.route('/user', methods=['GET'])
+@jwt_required()
+def get_user():
+    user = User.query.get(get_jwt_identity())
+    if user is not None:
+        print(user.serialize())
+        return jsonify(user.serialize()), 200
+    else: 
+        return jsonify("user not found"), 404 
+
+
 ######### Creando la ruta para hacer Login##########
 
 @api.route('/login', methods=['POST'])              # declaro mi ruta para el hacer login con un metodo POST
@@ -193,15 +207,15 @@ def get_talleres(taller_id=None):                           # declaro la funcion
 
         if taller_id is None:                               # valido si taller_id fue incluido por el usuario
             talleres = Taller.query.all()                         # en caso de no ser incluido me traigo todos los talleres de mi BD                       
-            return jsonify(list(map(lambda item : item.serialize(), talleres ))),200        # retorno una lista con la informacion de los talleres disponibles con el codigo 200
+            return jsonify(list(map(lambda item : item.serialize(), talleres ))),200        
         
         elif taller_id is not None:
                 taller = Taller.query.get(taller_id)
                 if taller is None:
                     return jsonify("No se consigio ningun taller por ese id"), 404    
                 else:    
-                    return jsonify(taller.serialize()),200  # retorno la informacion del taller solicitado    
-    return jsonify ([]), 401                    # en caso de no ser el metodo get retorno un mensaje de error con el codigo 401 (Method Not Allowed)
+                    return jsonify(taller.serialize()),200    
+    return jsonify ([]), 401                  
 
 ############ Creando la ruta para registrar servicio##########
 
@@ -294,3 +308,4 @@ def get_services(service_id = None):
             else:
                 return jsonify(service.serialize()), 200
     return jsonify([]), 405
+

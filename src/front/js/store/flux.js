@@ -4,25 +4,13 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: localStorage.getItem("token") || "",
       // urlBase:"https://talleresvenapp.herokuapp.com/",
       urlBase:
-        "https://3001-orlandoorop-talleresven-c1f72pvbgve.ws-us67.gitpod.io",
+        "https://3001-orlandoorop-talleresven-rew8nw0mzdy.ws-us67.gitpod.io"
+        ,
 
-      taller: [
-        {
-          razon_social: "",
-          rif: "",
-          direccion: "",
-          servicio: "",
-        },
-      ],
+      taller: [],
+      service: [],
+      user:[]
 
-      service: [
-        {
-          image: "",
-          name: "",
-          descripcion: "",
-          precio: "",
-        },
-      ],
     },
     actions: {
       userRegister: async (user) => {
@@ -44,6 +32,29 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(`Error: ${error}`);
         }
       },
+
+      getUserToke: async()=>{
+        let store = getStore();
+        try{
+          let response = await fetch(`${store.urlBase}/api/user`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${store.token}`,
+          },
+        });
+        let data = await response.json();
+        console.log(response)
+        if (response.ok){
+          setStore ({
+            ...store,
+            user: data
+          })
+        }
+        }catch{console.log (error)}
+      
+      },
+
       login: async (user) => {
         let store = getStore();
         try {
