@@ -23,7 +23,7 @@ const AllTaller = (props) => {
         <div className="card-father"> 
         {taller.map((taller,index)=>{
             return(
-                <CardTaller razon_social={taller.razon_social} rif={taller.rif} direccion={taller.direccion} servicio={taller.servicio}/>
+                <CardTaller key={taller.id} razon_social={taller.razon_social} rif={taller.rif} direccion={taller.direccion} servicio={taller.servicio}/>
             )   
         })}
         </div>

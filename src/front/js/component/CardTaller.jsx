@@ -8,17 +8,17 @@ const CardTaller = (props) => {
   return (
     <>
       <div className="card">
-        <div class="list-group">
-          <a href="#" class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">{props.razon_social}</h5>
+        <div className="list-group">
+          <a href="#" className="list-group-item list-group-item-action">
+            <div className="d-flex w-100 justify-content-between">
+              <h5 className="mb-1">{props.razon_social}</h5>
             </div>
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">{props.rif}</h5>
+            <div className="d-flex w-100 justify-content-between">
+              <h5 className="mb-1">{props.rif}</h5>
             </div>
-            <p class="mb-1">{props.direccion}</p>
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">{props.servico}</h5>
+            <p className="mb-1">{props.direccion}</p>
+            <div className="d-flex w-100 justify-content-between">
+              <h5 className="mb-1">{props.servico}</h5>
             </div>
           </a>
         </div>

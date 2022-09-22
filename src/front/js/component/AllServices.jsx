@@ -7,22 +7,13 @@ const AllService = (props) => {
     const { store } = useContext(Context);
     let service= store.service
 
-    // let  service = [
-    //     {
-    //         image: "https://media.istockphoto.com/photos/car-repairair-conditioner-picture-id495341914?k=20&m=495341914&s=612x612&w=0&h=VIAFCTsf4xKzI7naa4Tdi1E4aFJgPos7LxKSt1GQfy4=",
-    //         name:"Talleres Fulanito",
-    //         descripcion:"Servicio Aire Acondicionado",
-    //         precio:"50 USD"
-    //     },
-    
-    // ]
 
     return (
         <>
         <div className="card-father"> 
         {service.map((service,index)=>{
             return(
-                <CardService image={service.image} name={service.name} descripcion={service.descripcion} precio={service.precio}/>
+                <CardService key={service.id} image={service.image} name={service.name} descripcion={service.descripcion} precio={service.precio}/>
             )
         })}
         </div>
