@@ -2,6 +2,36 @@ import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 
 export const TallerRegister = () => {
+    let initialState = {
+        razon_social:"",
+        rif:"",
+        direccion:""
+    } 
+    const [tallerRegister,setTallerRegister]=useState(initialState)
+    
+    const handleChange = (event) =>{
+        setTallerRegister({
+            ...TallerRegister,
+            [event.target.name]: event.target.value
+
+        })
+    }
+    const {actions}=useContext(Context) 
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+        if (tallerRegister.razon_social != "" && tallerRegister.rif !="" && tallerRegister.direccion != ""){
+            let response = await actions.userRegisterTaller(tallerRegister)
+            if (response){
+                setTallerRegister({initialState});
+                alert("Taller registrado con exito")
+            }else{
+                alert("Algo salio mal")
+            }
+        }else {
+            alert("Todos los campos son obligatorios")
+        }
+    };
 
   return (
     <>
@@ -20,7 +50,7 @@ export const TallerRegister = () => {
               ></button>
             </div>
             <div className="modal-body">
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                   <label htmlFor="recipient-name" className="col-form-label">
                     Razon Social:
@@ -29,6 +59,9 @@ export const TallerRegister = () => {
                     type="text"
                     className="form-control"
                     id="recipient-name"
+                    onChange={handleChange}
+                    name="razon_social"
+                    value={tallerRegister.razon_social}
                   />
                 </div>
                 <div className="mb-3">
@@ -39,6 +72,9 @@ export const TallerRegister = () => {
                     type="text"
                     className="form-control"
                     id="recipient-name"
+                    onChange={handleChange}
+                    name="rif"
+                    value={tallerRegister.rif}
                   />
                 </div>
                 <div className="mb-3">
@@ -49,6 +85,9 @@ export const TallerRegister = () => {
                     type="text"
                     className="form-control"
                     id="recipient-name"
+                    onChange={handleChange}
+                    name="direccion"
+                    value={tallerRegister.direccion}
                   />
                 </div>
               </form>
