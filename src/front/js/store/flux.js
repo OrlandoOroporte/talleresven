@@ -4,8 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: localStorage.getItem("token") || "",
       // urlBase:"https://talleresvenapp.herokuapp.com/",
       urlBase:
-        "https://3001-orlandoorop-talleresven-rew8nw0mzdy.ws-us67.gitpod.io"
-        ,
+        "https://3001-orlandoorop-talleresven-gbbr3d7c8pf.ws-us67.gitpod.io",
 
       taller: [],
       service: [],
@@ -23,6 +22,26 @@ const getState = ({ getStore, getActions, setStore }) => {
               // "Authorization": `Bearer ${store.token}`,
             },
             body: JSON.stringify(user),
+          });
+          if (response.ok) {
+            return true;
+          }
+          return false;
+        } catch (error) {
+          console.log(`Error: ${error}`);
+        }
+      },
+
+      userRegisterTaller: async (taller) => {
+        let store = getStore();
+        try {
+          let response = await fetch(`${store.urlBase}/api/taller`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${store.token}`,
+            },
+            body: JSON.stringify(taller),
           });
           if (response.ok) {
             return true;

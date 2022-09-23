@@ -1,15 +1,14 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
-import logo_taller from "../../img/Logo_taller2.jpg";
+import {TallerRegister} from "../component/TallerRegister.jsx"
 
 export const Worksheet = () => {
   const { store, actions } = useContext(Context);
-  let navigate = useNavigate()
-  useEffect(()=>{
-    actions.getUserToke()
-
-  },[])
+  let navigate = useNavigate();
+  useEffect(() => {
+    actions.getUserToke();
+  }, []);
   //   let rol = "XXXX"
 
   return (
@@ -110,12 +109,98 @@ export const Worksheet = () => {
         >
           <div className="card-body">
             <h5 className="card-title">{store.user?.name}</h5>
-            <p className="card-text">J22222333</p>
-            <p className="card-text">AV. principal ...</p>
-            <p className="card-text">Fulanito detal</p>
-            <a href="#" className="btn btn-primary">
+            <p className="card-text">{store.user?.email}</p>
+            <p className="card-text">{store.user?.numero}</p>
+            {store.user?.taller_id?.length > 0 &&
+              store.user?.taller_id.map((taller) => (
+                <div key={taller.id}>
+                  <p className="card-text">{taller.razon_social}</p>
+                  <p className="card-text">{taller.rif}</p>
+                  <p className="card-text">{taller.direccion}</p>
+                </div>
+              ))}
+            <button
+              type="button"
+              className="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              data-bs-whatever="@getbootstrap"
+            >
+              Agregar taller
+            </button>
+            <div
+              className="modal fade"
+              id="exampleModal"
+              tabIndex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <TallerRegister/>
+              {/* <div className="modal-dialog">
+                <div className="modal-content">
+                  <div className="modal-header">
+                    <h5 className="modal-title" id="exampleModalLabel">
+                      Complete los campos
+                    </h5>
+                    <button
+                      type="button"
+                      className="btn-close"
+                      data-bs-dismiss="modal"
+                      aria-label="Close"
+                    ></button>
+                  </div>
+                  <div className="modal-body">
+                    <form>
+                      <div className="mb-3">
+                        <label htmlFor="recipient-name" className="col-form-label">
+                          Razon Social:
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="recipient-name"
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label htmlFor="recipient-name" className="col-form-label">
+                          Rif:
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="recipient-name"
+                        />
+                      </div>
+                      <div className="mb-3">
+                        <label htmlFor="recipient-name" className="col-form-label">
+                          Direccion:
+                        </label>
+                        <input
+                          type="text"
+                          className="form-control"
+                          id="recipient-name"
+                        />
+                      </div>
+                    </form>
+                  </div>
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="btn btn-secondary"
+                      data-bs-dismiss="modal"
+                    >
+                      Close
+                    </button>
+                    <button type="button" className="btn btn-primary">
+                      Send message
+                    </button>
+                  </div>
+                </div>
+              </div> */}
+            </div>
+            {/* <a href="#" className="btn btn-primary">
               Modificar Perfil
-            </a>
+            </a> */}
           </div>
         </div>
         <div
@@ -126,111 +211,163 @@ export const Worksheet = () => {
           tabIndex="0"
         >
           <div className="card-father">
-          <div className="card">
-            <img src="https://media.istockphoto.com/photos/car-repairair-conditioner-picture-id495341914?k=20&m=495341914&s=612x612&w=0&h=VIAFCTsf4xKzI7naa4Tdi1E4aFJgPos7LxKSt1GQfy4=" className="card-img-top" alt="..."/>
-            <div className="card-body">
-              <h5 className="card-title">Revision aire acondicionado</h5>
-              <p className="card-text">Revision de los 5 puntos de sistema aire acondicionado. </p>
-                <a href="#" className="card-link">Añadir a mis servicios</a>
+            <div className="card">
+              <img
+                src="https://media.istockphoto.com/photos/car-repairair-conditioner-picture-id495341914?k=20&m=495341914&s=612x612&w=0&h=VIAFCTsf4xKzI7naa4Tdi1E4aFJgPos7LxKSt1GQfy4="
+                className="card-img-top"
+                alt="..."
+              />
+              <div className="card-body">
+                <h5 className="card-title">Revision aire acondicionado</h5>
+                <p className="card-text">
+                  Revision de los 5 puntos de sistema aire acondicionado.{" "}
+                </p>
+                <a href="#" className="card-link">
+                  Añadir a mis servicios
+                </a>
+              </div>
             </div>
-          </div>
-          <div className="card">
-            <img src="https://cdn.autoproyecto.com/wp-content/uploads/2017/12/top_10_autos_decepcion_2017_main.jpg" className="card-img-top" alt="..."/>
-            <div className="card-body">
-              <h5 className="card-title">Cambio aceite carro pequeño</h5>
-              <p className="card-text">
+            <div className="card">
+              <img
+                src="https://cdn.autoproyecto.com/wp-content/uploads/2017/12/top_10_autos_decepcion_2017_main.jpg"
+                className="card-img-top"
+                alt="..."
+              />
+              <div className="card-body">
+                <h5 className="card-title">Cambio aceite carro pequeño</h5>
+                {/* <p className="card-text"> */}
                 <ul>
                   <li>4 litros aceite</li>
-                  <li>Filtro  aceite/aire</li>
+                  <li>Filtro aceite/aire</li>
                   <li>Revision de fluidos</li>
                 </ul>
-              </p>
-                <a href="#" className="card-link">Añadir a mis servicios</a>
+                {/* </p> */}
+                <a href="#" className="card-link">
+                  Añadir a mis servicios
+                </a>
+              </div>
             </div>
-          </div>
-          <div className="card">
-            <img src="https://conduciendo.com/wp-content/uploads/2017/10/Camionetas2013Colombia-18102013-01.jpg" className="card-img-top" alt="..."/>
-            <div className="card-body">
-              <h5 className="card-title">Cambio aceite carro grande</h5>
-              <p className="card-text">
+            <div className="card">
+              <img
+                src="https://conduciendo.com/wp-content/uploads/2017/10/Camionetas2013Colombia-18102013-01.jpg"
+                className="card-img-top"
+                alt="..."
+              />
+              <div className="card-body">
+                <h5 className="card-title">Cambio aceite carro grande</h5>
+                {/* <p className="card-text"> */}
                 <ul>
                   <li>8 litros aceite</li>
-                  <li>Filtro  aceite/aire</li>
+                  <li>Filtro aceite/aire</li>
                   <li>Revision de fluidos</li>
                 </ul>
-              </p>
-                <a href="#" className="card-link">Añadir a mis servicios</a>
+                {/* </p> */}
+                <a href="#" className="card-link">
+                  Añadir a mis servicios
+                </a>
+              </div>
             </div>
-          </div>
-          <div className="card">
-            <img src="https://articulos.elclasificado.com/wp-content/uploads/2022/02/Mecanico-revisando-el-motor-de-un-carro-696x363.jpg" className="card-img-top" alt="..."/>
-            <div className="card-body">
-              <h5 className="card-title">Servicio de entonacion</h5>
-              <p className="card-text">
+            <div className="card">
+              <img
+                src="https://articulos.elclasificado.com/wp-content/uploads/2022/02/Mecanico-revisando-el-motor-de-un-carro-696x363.jpg"
+                className="card-img-top"
+                alt="..."
+              />
+              <div className="card-body">
+                <h5 className="card-title">Servicio de entonacion</h5>
+                {/* <p className="card-text"> */}
                 <ul>
                   <li>Limpieza de inyectores</li>
                   <li>Cambio Bujias</li>
                   <li>Mantenimiento Bomba de gasolina</li>
                 </ul>
-              </p>
-                <a href="#" className="card-link">Añadir a mis servicios</a>
+                {/* </p> */}
+                <a href="#" className="card-link">
+                  Añadir a mis servicios
+                </a>
+              </div>
             </div>
-          </div>
           </div>
           <div className="card-father">
-          <div className="card">
-            <img src="https://images.milenio.com/YieC_jyKKOIsSUpbtTKviu4RnSQ=/936x566/uploads/media/2020/11/19/loops-app-lavado-autos-domicilio.jpeg" className="card-img-top" alt="..."/>
-            <div className="card-body">
-              <h5 className="card-title">Lavado Automotriz</h5>
-              <p className="card-text">Lavado de carroceria y  aspirado de interiores  </p>
-                <a href="#" className="card-link">Añadir a mis servicios</a>
+            <div className="card">
+              <img
+                src="https://images.milenio.com/YieC_jyKKOIsSUpbtTKviu4RnSQ=/936x566/uploads/media/2020/11/19/loops-app-lavado-autos-domicilio.jpeg"
+                className="card-img-top"
+                alt="..."
+              />
+              <div className="card-body">
+                <h5 className="card-title">Lavado Automotriz</h5>
+                <p className="card-text">
+                  Lavado de carroceria y aspirado de interiores{" "}
+                </p>
+                <a href="#" className="card-link">
+                  Añadir a mis servicios
+                </a>
+              </div>
             </div>
-          </div>
-          <div className="card">
-            <img src="https://www.maddoxdetail.com/wp-content/uploads/2021/10/limpiar-tapiceria-piel-cuero-coche-maddox-detailing-car-productos-aurgi-norauto-midas-amazon-2.jpeg" className="card-img-top" alt="..."/>
-            <div className="card-body">
-              <h5 className="card-title">Limpieza de Tapiceria</h5>
-              <p className="card-text">
+            <div className="card">
+              <img
+                src="https://www.maddoxdetail.com/wp-content/uploads/2021/10/limpiar-tapiceria-piel-cuero-coche-maddox-detailing-car-productos-aurgi-norauto-midas-amazon-2.jpeg"
+                className="card-img-top"
+                alt="..."
+              />
+              <div className="card-body">
+                <h5 className="card-title">Limpieza de Tapiceria</h5>
+                {/* <p className="card-text"> */}
                 <ul>
                   <li>Tapiceria de techo</li>
                   <li>Puertas </li>
                   <li>Piso </li>
                 </ul>
-              </p>
-                <a href="#" className="card-link">Añadir a mis servicios</a>
+                {/* </p> */}
+                <a href="#" className="card-link">
+                  Añadir a mis servicios
+                </a>
+              </div>
             </div>
-          </div>
-          <div className="card">
-            <img src="http://www.goodyear-up.com/Content/uploads/Mantenimiento.jpg" className="card-img-top" alt="..."/>
-            <div className="card-body">
-              <h5 className="card-title">Servicio de Neumaticos</h5>
-              <p className="card-text">
+            <div className="card">
+              <img
+                src="http://www.goodyear-up.com/Content/uploads/Mantenimiento.jpg"
+                className="card-img-top"
+                alt="..."
+              />
+              <div className="card-body">
+                <h5 className="card-title">Servicio de Neumaticos</h5>
+                {/* <p className="card-text"> */}
                 <ul>
                   <li>Revision</li>
                   <li>Rotacion</li>
                   <li>Alineacion y balanceo</li>
                 </ul>
-              </p>
-                <a href="#" className="card-link">Añadir a mis servicios</a>
+                {/* </p> */}
+                <a href="#" className="card-link">
+                  Añadir a mis servicios
+                </a>
+              </div>
             </div>
-          </div>
-          <div className="card">
-            <img src="https://storage.googleapis.com/blog-prod-files/uploads/sites/11/2022/02/sistema-de-frenos-680x350.jpg" className="card-img-top" alt="..."/>
-            <div className="card-body">
-              <h5 className="card-title">Revision y cambio de frenos</h5>
-              <p className="card-text">
+            <div className="card">
+              <img
+                src="https://storage.googleapis.com/blog-prod-files/uploads/sites/11/2022/02/sistema-de-frenos-680x350.jpg"
+                className="card-img-top"
+                alt="..."
+              />
+              <div className="card-body">
+                <h5 className="card-title">Revision y cambio de frenos</h5>
+                {/* <p className="card-text"> */}
                 <ul>
                   <li>Cambios de pastillas o bandas</li>
                   <li>Rectificacion de disco</li>
                   <li>Revision de fluidos</li>
                 </ul>
-              </p>
-                <a href="#" className="card-link">Añadir a mis servicios</a>
+                {/* </p> */}
+                <a href="#" className="card-link">
+                  Añadir a mis servicios
+                </a>
+              </div>
             </div>
           </div>
-          </div>
-          </div>
-  
+        </div>
+
         <div
           className="tab-pane fade"
           id="nav-contact"
