@@ -13,39 +13,6 @@ export const Worksheet = () => {
 
   return (
     <>
-      {/* <div className="container-fluid">
-        <nav className="navbar bg-light">
-          <Link className="navbar-brand" to="/">
-            <img
-              src={logo_taller}
-              alt="Logo"
-              width="50"
-              height="50"
-              className="d-inline-block align-text-top"
-            />
-            <h6>TalleresVenAPP</h6>
-          </Link>
-          <button className="btn btn-primary" type="button"  onClick={() => {
-              actions.logout();
-              navigate("/");
-            }}>
-            Salir
-          </button>
-        </nav>
-      </div> */}
-      {/* {rol==="taller"?
-        
-        <nav>
-        <div className="nav nav-tabs" id="nav-tab" role="tablist">
-          <button className="nav-link active" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true">Perfil</button>
-          <button className="nav-link" id="nav-profile-tab" data-bs-toggle="tab" data-bs-target="#nav-profile" type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Servicios</button>
-          <button className="nav-link" id="nav-contact-tab" data-bs-toggle="tab" data-bs-target="#nav-contact" type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Citas</button>
-          <button className="nav-link" id="nav-disabled-tab" data-bs-toggle="tab" data-bs-target="#nav-disabled" type="button" role="tab" aria-controls="nav-disabled" aria-selected="false" disabled>Disabled</button>
-        </div>
-      </nav>
-      : 
-      <h1>cliente</h1>
-    } */}
       <nav>
         <div className="nav nav-tabs" id="nav-tab" role="tablist">
           <button
@@ -136,71 +103,8 @@ export const Worksheet = () => {
               aria-hidden="true"
             >
               <TallerRegister/>
-              {/* <div className="modal-dialog">
-                <div className="modal-content">
-                  <div className="modal-header">
-                    <h5 className="modal-title" id="exampleModalLabel">
-                      Complete los campos
-                    </h5>
-                    <button
-                      type="button"
-                      className="btn-close"
-                      data-bs-dismiss="modal"
-                      aria-label="Close"
-                    ></button>
-                  </div>
-                  <div className="modal-body">
-                    <form>
-                      <div className="mb-3">
-                        <label htmlFor="recipient-name" className="col-form-label">
-                          Razon Social:
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="recipient-name"
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label htmlFor="recipient-name" className="col-form-label">
-                          Rif:
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="recipient-name"
-                        />
-                      </div>
-                      <div className="mb-3">
-                        <label htmlFor="recipient-name" className="col-form-label">
-                          Direccion:
-                        </label>
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="recipient-name"
-                        />
-                      </div>
-                    </form>
-                  </div>
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      className="btn btn-secondary"
-                      data-bs-dismiss="modal"
-                    >
-                      Close
-                    </button>
-                    <button type="button" className="btn btn-primary">
-                      Send message
-                    </button>
-                  </div>
-                </div>
-              </div> */}
+
             </div>
-            {/* <a href="#" className="btn btn-primary">
-              Modificar Perfil
-            </a> */}
           </div>
         </div>
         <div

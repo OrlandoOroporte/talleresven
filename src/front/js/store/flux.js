@@ -4,7 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       token: localStorage.getItem("token") || "",
       // urlBase:"https://talleresvenapp.herokuapp.com/",
       urlBase:
-        "https://3001-orlandoorop-talleresven-gbbr3d7c8pf.ws-us67.gitpod.io",
+        "https://3001-orlandoorop-talleresven-2jweznl2afk.ws-us67.gitpod.io",
 
       taller: [],
       service: [],
@@ -34,6 +34,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       userRegisterTaller: async (taller) => {
         let store = getStore();
+        console.log(taller,"desde el actions")
         try {
           let response = await fetch(`${store.urlBase}/api/taller`, {
             method: "POST",
@@ -45,6 +46,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           if (response.ok) {
             return true;
+            
           }
           return false;
         } catch (error) {

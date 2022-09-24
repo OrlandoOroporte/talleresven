@@ -11,7 +11,7 @@ export const TallerRegister = () => {
     
     const handleChange = (event) =>{
         setTallerRegister({
-            ...TallerRegister,
+            ...tallerRegister,
             [event.target.name]: event.target.value
 
         })
@@ -19,7 +19,8 @@ export const TallerRegister = () => {
     const {actions}=useContext(Context) 
 
     const handleSubmit = async (event) => {
-        event.preventDefault();
+      console.log("me ejecuto")
+        // event.preventDefault();
         if (tallerRegister.razon_social != "" && tallerRegister.rif !="" && tallerRegister.direccion != ""){
             let response = await actions.userRegisterTaller(tallerRegister)
             if (response){
@@ -50,7 +51,7 @@ export const TallerRegister = () => {
               ></button>
             </div>
             <div className="modal-body">
-              <form onSubmit={handleSubmit}>
+              <form >
                 <div className="mb-3">
                   <label htmlFor="recipient-name" className="col-form-label">
                     Razon Social:
@@ -98,10 +99,11 @@ export const TallerRegister = () => {
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
               >
-                Close
+                Salir
               </button>
-              <button type="button" className="btn btn-primary">
-                Send message
+              <button type="button" className="btn btn-primary"
+              onClick={() => handleSubmit()}>
+                Registrar
               </button>
             </div>
           </div>
