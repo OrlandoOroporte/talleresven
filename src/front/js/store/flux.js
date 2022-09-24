@@ -1,38 +1,28 @@
 const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
-      token:localStorage.getItem("token") || "",
-      urlBase:"https://talleresvenapp.herokuapp.com/"
+      token: localStorage.getItem("token") || "",
+      // urlBase:"https://talleresvenapp.herokuapp.com/",
+      urlBase:
+        "https://3001-orlandoorop-talleresven-2jweznl2afk.ws-us67.gitpod.io",
 
-      // message: null,
-      // demo: [
-      // 	{
-      // 		title: "FIRST",
-      // 		background: "white",
-      // 		initial: "white"
-      // 	},
-      // 	{
-      // 		title: "SECOND",
-      // 		background: "white",
-      // 		initial: "white"
-      // 	}
-      // ]
+      taller: [],
+      service: [],
+      user:[]
+
     },
     actions: {
       userRegister: async (user) => {
         let store = getStore();
         try {
-          let response = await fetch(
-            `${store.urlBase}/api/user`,
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                // Authorization: `Bearer ${store.token}`,
-              },
-              body: JSON.stringify(user),
-            }
-          );
+          let response = await fetch(`${store.urlBase}/api/user`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              // "Authorization": `Bearer ${store.token}`,
+            },
+            body: JSON.stringify(user),
+          });
           if (response.ok) {
             return true;
           }
@@ -41,7 +31,53 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(`Error: ${error}`);
         }
       },
+
+      userRegisterTaller: async (taller) => {
+        let store = getStore();
+        console.log(taller,"desde el actions")
+        try {
+          let response = await fetch(`${store.urlBase}/api/taller`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${store.token}`,
+            },
+            body: JSON.stringify(taller),
+          });
+          if (response.ok) {
+            return true;
+            
+          }
+          return false;
+        } catch (error) {
+          console.log(`Error: ${error}`);
+        }
+      },
+
+      getUserToke: async()=>{
+        let store = getStore();
+        try{
+          let response = await fetch(`${store.urlBase}/api/user`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${store.token}`,
+          },
+        });
+        let data = await response.json();
+        console.log(response)
+        if (response.ok){
+          setStore ({
+            ...store,
+            user: data
+          })
+        }
+        }catch{console.log (error)}
+      
+      },
+
       login: async (user) => {
+        let store = getStore();
         try {
           let response = await fetch(`${store.urlBase}/api/login`, {
             method: "POST",
@@ -61,12 +97,44 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(`Error: ${error}`);
         }
       },
-	  logout: () => {
+      logout: () => {
+        let store = getStore()
         localStorage.removeItem("token");
 
-        setStore({ token: "" });
-      }, 
-	  
+        setStore({ ...store, token: "" });
+      },
+
+      ////lo que agregue:
+      getService: async () => {
+        let store = getStore();
+        try {
+          let response = await fetch(`${store.urlBase}/api/services`);
+          let data = await response.json();
+          if (response.ok) {
+            setStore({
+              ...store,
+              service: data,
+            });
+          }
+        } catch (error) {
+          console.log(`Error: ${error}`);
+        }
+      },
+      getTaller: async () => {
+        let store = getStore();
+        try {
+          let response = await fetch(`${store.urlBase}/api/talleres`);
+          let data = await response.json();
+          if (response.ok) {
+            setStore({
+              ...store,
+              taller: data,
+            });
+          }
+        } catch (error) {
+          console.log(`Error: ${error}`);
+        }
+      },
 
       // // Use getActions to call a function within a fuction
       // exampleFunction: () => {
