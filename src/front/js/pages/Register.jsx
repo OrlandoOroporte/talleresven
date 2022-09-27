@@ -45,7 +45,6 @@ export const Register = () => {
               <input
                 type="email"
                 className="form-control"
-                id="exampleInputEmail1"
                 aria-describedby="emailHelp"
                 onChange={handleChange}
                 name="email"
@@ -63,7 +62,6 @@ export const Register = () => {
               <input
                 type="password"
                 className="form-control"
-                id="exampleInputPassword1"
                 onChange={handleChange}
                 name="password"
                 value={userRegister.password}
@@ -76,7 +74,6 @@ export const Register = () => {
               <input
                 type="text"
                 className="form-control"
-                id="exampleInputPassword1"
                 onChange={handleChange}
                 name="name"
                 value={userRegister.name}

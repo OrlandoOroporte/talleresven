@@ -3,6 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 
 
+from email.mime import image
 import os                                                                     # importo os para trabajar con cosas del sistema operativo 
 from ast import Try
 import email
@@ -226,7 +227,10 @@ def add_service():                                  # declaro mi funcion para ag
         body = request.json                       # guardo el cuerpo de la solicitud en la variable body
         name = body.get('name', None)             # declaro una variable email, y guardo el emial en ella y en caso de no conseguirla la creo en None    
         price = body.get('price', None)
+        descripcion = body.get('descripcion', None)
+        image = body.get('image', None)
         taller_id = body.get('taller_id', None)
+        
 
         user_id = get_jwt_identity()              # extraigo el id del usuario y lo guardo en user_id
         # user = User.query.filter_by(id=user_id).one_or_none()
@@ -239,7 +243,7 @@ def add_service():                                  # declaro mi funcion para ag
             return jsonify('debe enviar el payload completo'), 400           # en caso de dar error imprimo el mensaje y paso el codigo (400 Bad Request)
         else:
             print (f"debo guardar al servicio")        
-            request_service = Servicio(name = name, precio=price, taller_id=taller_id)   # Instancio mi variable request_user
+            request_service = Servicio(name = name, precio=price, descripcion=descripcion, image=image, taller_id=taller_id)   # Instancio mi variable request_user
             db.session.add(request_service)                                              # inicio la session en BD con los datos de usuario
             
             try:                                    # realizo un try except            

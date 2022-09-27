@@ -1,7 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
-import {TallerRegister} from "../component/TallerRegister.jsx"
+import { TallerRegister } from "../component/TallerRegister.jsx"
+import ServiceRegister from "../component/ServiceRegister.jsx";
 
 export const Worksheet = () => {
   const { store, actions } = useContext(Context);
@@ -78,14 +79,31 @@ export const Worksheet = () => {
             <h5 className="card-title">{store.user?.name}</h5>
             <p className="card-text">{store.user?.email}</p>
             <p className="card-text">{store.user?.numero}</p>
-            {store.user?.taller_id?.length > 0 &&
-              store.user?.taller_id.map((taller) => (
-                <div key={taller.id}>
-                  <p className="card-text">{taller.razon_social}</p>
-                  <p className="card-text">{taller.rif}</p>
-                  <p className="card-text">{taller.direccion}</p>
-                </div>
-              ))}
+            <br></br>
+            {/* {store.user?.taller_id?.length > 0 && <h3>Tus talleres</h3>} */}
+            {store.user?.taller_id?.length > 0 ? store.user.taller_id.map((taller, index) => (
+              <div key={taller.id}>
+                <h3>Taller: {index + 1}</h3>
+                <p className="card-text">{taller.razon_social}</p>
+                <p className="card-text">{taller.rif}</p>
+                <p className="card-text">{taller.direccion}</p>
+                <p className="card-text">ID del taller: {taller.id}</p>
+                <br></br>
+                {/* {taller.servicio_id?.length > 0 && <h3>Tus servicios</h3>} */}
+                {taller.servicio_id?.length > 0 ? taller.servicio_id.map((service, index) => (
+                  <div key={service.id}>
+                    <h4>Servicio: {index + 1}</h4>
+                    <img src={service.image} className="card-img-top" alt="..." />
+                    <p className="card-text"> Nombre: {service.name}</p>
+                    <p className="card-text"> Descripcion: {service.descripcion}</p>
+                    <p className="card-text">Precio: {service.precio}</p>
+                    <p className="card-text">Taller: {service.taller_id}</p>
+                    <br />
+                  </div>
+                )) : <h4>Usted no tiene servicios registrado</h4>}
+              </div>
+            )) : <h4>Usted no posee talleres registrado</h4>}
+            <br />
             <button
               type="button"
               className="btn btn-primary"
@@ -102,7 +120,26 @@ export const Worksheet = () => {
               aria-labelledby="exampleModalLabel"
               aria-hidden="true"
             >
-              <TallerRegister/>
+              <TallerRegister />
+
+            </div>
+            <button
+              type="button"
+              className="btn btn-success mx-3"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal2"
+              data-bs-whatever="@getbootstrap"
+            >
+              Agregar servicio
+            </button>
+            <div
+              className="modal fade"
+              id="exampleModal2"
+              tabIndex="-1"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <ServiceRegister />
 
             </div>
           </div>
