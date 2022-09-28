@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo_taller from "../../img/Logo_taller2.jpg";
+import logo_taller from "../../img/Logo_tallervenapp.png";
 import { Context } from "../store/appContext";
 
 export const Navbar = () => {
@@ -11,16 +11,20 @@ export const Navbar = () => {
     <>
       <div className="container-fluid">
         <nav className="navbar bg-light">
+          <div className="d-flex align-items-center">
           <Link className="navbar-brand" to="/">
             <img
               src={logo_taller}
               alt="Logo"
-              width="50"
-              height="50"
-              className="d-inline-block align-text-top"
+              className="d-inline-block align-text-top  logo"
             />
-            <h6>TalleresVenAPP</h6>
+          
           </Link>
+          <div clasName="name-logo" onClick={()=>{navigate("/")}} >
+            <h5>TalleresVenAPP</h5>
+            <h7>Lo que tu vehículo necesita</h7>
+          </div>
+          </div>
           <ul className="nav justify-content-end">
             <li className="nav-item">
               <Link

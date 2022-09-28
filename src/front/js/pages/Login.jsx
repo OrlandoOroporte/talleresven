@@ -2,7 +2,6 @@ import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import logo_taller from "../../img/Logo_taller2.jpg";
 import "../../styles/index.css";
 
 export const Login = () => {
