@@ -1,5 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import { useNavigate } from "react-router-dom";
 import "../../styles/index.css";
 
 export const Register = () => {
@@ -7,6 +8,7 @@ export const Register = () => {
     email: "",
     password: "",
   };
+  let navigate = useNavigate();
   const { store, actions } = useContext(Context);
   const [userRegister, setUserRegister] = useState(initialState);
 
@@ -24,6 +26,7 @@ export const Register = () => {
       if (response) {
         setUserRegister({ initialState });
         alert("Se ha resgitrado con exito");
+        navigate("/login")
       } else {
         alert("algo salio mal, intetalo de nuevo");
       }

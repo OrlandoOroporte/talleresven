@@ -20,7 +20,9 @@ const ServiceRegister = () => {
         })
     }
 
-    const { actions } = useContext(Context)
+    const { actions, store } = useContext(Context)
+    const {taller_id} = store.user 
+    console.log(taller_id)
 
     const handleSubmit = async (event) => {
         //event.preventDefault();
@@ -30,6 +32,7 @@ const ServiceRegister = () => {
             if (response) {
                 setServiceRegister({ initialState });
                 alert("Se ha registrado el servicio con exito")
+                actions.getService();
             } else {
                 alert("Ocurrio un error al crear el servicio")
             }
@@ -103,18 +106,18 @@ const ServiceRegister = () => {
                                     value={serviceRegister.image}
                                 />
                             </div>
-                            <div className="mb-3">
-                                <label htmlFor="recipient-name" className="col-form-label">
+                         <label htmlFor="recipient-name" className="col-form-label">
                                     Taller:
                                 </label>
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    onChange={handleChange}
-                                    name="taller_id"
-                                    value={serviceRegister.taller_id}
-                                />
-                            </div>
+                            <select className="form-select " aria-label="Default select example" onChange={handleChange} name="taller_id">
+                            <option value="" >Seleccione un Taller</option>
+                                {taller_id?.map((item)=>{ 
+                                    return(
+                                        <option  key={item.id} value={item.id}>{item.razon_social}</option>
+                                    )
+                                })}
+                    
+                            </select>
                         </form>
                     </div>
                     <div className="modal-footer">
