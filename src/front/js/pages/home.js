@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
-import logo_taller from "../../img/Logo_taller2.jpg";
 import "../../styles/index.css";
 
 export const Home = () => {
