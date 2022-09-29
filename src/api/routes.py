@@ -1,6 +1,9 @@
 """
 This module takes care of starting the API Server, Loading the DB and Adding the endpoints
 """
+
+
+from email.mime import image
 import os                                                                     # importo os para trabajar con cosas del sistema operativo 
 from ast import Try
 import email
@@ -11,7 +14,7 @@ from api.models import db, User, Taller, Servicio
 from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash, check_password_hash      # importo generate y cheack de la libreria werkzeug.security
 from base64 import b64encode                                                   # importo b64encode desde la libreria base64
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
 api = Blueprint('api', __name__)                # declaro que voy a utilizar api en las rutas
 
@@ -41,16 +44,16 @@ def add_user():                                 # declaro mi funcion para agrega
         password = body.get('password', None)   # declaro una variable password, y guardo la contraseña en ella y en caso de no conseguirla la creo en None
         name = body.get('name', None)           # declaro una variable name, y guarde el nombre de usuario y en caso de no conseguirla la creo en None
         numero = body.get('numero', None)       # declaro una variable numero, y guarde el nombre de usuario y en caso de no conseguirla la creo en None
-        # avatar = body.get('avatar', None)       # declaro una variable avatar, y guarde el nombre de usuario y en caso de no conseguirla la creo en None
+        avatar = body.get('avatar', None)       # declaro una variable avatar, y guarde el nombre de usuario y en caso de no conseguirla la creo en None
 
                                                 # hacemos las Validaciones
         if email is None or password is None:               # verifico si existe una propiedad email 
-            print ('debe enviar el payload completo'), 400  # en caso de dar error imprimo el mensaje y paso el codigo (400 Bad Request)
+            return jsonify('debe enviar el payload completo'), 400  # en caso de dar error imprimo el mensaje y paso el codigo (400 Bad Request)
         else:
             salt = b64encode(os.urandom(32)).decode('utf-8')                       # creo el salt en base a b64code aleatorio
-            password = set_password(password, salt)                                      # antes de registrar el usuario, hasheo mi contrase;a 
-            print (f"debo guardar al usuario con el pass: ${password}"), 200       # imprimo el mensaje y paso el codigo 200 (Ok)
-            request_user = User(name = name, email=email, numero=numero, password=password, salt=salt)   # Instancio mi variable request_user
+            password = set_password(password, salt)                                # antes de registrar el usuario, hasheo mi contrase;a 
+            print (f"debo guardar al usuario con el pass: ${password}")            # imprimo el mensaje y paso el codigo 200 (Ok)
+            request_user = User(name = name, email=email, numero=numero, avatar=avatar, password=password, salt=salt)   # Instancio mi variable request_user
             db.session.add(request_user)                                            # inicio la session en BD con los datos de usuario
             
             try:                                    # realizo un try except            
@@ -62,6 +65,49 @@ def add_user():                                 # declaro mi funcion para agrega
                 return jsonify('algo salio mal')
     return jsonify(), 201                           # retorno vacio con el codigo 201 (Created)
 
+############ Creando la ruta para actualizar usuarios##########
+
+@api.route('/user/update', methods=['PUT'])                 # creo mi ruta para actualizar  
+@jwt_required()
+def update_user():                                   # declaro la funcion para actulizar el usuario 
+    user_id = get_jwt_identity()                     # declaro user_id para extraer del token el id del usuario que hace la solicitud   
+    if request.method == 'PUT':                      # valido si el metodo es PUT
+        body = request.json                          # declaro mi variable body y guardo lo que llego en el cuerpo   
+        #validaciones
+        if user_id is None:                                      # verifico si el ID de usuario es valido   
+            return jsonify("Verifica el ID del usuario"), 400    # retorno un mensaje de error y el codigo 400 (Bad request)  
+
+        if user_id is not None:
+            update_user = User.query.get(user_id)                # consulto en bd y me traigo el usuario por el id   
+            if update_user is None:                              # verifico si el usuario llego vacio
+                return jsonify("No se consiguio informacio de ese user"), 404  # retorno un mensaje de error con el codigo 404 (Not found)
+            else:
+                update_user.name = body["name"]          # accedo a la propiedad name y le asigno el name que vino en la solicitud
+                if body.get("email") != update_user.email:
+                    update_user.email = body["email"]    # accedo a la propiedad email y le asigno el email que vino en la solicitud
+                update_user.numero = body["numero"]      # accedo a la propiedad numero y le asigno el numero que vino en la solicitud
+                update_user.avatar = body["avatar"]      # accedo a la propiedad avatar y le asigno el avatar que vino en la solicitud
+                try:
+                    db.session.commit()                  # guardo los cambios en BD
+                    return jsonify(update_user.serialize()), 201  # retorno el usuario modificado con el codigo 201
+                except Exception as error:               # en caso de error 
+                    print(error.args)                    # imprimo el error 
+                    return jsonify(f"Error interno del servidor{error.args}"), 500    # imprimo el error con el codigo 500 (Internal server error) 
+        return jsonify([]), 200                          # retorno un jsonify 200 Ok   ?????
+    return jsonify ([]), 405                             # retorno un jsonify vacio con el codigo 405 (metodo no permitido)
+
+
+#####consulta de usuarios#####
+
+@api.route('/user', methods=['GET'])
+@jwt_required()
+def get_user():
+    user = User.query.get(get_jwt_identity())
+    if user is not None:
+        print(user.serialize())
+        return jsonify(user.serialize()), 200
+    else: 
+        return jsonify("user not found"), 404 
 
 
 ######### Creando la ruta para hacer Login##########
@@ -79,7 +125,7 @@ def login():                                        # defino mi funcion llamada 
                 print("este pana tiene permiso")                 # imprimo un mensaje que se tiene permiso
                 ###CREAR Y RESPONDER EL TOKEN###   
                 created_token = create_access_token(identity= login_user.id)
-                return jsonify({'usted esta logeado con el token': created_token}), 200        # y retorno un mensaje usted esta logeado con el codigo 200 ok
+                return jsonify({'token': created_token}), 200    # y retorno un mensaje usted esta logeado con el codigo 200 ok
             else:
                 return jsonify("Bad credentials"),    400        # en caso de no coincidir retorno un mensaje de error con el codigo 400 (Bad reques)
         else:                                                    # en caso de no traer nada
@@ -88,49 +134,117 @@ def login():                                        # defino mi funcion llamada 
     return jsonify('todo bien'),201                     
 
 
-############ Creando la ruta para registrar usuarios##########
+############ Creando la ruta para registrar talleres##########
 
 @api.route('/taller', methods=['POST'])         # creo mi ruta para user
+@jwt_required()
 def add_taller():                               # declaro mi funcion para agregar el taller
     if request.method == 'POST':                # pregunto si el metodo es POST
         body = request.json                     # guardo el cuerpo de la solicitud en la variable body
         direccion = body.get('direccion', None)         # declaro una variable email, y guardo el emial en ella y en caso de no conseguirla la creo en None    
         rif = body.get('rif', None)
         razon_social = body.get('razon_social', None)   # declaro una variable password, y guardo la contraseña en ella y en caso de no conseguirla la creo en None
-        
+        user_id = get_jwt_identity()                    # guardo el id del usuario en la variable user_id
         # hacemos las Validaciones 
         if direccion is None or rif is None or razon_social is None:               # verifico si existe una propiedad email 
             print ('debe enviar el payload completo'), 400  # en caso de dar error imprimo el mensaje y paso el codigo (400 Bad Request)
         else:
             print (f"debo guardar al taller"), 200       # imprimo el mensaje y paso el codigo 200 (Ok)
-            request_taller = Taller(direccion = direccion, rif=rif, razon_social=razon_social)   # Instancio mi variable request_user
+            request_taller = Taller(direccion = direccion, rif=rif, razon_social=razon_social, user_id=user_id)   # Instancio mi variable request_user
             db.session.add(request_taller)                                            # inicio la session en BD con los datos de usuario
             
             try:                                    # realizo un try except            
                 db.session.commit()                 # subo los cambios en BD
-                return jsonify("Todo bien"), 200    # retorno un mensaje "Todo bien" con el codigo 200(ok)
+                return jsonify({"Taller":request_taller.serialize()}), 200    # retorno un mensaje "Todo bien" con el codigo 200(ok)
             except ExecError as error:
                 db.session.rollback                 # en caso de error, regreso todos los cambios
                 print(error.args)
-                return jsonify('algo salio mal')
+                return jsonify('algo salio mal'),500
     return jsonify(), 201                           # retorno vacio con el codigo 201 (Created)
+
+
+############# creando la ruta para actualizar un taller##########
+
+@api.route('/taller', methods=['PUT'])                  
+@api.route('taller/<int:taller_id>', methods=['PUT'])  # creo mi ruta para actualizar mi id
+@jwt_required()                                        # protego mi ruta para que solo el usuario pued modificar los datos del taller
+def update_taller(taller_id=None):                     # declaro una funcion para tomar el taller id y hacer validaciones
+    if request.method == 'PUT':                        # valido si el metodo es PUT (actualizar)
+        body = request.json                            # guardo en la variable body el cuerpo de la solicitud
+
+        if taller_id is None:                                     # valido si colocaron el id en la ruta 
+            return jsonify("Debe colocar el id en ruta"),404      # en ese caso retorno un mensaje de error con el codigo 404 (Bad request)
+        
+        if taller_id is not None: 
+            update_taller = Taller.query.get(taller_id)    # consulto la base de datos y me traigo el taller con el id solicitado  
+            if update_taller is None:                      # valido si me traje alguna informacion
+                return jsonify("No se encontro datos con ese ID"), 404   # en caso de no encontrar nada retorno un error 404 (not found)
+            elif update_taller.user_id != get_jwt_identity():            # en caso de que el id de usuario no coincida le digo que no tiene permiso
+                return jsonify('Unautorizate user'), 401   # retorno un mensaje de error usuario no autorizado 
+
+            else:
+                update_taller.direccion = body["direccion"]             # guardo en la direccion nueva 
+                if update_taller.rif != body.get('rif'):                # si el rif del taller es diferente guardo el rif
+                   update_taller.rif = body["rif"]                      # guardo el nuevo rif 
+                update_taller.razon_social = body["razon_social"]       # guardo la nueva razon social 
+
+                try:
+                    db.session.commit()                                 # guardo los cambios en BD
+                    return jsonify(update_taller.serialize()), 202      # retorno lo que se esta guardando con el codigo 202 (acepted)             
+                except Exception as error:                                          
+                    return jsonify(f"Error al actualizar el taller{error.args}"), 500    # Error interno del servidor 500 (Internal error server) 
+       
+        return jsonify ([]), 201                                          # error 201  ???? el 201 no es un error
+    return jsonify ([]), 405                                              # metodo no permitido     
+
+
+######### Creando la ruta para traerme todos los talleres#########
+
+@api.route('/talleres', methods=['GET'])                    # creo la ruta que usare para traer todos los talleres disponibles
+@api.route('/talleres/<int:taller_id>')                     # creo la ruta que usare para traerme un taller en especifico
+def get_talleres(taller_id=None):                           # declaro la funcion que me ayudara a ejecutar mi logica
+                                                            
+    if request.method == 'GET':                             # pregunto si el metodo es GET 
+
+        if taller_id is None:                               # valido si taller_id fue incluido por el usuario
+            talleres = Taller.query.all()                         # en caso de no ser incluido me traigo todos los talleres de mi BD                       
+            return jsonify(list(map(lambda item : item.serialize(), talleres ))),200        
+        
+        elif taller_id is not None:
+                taller = Taller.query.get(taller_id)
+                if taller is None:
+                    return jsonify("No se consigio ningun taller por ese id"), 404    
+                else:    
+                    return jsonify(taller.serialize()),200    
+    return jsonify ([]), 401                  
 
 ############ Creando la ruta para registrar servicio##########
 
-@api.route('/servicio', methods=['POST'])         # creo mi ruta para user
-def add_servicio():                               # declaro mi funcion para agregar el taller
+@api.route('/service', methods=['POST'])          # creo mi ruta para user
+@jwt_required()
+def add_service():                                  # declaro mi funcion para agregar el taller
     if request.method == 'POST':                  # pregunto si el metodo es POST
         body = request.json                       # guardo el cuerpo de la solicitud en la variable body
         name = body.get('name', None)             # declaro una variable email, y guardo el emial en ella y en caso de no conseguirla la creo en None    
-        precio = body.get('precio', None)
+        price = body.get('price', None)
+        descripcion = body.get('descripcion', None)
+        image = body.get('image', None)
+        taller_id = body.get('taller_id', None)
         
+
+        user_id = get_jwt_identity()              # extraigo el id del usuario y lo guardo en user_id
+        # user = User.query.filter_by(id=user_id).one_or_none()
+        taller = Taller.query.get(taller_id)      # consulto la bd y me traigo la informacion del taller y la guardo en taller
+        if taller.user_id != user_id:             # pregunto si el taller pertenece al usario actual
+            return jsonify('usted no tiene permiso becerro'), 401     # retorno un mensaje de error "sin autorizacion"
+    
         # hacemos las Validaciones 
-        if name is None or precio is None :               # verifico si existe una propiedad email 
-            print ('debe enviar el payload completo'), 400  # en caso de dar error imprimo el mensaje y paso el codigo (400 Bad Request)
+        if name is None or price is None or taller_id is None:               # verifico si existe una propiedad email, price o taller_id
+            return jsonify('debe enviar el payload completo'), 400           # en caso de dar error imprimo el mensaje y paso el codigo (400 Bad Request)
         else:
-            print (f"debo guardar al servicio"), 200       # imprimo el mensaje y paso el codigo 200 (Ok)
-            request_servicio = Servicio(name = name, precio=precio)   # Instancio mi variable request_user
-            db.session.add(request_servicio)                                            # inicio la session en BD con los datos de usuario
+            print (f"debo guardar al servicio")        
+            request_service = Servicio(name = name, precio=price, descripcion=descripcion, image=image, taller_id=taller_id)   # Instancio mi variable request_user
+            db.session.add(request_service)                                              # inicio la session en BD con los datos de usuario
             
             try:                                    # realizo un try except            
                 db.session.commit()                 # subo los cambios en BD
@@ -139,6 +253,63 @@ def add_servicio():                               # declaro mi funcion para agre
                 db.session.rollback                 # en caso de error, regreso todos los cambios
                 print(error.args)
                 return jsonify('algo salio mal')
-    return jsonify(), 201                           # retorno vacio con el codigo 201 (Created)
+    return jsonify(), 405                           # retorno vacio con el codigo 405 (Metodo no permitido)
 
+
+
+###### creando la ruta para actualizar el servicio###########
+
+@api.route('/service/update', methods=['PUT'])              # creo el endpoint que se utilizara para actualizar el servico 
+@jwt_required()                                             # protejo mi ruta para que solo el usuario dueno del taller pueda actualizar su servicio
+def update_service():                                       # defino la funcion que puede actualizar el servicio
+    if request.method == 'PUT':                             # valido si el metodo utilizado es PUT
+        body = request.json                                 # declaro mi variable body y le guardo el cuerpo json de la solicitud
+ 
+        service_id = body.get('service_id')                 # declaro una variable service_id y guardo el id del servicio
+
+
+        if service_id is None:                                           # verifico si el usuario coloco el id del servicio
+            return jsonify("Debe indicar el id del servicio"), 400       # en el caso que no, retorno un mensaje de error con el codigo 400 (Bad request)
+        if service_id is not None:
+            user_id = get_jwt_identity()                                 # guardo el id de mi usuario en la variable user_id         
+            update_service = Servicio.query.get(service_id)              # consulto la BD y me traigo el servicio por el ID
+            taller = Taller.query.get(update_service.taller_id)          # consulto la BD y me traigo la informacion del taller
+            if taller.user_id != user_id:                                # verifico si el id de usuario coincide
+                return jsonify('usted no tiene permiso becerro'), 401    # en caso de no coincidir, retorno un mensaje de erro con el codigo 401 (Unauthorized)
+
+            if update_service is None:                                   # valido si la busqueda trajo algo por el id recibido
+                return jsonify("No se encontro el taller"), 404          # en caso de no traer nada, se retorno un mensaje de error con el codigo 404
+            else:
+                
+                if "" != body.get('name'):
+                   update_service.name = body.get('name')
+                update_service.precio = body.get('price')
+
+                try:
+                    db.session.commit()                                  # subo los cambios a BD
+                    return jsonify (update_service.serialize()), 200     # retorno el codigo 200 con los datos actualizados
+                except ExecError as error:
+                    db.session.rollback()                                # en caso de error devuelvo todos los cambios
+                    return jsonify (f"Ocurrio un error mientras se guardaban los cambios: {error}"), 500       # retorno un error 500 (Internal server error)
+    return jsonify([]), 405                                              # en caso de no ser PUT retorno vacio y devuelvo el codigo 405 (Metodo no permitido )        
+
+
+##### creando la ruta para consultar todos los servicios####
+
+@api.route('/services', methods = ['GET'])
+@api.route('services/<int:service_id>', methods=['GET'])
+def get_services(service_id = None):
     
+    if request.method == 'GET':
+        if service_id == None:
+           services = Servicio.query.all()
+           return jsonify(list(map(lambda item : item.serialize() , services))), 200
+        
+        elif service_id is not None:
+            service = Servicio.query.get(service_id)
+            if service is None:
+                return jsonify("No se puedo encontrar un servicio con ese id"), 404
+            else:
+                return jsonify(service.serialize()), 200
+    return jsonify([]), 405
+

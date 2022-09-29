@@ -25,6 +25,7 @@ class User(db.Model):
             "email": self.email,
             "numero":self.numero,
             "avatar":self.avatar,
+            "taller_id":[element.serialize() for element in  self.taller_id ]
             # do not serialize the password, its a security breach
         }
 
@@ -37,8 +38,8 @@ class Taller(db.Model):
     razon_social = db.Column(db.String, unique=False, nullable=True)
     activo = db.Column(db.Boolean, default=True)                           # cuando se cree el taller por defaul vendra activo y con permiso para publicar
 
-    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
-    servicio = db.relationship('Servicio', backref = 'taller', uselist=True)  # backref = relacion bidirecional, uselist = relacion 1 a muchos
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))               ##??????? no es necesario cuando tienes el backref
+    servicio_id = db.relationship('Servicio', backref = 'taller', uselist=True)  # backref = relacion bidirecional, uselist = relacion 1 a muchos
 
     def __repr__(self):
         return f'<User {self.razon_social}>'
@@ -46,12 +47,10 @@ class Taller(db.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "name": self.name,
-            "email": self.email,
             "direccion": self.direccion,
             "rif": self.rif,
-            "avatar":self.avatar,
-            "numero":self.numero,
+            "razon_social":self.razon_social,
+            "servicio_id":[element.serialize() for element in  self.servicio_id ]
             # do not serialize the password, its a security breach
         }
         
@@ -59,7 +58,9 @@ class Taller(db.Model):
 
 class Servicio(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    name = db.Column(db.String(80), unique=True, nullable=False)
+    image = db.Column(db.String(200),unique=False, nullable=True)
+    name = db.Column(db.String(80), unique=False, nullable=False)
+    descripcion = db.Column(db.String(200), unique=False, nullable=True)
     precio = db.Column(db.Integer, unique=False, nullable=False)
     
     taller_id = db.Column(db.Integer, db.ForeignKey('taller.id'))
@@ -70,6 +71,9 @@ class Servicio(db.Model):
     def serialize(self):
         return {
             "id": self.id,
+            "image": self.image,
             "name": self.name,
+            "descripcion": self.descripcion,
             "precio": self.precio,
+            "taller_id": self.taller_id
         }

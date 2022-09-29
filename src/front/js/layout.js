@@ -7,11 +7,15 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import { Register } from "./pages/Register.jsx";
 import { Login } from "./pages/Login.jsx";
+import { Services } from "./pages/Services.jsx";
 import { Worksheet } from "./pages/Worksheet.jsx";
 import injectContext from "./store/appContext";
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import AllService from "./component/AllServices.jsx";
+import AllTaller from "./component/AllTaller.jsx";
+import ServiceDetail from "./component/ServiceDetail.jsx";
 
 //create your first component
 const Layout = () => {
@@ -23,13 +27,16 @@ const Layout = () => {
         <div>
             <BrowserRouter basename={basename}>
                 <ScrollToTop>
-                    {/* <Navbar /> */}
+                    <Navbar />
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Register />} path="/register" />
                         <Route element={<Login />} path="/login" />
+                        <Route element={<AllService />} path="/services" />
+                        <Route element={<AllTaller />} path="/taller" />
                         <Route element={<Worksheet />} path="/worksheet" />
+                        <Route element={<ServiceDetail />} path="/services/:id" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
