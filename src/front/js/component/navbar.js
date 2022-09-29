@@ -9,7 +9,7 @@ export const Navbar = () => {
 
   return (
     <>
-      <div className="container-fluid">
+      <div className="container-fluid p-0">
         <nav className="navbar bg-light">
           <div className="d-flex align-items-center">
           <Link className="navbar-brand" to="/">
@@ -18,15 +18,14 @@ export const Navbar = () => {
               alt="Logo"
               className="d-inline-block align-text-top  logo"
             />
-          
           </Link>
-          <div clasName="name-logo" onClick={()=>{navigate("/")}} >
-            <h5>TalleresVenAPP</h5>
-            <h7>Lo que tu vehículo necesita</h7>
+          <div className="name-logo p-0" onClick={()=>{navigate("/")}} >
+            <h5 ><Link className="nav-link p-0" to="/">TalleresVenAPP</Link></h5>
+            <h7 className="fst-italic fw-bold">Lo que tu vehículo necesita</h7>
           </div>
           </div>
-          <ul className="nav justify-content-end">
-            <li className="nav-item">
+          <ul className="nav justify-content-end m-4">
+            <li className="nav-item fw-bold">
               <Link
                 className="nav-link active"
                 aria-current="page"
@@ -35,12 +34,12 @@ export const Navbar = () => {
                 Talleres
               </Link>
             </li>
-            <li className="nav-item">
+            <li className="nav-item fw-bold">
               <Link className="nav-link" to="/services">
                 Servicios
               </Link>
             </li>
-            <li className="nav-item dropdown">
+            <li className="nav-item dropdown fw-bold">
               <Link
                 className="nav-link dropdown-toggle"
                 to="/"
