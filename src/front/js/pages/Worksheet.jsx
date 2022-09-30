@@ -3,6 +3,9 @@ import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import { TallerRegister } from "../component/TallerRegister.jsx"
 import ServiceRegister from "../component/ServiceRegister.jsx";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
 
 export const Worksheet = () => {
   const { store, actions } = useContext(Context);
@@ -104,7 +107,10 @@ export const Worksheet = () => {
               </div>
             )) : <h4>Usted no posee talleres registrado</h4>}
             <br />
-            <button
+            {/* <Button variant="primary" onClick={handleShow}>
+              Launch demo modal
+            </Button> */}
+            {/* <button
               type="button"
               className="btn btn-primary"
               data-bs-toggle="modal"
@@ -119,10 +125,10 @@ export const Worksheet = () => {
               tabIndex="-1"
               aria-labelledby="exampleModalLabel"
               aria-hidden="true"
-            >
-              <TallerRegister />
+            > */}
+            <TallerRegister />
 
-            </div>
+            {/* </div> */}
             <button
               type="button"
               className="btn btn-success mx-3"

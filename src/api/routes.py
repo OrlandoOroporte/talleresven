@@ -146,10 +146,10 @@ def add_taller():                               # declaro mi funcion para agrega
         razon_social = body.get('razon_social', None)   # declaro una variable password, y guardo la contraseña en ella y en caso de no conseguirla la creo en None
         user_id = get_jwt_identity()                    # guardo el id del usuario en la variable user_id
         # hacemos las Validaciones 
-        if direccion is None or rif is None or razon_social is None:               # verifico si existe una propiedad email 
-            print ('debe enviar el payload completo'), 400  # en caso de dar error imprimo el mensaje y paso el codigo (400 Bad Request)
+        if direccion is None or rif is None or razon_social is None:   
+                   return('debe enviar el payload completo'), 400  # en caso de dar error imprimo el mensaje y paso el codigo (400 Bad Request)
         else:
-            print (f"debo guardar al taller"), 200       # imprimo el mensaje y paso el codigo 200 (Ok)
+            print (f"debo guardar al taller")     # imprimo el mensaje y paso el codigo 200 (Ok)
             request_taller = Taller(direccion = direccion, rif=rif, razon_social=razon_social, user_id=user_id)   # Instancio mi variable request_user
             db.session.add(request_taller)                                            # inicio la session en BD con los datos de usuario
             

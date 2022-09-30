@@ -21,7 +21,7 @@ export const Navbar = () => {
           </Link>
           <div className="name-logo p-0" onClick={()=>{navigate("/")}} >
             <h5 ><Link className="nav-link p-0" to="/">TalleresVenAPP</Link></h5>
-            <h7 className="fst-italic fw-bold">Lo que tu vehículo necesita</h7>
+            <h6 className="fst-italic fw-bold">Lo que tu vehículo necesita</h6>
           </div>
           </div>
           <ul className="nav justify-content-end m-4">

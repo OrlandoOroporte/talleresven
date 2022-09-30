@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-import "../../styles/index.css";
+import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 export const Login = () => {
   let initialState = {
@@ -29,23 +29,33 @@ export const Login = () => {
       if (response) {
         navigate("/worksheet");
       } else {
-        alert("Algo salio mal, intentalo de nuevo");
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Algo salio mal, intentalo de nuevo!',
+          
+        })
       }
     } else {
-      alert("Todos los campos son obligatorios");
+      Swal.fire({
+        title: 'Error!',
+        text: 'Todos los campos son necesarios',
+        icon: 'error',
+        confirmButtonText: 'Intentalo de nuevo'
+      })
     }
   };
 
   return (
-  
     <>
       <div className="container">
-        <div className="row col-8 justify-content-center">
-        <h1 className="text-center">Inicion Sesion </h1>
+      <div className="d-flex">
+        <div className="row col-8 justify-content-center pt-4">
+        <h1 className="text-center">Inicia Sesión  </h1>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="exampleInputEmail1" className="form-label">
-                Email address
+                Email 
               </label>
               <input
                 type="email"
@@ -56,13 +66,11 @@ export const Login = () => {
                 onChange={handleChange}
                 value={userLogin.email}
               />
-              <div id="emailHelp" className="form-text">
-                We'll never share your email with anyone else.
-              </div>
+
             </div>
             <div className="mb-3">
               <label htmlFor="exampleInputPassword1" className="form-label">
-                Password
+                Contraseña
               </label>
               <input
                 type="password"
@@ -73,20 +81,18 @@ export const Login = () => {
                 value={userLogin.password}
               />
             </div>
-            <div className="mb-3 form-check">
-              <input
-                type="checkbox"
-                className="form-check-input"
-                id="exampleCheck1"
-              />
-              <label className="form-check-label" htmlFor="exampleCheck1">
-                Check me out
-              </label>
-            </div>
             <button type="submit" className="btn btn-primary">
-              Submit
+              Iniciar 
             </button>
           </form>
+        </div>
+        <div className="ps-4 pt-4">
+      <img
+              src="https://cdn2.hubspot.net/hubfs/500845/Im%C3%A1genes_Post/Octubre%202017/servicios-extra-taller.jpg"
+              className="img-register"
+              alt="..."
+            />
+        </div>
         </div>
       </div>
     </>

@@ -1,42 +1,129 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
+import { Link, useNavigate } from "react-router-dom";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
+import Modal from 'react-bootstrap/Modal';
+
+// export const TallerRegister = () => {
+//   const [show, setShow] = useState(false);
+
+//   const handleClose = () => setShow(false);
+//   const handleShow = () => setShow(true);
+
+//   return (
+//     <>
+//       <Button variant="primary" onClick={handleShow}>
+//           Agregar Taller
+//       </Button>
+
+//       <Modal show={show} onHide={handleClose}>
+//         <Modal.Header closeButton>
+//           <Modal.Title>Complete los campos</Modal.Title>
+//         </Modal.Header>
+//         <Modal.Body>
+//           <Form>
+//             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+//               <Form.Label>Email address</Form.Label>
+//               <Form.Control
+//                 type="email"
+//                 placeholder="name@example.com"
+//                 autoFocus
+//               />
+//             </Form.Group>
+//             <Form.Group
+//               className="mb-3"
+//               controlId="exampleForm.ControlTextarea1"
+//             >
+//               <Form.Label>Example textarea</Form.Label>
+//               <Form.Control as="textarea" rows={3} />
+//             </Form.Group>
+//           </Form>
+//         </Modal.Body>
+//         <Modal.Footer>
+//           <Button variant="secondary" onClick={handleClose}>
+//             Close
+//           </Button>
+//           <Button variant="primary" onClick={handleClose}>
+//             Save Changes
+//           </Button>
+//         </Modal.Footer>
+//       </Modal>
+//     </>
+//   );
+// }
+
 
 export const TallerRegister = () => {
-    let initialState = {
-        razon_social:"",
-        rif:"",
-        direccion:""
-    } 
-    const [tallerRegister,setTallerRegister]=useState(initialState)
+  let initialState = {
+    razon_social: "",
+    rif: "",
+    direccion: ""
+  }
+  
+  const [tallerRegister, setTallerRegister] = useState(initialState)
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const handleChange = (event) => {
+    setTallerRegister({
+      ...tallerRegister,
+      [event.target.name]: event.target.value
+
+    })
+  }
+  const handleFuntions = () => {
+    handleSubmit();
+    handleClose();
+    window.location.reload();
     
-    const handleChange = (event) =>{
-        setTallerRegister({
-            ...tallerRegister,
-            [event.target.name]: event.target.value
+  }
+  const handleHook = () => {
+    setTallerRegister(initialState);
 
-        })
+  }
+  const { actions } = useContext(Context)
+
+  const handleSubmit = async (event) => {
+    console.log("me ejecuto")
+    // event.preventDefault();
+    if (tallerRegister.razon_social != "" && tallerRegister.rif != "" && tallerRegister.direccion != "") {
+      let response = await actions.userRegisterTaller(tallerRegister)
+      if (response) {
+        alert("todo esta bien")
+        setTallerRegister(initialState);
+
+      } else {
+        alert("Algo salio mal")
+      }
+    } else {
+      alert("Todos los campos son obligatorios")
     }
-    const {actions}=useContext(Context) 
-
-    const handleSubmit = async (event) => {
-      console.log("me ejecuto")
-        // event.preventDefault();
-        if (tallerRegister.razon_social != "" && tallerRegister.rif !="" && tallerRegister.direccion != ""){
-            let response = await actions.userRegisterTaller(tallerRegister)
-            if (response){
-                setTallerRegister({initialState});
-                alert("Taller registrado con exito")
-            }else{
-                alert("Algo salio mal")
-            }
-        }else {
-            alert("Todos los campos son obligatorios")
-        }
-    };
+  };
 
   return (
     <>
-     
+      <button
+        type="button"
+        className="btn btn-primary"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        data-bs-whatever="@getbootstrap"
+        onClick={handleShow}
+      >
+        Agregar taller
+      </button>
+      <div
+        className="modal fade"
+        id="exampleModal"
+        tabIndex="-1"
+        aria-labelledby="exampleModalLabel"
+        aria-hidden="true"
+        show={show} onHide={handleClose}
+      >
+
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">
@@ -98,16 +185,20 @@ export const TallerRegister = () => {
                 type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
+                onClick={()=>handleHook()}
               >
                 Salir
               </button>
               <button type="button" className="btn btn-primary"
-              onClick={() => handleSubmit()}>
+                onClick={() => handleFuntions()}
+                >
                 Registrar
               </button>
             </div>
           </div>
         </div>
+      </div>
+
     </>
   );
 };
