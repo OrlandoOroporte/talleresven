@@ -23,8 +23,6 @@ const ServiceUpdate = ({ modalId, initial }) => {
     }
 
     const { actions, store } = useContext(Context)
-    const { taller_id } = store.user
-
 
     const handleSubmit = async (event) => {
 
@@ -32,7 +30,7 @@ const ServiceUpdate = ({ modalId, initial }) => {
             console.log("debo guardar el servicio")
             let response = await actions.updateService(serviceUpdate)
             if (response) {
-                setServiceUpdate(initialState);
+                //setServiceUpdate(initialState);
                 Swal.fire(
                     '¡Bien Hecho!',
                     '¡Se ha modificado el servicio con exito!',
@@ -59,6 +57,10 @@ const ServiceUpdate = ({ modalId, initial }) => {
         }
     }
 
+    // useEffect(() => {
+    //     actions.getService();
+    //     actions.getTaller();
+    // }, [serviceUpdate]);
 
     return (
         <>

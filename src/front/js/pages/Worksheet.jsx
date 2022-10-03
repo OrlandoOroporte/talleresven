@@ -102,7 +102,7 @@ export const Worksheet = () => {
           tabIndex="0"
         >
           <div className="card-body">
-            <img src={store.user?.avatar} className="card-img-top" alt="..." />
+            <img src={store.user?.avatar} className="card-img-top rounded-circle profile-img" alt="..." />
             <h5 className="card-title"> {store.user?.name}</h5>
             <p className="card-text"> <b>Email:</b> {store.user?.email}</p>
             <p className="card-text"><b>Teléfono: </b>{store.user?.numero}</p>

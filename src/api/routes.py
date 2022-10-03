@@ -320,7 +320,7 @@ def get_services(service_id = None):
 
 @api.route('/services', methods = ['DELETE'])
 @api.route('/services/<int:service_id>', methods=['DELETE'])
-# @jwt_required
+@jwt_required()
 def deleteService(service_id = None):
 
     if request.method == 'DELETE':
@@ -328,11 +328,11 @@ def deleteService(service_id = None):
             return jsonify({"Error":"Debes especificar el id"}), 400
               
         if service_id is not None:
-            # user_id = get_jwt_identity()                                 # guardo el id de mi usuario en la variable user_id         
+            user_id = get_jwt_identity()                                 # guardo el id de mi usuario en la variable user_id         
             delete_service = Servicio.query.get(service_id)              # consulto la BD y me traigo el servicio por el ID
-            # taller = Taller.query.get(delete_service.taller_id)          # consulto la BD y me traigo la informacion del taller
-            # if taller.user_id != user_id:                                # verifico si el id de usuario coincide con id de usuario del taller
-            #     return jsonify('usted no tiene permiso becerro'), 401    # en caso de no coincidir, retorno un mensaje de error con el codigo 401 (Unauthorized)
+            taller = Taller.query.get(delete_service.taller_id)          # consulto la BD y me traigo la informacion del taller
+            if taller.user_id != user_id:                                # verifico si el id de usuario coincide con id de usuario del taller
+                return jsonify('usted no tiene permiso becerro'), 401    # en caso de no coincidir, retorno un mensaje de error con el codigo 401 (Unauthorized)
             
             if delete_service is None:
                 return jsonify({"Error":"No se consiguio el servicio"}), 404
