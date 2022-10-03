@@ -54,7 +54,7 @@ def add_user():                                 # declaro mi funcion para agrega
             password = set_password(password, salt)                                # antes de registrar el usuario, hasheo mi contrase;a 
             print (f"debo guardar al usuario con el pass: ${password}")            # imprimo el mensaje y paso el codigo 200 (Ok)
             request_user = User(name = name, email=email, numero=numero, avatar=avatar, password=password, salt=salt)   # Instancio mi variable request_user
-            db.session.add(request_user)                                            # inicio la session en BD con los datos de usuario
+            db.session.add(request_user)                                           # inicio la session en BD con los datos de usuario
             
             try:                                    # realizo un try except            
                 db.session.commit()                 # subo los cambios en BD
@@ -281,9 +281,12 @@ def update_service():                                       # defino la funcion 
                 return jsonify("No se encontro el taller"), 404          # en caso de no traer nada, se retorno un mensaje de error con el codigo 404
             else:
                 
-                if "" != body.get('name'):
+                if "" != body.get('name'):                              # verifico si el nombre vino vacio no hagas nada
                    update_service.name = body.get('name')
                 update_service.precio = body.get('price')
+                update_service.descripcion = body.get('descripcion')
+                if "" != body.get('image'):
+                    update_service.image = body.get('image')
 
                 try:
                     db.session.commit()                                  # subo los cambios a BD
@@ -312,4 +315,37 @@ def get_services(service_id = None):
             else:
                 return jsonify(service.serialize()), 200
     return jsonify([]), 405
+
+###### Creando la ruta para eliminar los servicios #####
+
+@api.route('/services', methods = ['DELETE'])
+@api.route('/services/<int:service_id>', methods=['DELETE'])
+# @jwt_required
+def deleteService(service_id = None):
+
+    if request.method == 'DELETE':
+        if service_id is None:
+            return jsonify({"Error":"Debes especificar el id"}), 400
+              
+        if service_id is not None:
+            # user_id = get_jwt_identity()                                 # guardo el id de mi usuario en la variable user_id         
+            delete_service = Servicio.query.get(service_id)              # consulto la BD y me traigo el servicio por el ID
+            # taller = Taller.query.get(delete_service.taller_id)          # consulto la BD y me traigo la informacion del taller
+            # if taller.user_id != user_id:                                # verifico si el id de usuario coincide con id de usuario del taller
+            #     return jsonify('usted no tiene permiso becerro'), 401    # en caso de no coincidir, retorno un mensaje de error con el codigo 401 (Unauthorized)
+            
+            if delete_service is None:
+                return jsonify({"Error":"No se consiguio el servicio"}), 404
+            else:
+                db.session.delete(delete_service)
+
+            try:
+                db.session.commit()
+                return jsonify([]), 202
+            except Exception as error:
+                print(error.args)
+                db.session.rollback()
+                return jsonify({"message":f"Error:{error.args}"}),500
+    
+    return jsonify([]),405
 

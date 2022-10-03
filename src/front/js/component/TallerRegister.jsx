@@ -1,58 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
-
-// export const TallerRegister = () => {
-//   const [show, setShow] = useState(false);
-
-//   const handleClose = () => setShow(false);
-//   const handleShow = () => setShow(true);
-
-//   return (
-//     <>
-//       <Button variant="primary" onClick={handleShow}>
-//           Agregar Taller
-//       </Button>
-
-//       <Modal show={show} onHide={handleClose}>
-//         <Modal.Header closeButton>
-//           <Modal.Title>Complete los campos</Modal.Title>
-//         </Modal.Header>
-//         <Modal.Body>
-//           <Form>
-//             <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-//               <Form.Label>Email address</Form.Label>
-//               <Form.Control
-//                 type="email"
-//                 placeholder="name@example.com"
-//                 autoFocus
-//               />
-//             </Form.Group>
-//             <Form.Group
-//               className="mb-3"
-//               controlId="exampleForm.ControlTextarea1"
-//             >
-//               <Form.Label>Example textarea</Form.Label>
-//               <Form.Control as="textarea" rows={3} />
-//             </Form.Group>
-//           </Form>
-//         </Modal.Body>
-//         <Modal.Footer>
-//           <Button variant="secondary" onClick={handleClose}>
-//             Close
-//           </Button>
-//           <Button variant="primary" onClick={handleClose}>
-//             Save Changes
-//           </Button>
-//         </Modal.Footer>
-//       </Modal>
-//     </>
-//   );
-// }
-
+import Swal from 'sweetalert2'
 
 export const TallerRegister = () => {
   let initialState = {
@@ -60,7 +9,7 @@ export const TallerRegister = () => {
     rif: "",
     direccion: ""
   }
-  
+
   const [tallerRegister, setTallerRegister] = useState(initialState)
   const [show, setShow] = useState(false);
 
@@ -76,9 +25,9 @@ export const TallerRegister = () => {
   }
   const handleFuntions = () => {
     handleSubmit();
-    handleClose();
-    window.location.reload();
-    
+
+
+
   }
   const handleHook = () => {
     setTallerRegister(initialState);
@@ -92,14 +41,30 @@ export const TallerRegister = () => {
     if (tallerRegister.razon_social != "" && tallerRegister.rif != "" && tallerRegister.direccion != "") {
       let response = await actions.userRegisterTaller(tallerRegister)
       if (response) {
-        alert("todo esta bien")
-        setTallerRegister(initialState);
-
+        Swal.fire(
+          '¡Bien Hecho!',
+          '¡Se ha creado el servicio con exito!',
+          'success'
+        ).then((result) => {
+          if (result.isConfirmed) {
+            setTallerRegister(initialState)
+            actions.getTaller()
+          }
+        })
       } else {
-        alert("Algo salio mal")
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: '¡Ocurrio un error al crear el taller!',
+        })
       }
     } else {
-      alert("Todos los campos son obligatorios")
+
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '¡Todos los campos son necesarios!',
+      })
     }
   };
 
@@ -121,7 +86,6 @@ export const TallerRegister = () => {
         tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
-        show={show} onHide={handleClose}
       >
 
         <div className="modal-dialog">
@@ -185,13 +149,13 @@ export const TallerRegister = () => {
                 type="button"
                 className="btn btn-secondary"
                 data-bs-dismiss="modal"
-                onClick={()=>handleHook()}
+                onClick={() => handleHook()}
               >
                 Salir
               </button>
-              <button type="button" className="btn btn-primary"
+              <button type="button" className="btn btn-primary" data-bs-dismiss="modal"
                 onClick={() => handleFuntions()}
-                >
+              >
                 Registrar
               </button>
             </div>

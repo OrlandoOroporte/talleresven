@@ -1,19 +1,42 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
 import { Link, useNavigate } from "react-router-dom";
 import { TallerRegister } from "../component/TallerRegister.jsx"
 import ServiceRegister from "../component/ServiceRegister.jsx";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import Modal from 'react-bootstrap/Modal';
+import ServiceUpdate from "../component/ServiceUpdate.jsx";
+import TallerUpdate from "../component/TallerUpdate.jsx"
+import Swal from "sweetalert2";
+
 
 export const Worksheet = () => {
   const { store, actions } = useContext(Context);
   let navigate = useNavigate();
   useEffect(() => {
     actions.getUserToke();
-  }, []);
+  }, [store.service, store.taller]);
   //   let rol = "XXXX"
+
+  const handleDeleteService = async (service) => {
+    let response = await actions.deleteService(service)
+    if (response) {
+      Swal.fire(
+        '¡Bien Hecho!',
+        '¡Se ha eliminado el servicio con exito!',
+        'success'
+      ).then((result) => {
+        if (result.isConfirmed) {
+          actions.getService();
+        }
+
+      })
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: '¡Ocurrio un error al modificar el servicio!',
+      })
+    }
+  }
 
   return (
     <>
@@ -21,9 +44,9 @@ export const Worksheet = () => {
         <div className="nav nav-tabs" id="nav-tab" role="tablist">
           <button
             className="nav-link active"
-            id="nav-home-tab"
+            id="nav-profile-tab"
             data-bs-toggle="tab"
-            data-bs-target="#nav-home"
+            data-bs-target="#nav-profile"
             type="button"
             role="tab"
             aria-controls="nav-home"
@@ -33,12 +56,12 @@ export const Worksheet = () => {
           </button>
           <button
             className="nav-link"
-            id="nav-profile-tab"
+            id="nav-services-tab"
             data-bs-toggle="tab"
-            data-bs-target="#nav-profile"
+            data-bs-target="#nav-services"
             type="button"
             role="tab"
-            aria-controls="nav-profile"
+            aria-controls="nav-services"
             aria-selected="false"
           >
             Servicios
@@ -73,88 +96,59 @@ export const Worksheet = () => {
       <div className="tab-content" id="nav-tabContent">
         <div
           className="tab-pane fade show active"
-          id="nav-home"
+          id="nav-profile"
           role="tabpanel"
-          aria-labelledby="nav-home-tab"
+          aria-labelledby="nav-profile-tab"
           tabIndex="0"
         >
           <div className="card-body">
-            <h5 className="card-title">{store.user?.name}</h5>
-            <p className="card-text">{store.user?.email}</p>
-            <p className="card-text">{store.user?.numero}</p>
+            <img src={store.user?.avatar} className="card-img-top" alt="..." />
+            <h5 className="card-title"> {store.user?.name}</h5>
+            <p className="card-text"> <b>Email:</b> {store.user?.email}</p>
+            <p className="card-text"><b>Teléfono: </b>{store.user?.numero}</p>
             <br></br>
-            {/* {store.user?.taller_id?.length > 0 && <h3>Tus talleres</h3>} */}
             {store.user?.taller_id?.length > 0 ? store.user.taller_id.map((taller, index) => (
               <div key={taller.id}>
-                <h3>Taller: {index + 1}</h3>
-                <p className="card-text">{taller.razon_social}</p>
-                <p className="card-text">{taller.rif}</p>
-                <p className="card-text">{taller.direccion}</p>
-                <p className="card-text">ID del taller: {taller.id}</p>
-                <br></br>
-                {/* {taller.servicio_id?.length > 0 && <h3>Tus servicios</h3>} */}
-                {taller.servicio_id?.length > 0 ? taller.servicio_id.map((service, index) => (
-                  <div key={service.id}>
-                    <h4>Servicio: {index + 1}</h4>
-                    <img src={service.image} className="card-img-top" alt="..." />
-                    <p className="card-text"> Nombre: {service.name}</p>
-                    <p className="card-text"> Descripcion: {service.descripcion}</p>
-                    <p className="card-text">Precio: {service.precio}</p>
-                    <p className="card-text">Taller: {service.taller_id}</p>
-                    <br />
+                <h4 className="card-text">{taller.razon_social}</h4>
+                <p className="card-text"><b>RIF:</b>  {taller.rif}</p>
+                <p className="card-text"><b>Ubicación:</b> {taller.direccion}</p>
+                <TallerUpdate modalId={taller.id} initial={taller} />
+                <br />
+                <br />
+                <p className="card-text"><b>Servicios:</b></p>
+                <div className="container-fluid">
+                  <div className="row">
+                    {taller.servicio_id?.length > 0 ? taller.servicio_id.map((service, index) => (
+                      <div key={service.id} className="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                        <h4 className="card-text">{service.name}</h4>
+                        <img src={service.image} className="card-img-top w-100" alt="..." />
+                        <p className="card-text"> <b>Descripción:</b> {service.descripcion}</p>
+                        <p className="card-text"> <b>Precio:</b> {service.precio}</p>
+                        <ServiceUpdate modalId={service.id} initial={service} />
+                        <button type="button" className="btn btn-danger mx-3" onClick={() => handleDeleteService(service.id)}>
+                          Eliminar
+                        </button>
+                        <br></br>
+                        <br></br>
+                      </div>
+                    )) : <h4>Usted no tiene servicios registrado</h4>}
+
                   </div>
-                )) : <h4>Usted no tiene servicios registrado</h4>}
+                </div>
+
               </div>
             )) : <h4>Usted no posee talleres registrado</h4>}
             <br />
-            {/* <Button variant="primary" onClick={handleShow}>
-              Launch demo modal
-            </Button> */}
-            {/* <button
-              type="button"
-              className="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal"
-              data-bs-whatever="@getbootstrap"
-            >
-              Agregar taller
-            </button>
-            <div
-              className="modal fade"
-              id="exampleModal"
-              tabIndex="-1"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            > */}
             <TallerRegister />
 
-            {/* </div> */}
-            <button
-              type="button"
-              className="btn btn-success mx-3"
-              data-bs-toggle="modal"
-              data-bs-target="#exampleModal2"
-              data-bs-whatever="@getbootstrap"
-            >
-              Agregar servicio
-            </button>
-            <div
-              className="modal fade"
-              id="exampleModal2"
-              tabIndex="-1"
-              aria-labelledby="exampleModalLabel"
-              aria-hidden="true"
-            >
-              <ServiceRegister />
-
-            </div>
+            <ServiceRegister />
           </div>
         </div>
         <div
           className="tab-pane fade"
-          id="nav-profile"
+          id="nav-services"
           role="tabpanel"
-          aria-labelledby="nav-profile-tab"
+          aria-labelledby="nav-services-tab"
           tabIndex="0"
         >
           <div className="card-father">
