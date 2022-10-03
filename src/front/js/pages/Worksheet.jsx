@@ -101,48 +101,56 @@ export const Worksheet = () => {
           aria-labelledby="nav-profile-tab"
           tabIndex="0"
         >
-          <div className="card-body">
-            <img src={store.user?.avatar} className="card-img-top rounded-circle profile-img" alt="..." />
-            <h5 className="card-title"> {store.user?.name}</h5>
-            <p className="card-text"> <b>Email:</b> {store.user?.email}</p>
-            <p className="card-text"><b>Teléfono: </b>{store.user?.numero}</p>
-            <br></br>
-            {store.user?.taller_id?.length > 0 ? store.user.taller_id.map((taller, index) => (
-              <div key={taller.id}>
-                <h4 className="card-text">{taller.razon_social}</h4>
-                <p className="card-text"><b>RIF:</b>  {taller.rif}</p>
-                <p className="card-text"><b>Ubicación:</b> {taller.direccion}</p>
-                <TallerUpdate modalId={taller.id} initial={taller} />
-                <br />
-                <br />
-                <p className="card-text"><b>Servicios:</b></p>
-                <div className="container-fluid">
-                  <div className="row">
-                    {taller.servicio_id?.length > 0 ? taller.servicio_id.map((service, index) => (
-                      <div key={service.id} className="col-sm-12 col-md-6 col-lg-4 col-xl-3">
-                        <h4 className="card-text">{service.name}</h4>
-                        <img src={service.image} className="card-img-top w-100" alt="..." />
-                        <p className="card-text"> <b>Descripción:</b> {service.descripcion}</p>
-                        <p className="card-text"> <b>Precio:</b> {service.precio}</p>
-                        <ServiceUpdate modalId={service.id} initial={service} />
-                        <button type="button" className="btn btn-danger mx-3" onClick={() => handleDeleteService(service.id)}>
-                          Eliminar
-                        </button>
-                        <br></br>
-                        <br></br>
-                      </div>
-                    )) : <h4>Usted no tiene servicios registrado</h4>}
 
+          <div className="container ">
+            <div className="card-body">
+              <img src={store.user?.avatar} className="card-img-top" alt="..." />
+              <h5 className="card-title"> {store.user?.name}</h5>
+              <p className="card-text"> <b>Email:</b> {store.user?.email}</p>
+              <p className="card-text"><b>Teléfono: </b>{store.user?.numero}</p>
+              <br></br>
+              {store.user?.taller_id?.length > 0 ? store.user.taller_id.map((taller, index) => (
+                <div key={taller.id}>
+                  <h4 className="card-text">{taller.razon_social}</h4>
+                  <p className="card-text"><b>RIF:</b>  {taller.rif}</p>
+                  <p className="card-text"><b>Ubicación:</b> {taller.direccion}</p>
+                  <TallerUpdate modalId={taller.id} initial={taller} />
+                  <br />
+                  <br />
+                  <p className="card-text"><b>Servicios:</b></p>
+                  <div className="container-fluid">
+                    <div className="row">
+                      {taller.servicio_id?.length > 0 ? taller.servicio_id.map((service, index) => (
+                        <div key={service.id} className="col-sm-12 col-md-6 col-lg-4 col-xl-3">
+                          <h4 className="card-text">{service.name}</h4>
+                          <img src={service.image} className="card-img-top w-100" alt="..." />
+                          <p className="card-text"> <b>Descripción:</b> {service.descripcion}</p>
+                          <p className="card-text"> <b>Precio:</b> {service.precio}</p>
+                          <ServiceUpdate modalId={service.id} initial={service} />
+                          <button type="button" className="btn btn-danger mx-3" onClick={() => handleDeleteService(service.id)}>
+                            Eliminar
+                          </button>
+                          <br></br>
+                          <br></br>
+                        </div>
+                      )) : <h4>Usted no tiene servicios registrado</h4>}
+
+
+                    </div>
                   </div>
+
                 </div>
+              )) : <h4>Usted no posee talleres registrado</h4>}
+              <br />
+            </div>
+            <div className="container  text-center">
 
-              </div>
-            )) : <h4>Usted no posee talleres registrado</h4>}
-            <br />
-            <TallerRegister />
+              <TallerRegister />
 
-            <ServiceRegister />
+              <ServiceRegister />
+            </div>
           </div>
+
         </div>
         <div
           className="tab-pane fade"

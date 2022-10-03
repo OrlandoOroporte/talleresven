@@ -15,9 +15,11 @@ from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash, check_password_hash      # importo generate y cheack de la libreria werkzeug.security
 from base64 import b64encode                                                   # importo b64encode desde la libreria base64
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+import cloudinary.uploader as uploader 
 
-api = Blueprint('api', __name__)                # declaro que voy a utilizar api en las rutas
+api = Blueprint('api', __name__)               
 
+VALID_FORMATS = ["image/png", "image/jpg", "image/jpeg"]
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
