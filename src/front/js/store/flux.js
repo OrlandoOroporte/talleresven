@@ -5,7 +5,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       // urlBase:"https://talleresvenapp.herokuapp.com/",
       //  urlBase:process.env.BACKEND_URL,
 
-      urlBase:"https://3001-orlandoorop-talleresven-0y7bdtxya6x.ws-us69.gitpod.io",
+      urlBase:"https://3001-orlandoorop-talleresven-af1untbtaxa.ws-us69.gitpod.io",
 
 
       taller: [],
