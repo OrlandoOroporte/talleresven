@@ -32,6 +32,10 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['JWT_SECRET_KEY']=os.getenv('FLASK_APP_KEY')         #configurando mi palabra secreta
 jwt=JWTManager(app) 
 
+app.config.from_mapping(
+    CLOUDINARY_URL=os.environ.get('CLOUDINARY_URL')
+)
+
 MIGRATE = Migrate(app, db, compare_type = True)
 db.init_app(app)
 
