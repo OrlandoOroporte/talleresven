@@ -1,13 +1,19 @@
 import React, { useContext } from "react";
 import PropTypes from "prop-types"
 import { Link } from "react-router-dom";
-import "../../styles/index.css";
+import { Context } from "../store/appContext";
+
 
 
 
 const CardService = ({ service }) => {
+  const { store } = useContext(Context);
 
-  const { name, descripcion, precio, image, id } = service
+  const { name, descripcion, precio, image, id, taller_id} = service
+
+  let item = taller_id
+
+
   console.log(image)
   return (
     <>
@@ -18,7 +24,11 @@ const CardService = ({ service }) => {
           <h5 className="card-title">{name}</h5>
           <p className="card-text">{descripcion}</p>
           <p className="card-text">{precio}</p>
-          <a href="#" className="card-link">Talleres</a>
+          <p className="card-text" key={item.taller_id} > {store.taller.map((item) => {
+            return (
+              <span>{item.razon_social}</span>
+            )
+          })}</p>
         </div>
       </Link>
 

@@ -64,7 +64,7 @@ class Servicio(db.Model):
     precio = db.Column(db.Integer, unique=False, nullable=False)
     
     taller_id = db.Column(db.Integer, db.ForeignKey('taller.id'))
-
+    
     def __repr__(self):
         return f'<User {self.name}>'
 
