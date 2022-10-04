@@ -7,7 +7,8 @@ export const TallerRegister = () => {
   let initialState = {
     razon_social: "",
     rif: "",
-    direccion: ""
+    direccion: "",
+    logo: ""
   }
 
   const [tallerRegister, setTallerRegister] = useState(initialState)
@@ -71,7 +72,7 @@ export const TallerRegister = () => {
   return (
 
     <>
-    
+
       <button
         type="button"
         className="btn btn-primary"
@@ -142,6 +143,19 @@ export const TallerRegister = () => {
                     onChange={handleChange}
                     name="direccion"
                     value={tallerRegister.direccion}
+                  />
+                </div>
+                <div className="mb-3">
+                  <label htmlFor="recipient-name" className="col-form-label">
+                    Logo:
+                  </label>
+                  <input
+                    type="text"
+                    className="form-control"
+                    id="recipient-name"
+                    onChange={handleChange}
+                    name="logo"
+                    value={tallerRegister.logo}
                   />
                 </div>
               </form>
