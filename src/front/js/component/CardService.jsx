@@ -24,16 +24,18 @@ useEffect(()=>{findTallerService()},[])
   return (
     <>
 
-      <Link className="card" to={`/services/${id}`}>
-        <img src={image} className="card-img-top" alt="..." />
-        <div className="card-body">
-          <h5 className="card-title">{name}</h5>
-          <p className="card-text">{descripcion}</p>
-          <p className="card-text">{precio}</p>
-          <p className="card-text" >{taller?.razon_social}</p>
+      <div className="card" to={`/services/${id}`}>
+        <div className="list-group ">
+          <h4 className="card-title carservicer">{name}</h4>
+          <div>
+          {image != "" ? <img src={image} className="card-img-top" alt="..." />
+                    : <img src="https://images.emojiterra.com/twitter/v13.1/512px/1f464.png" className="card-img-top" alt="..." />}
+          </div>
+          <p className="card-text carservicer">{descripcion}</p>
+          <p className="card-text carservicer">{precio}</p>
+          <p className="card-text carservicer" >{taller?.razon_social}</p>
         </div>
-      </Link>
-
+      </div>
     </>
   )
 

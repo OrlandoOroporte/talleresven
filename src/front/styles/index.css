@@ -13,6 +13,8 @@
 }
 .card-father {
     display: flex;
+  justify-content: center;
+
 }
 .card-img-top {
 
@@ -32,4 +34,8 @@ height: 75px;
 .profile-img{
     width: 200px;
     height: 200px;
+}
+
+.carservicer {
+    padding: 8px;
 }
