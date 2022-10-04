@@ -3,10 +3,10 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       token: localStorage.getItem("token") || "",
       // urlBase:"https://talleresvenapp.herokuapp.com/",
-      urlBase:process.env.BACKEND_URL,
+       urlBase:process.env.BACKEND_URL,
 
-      // urlBase:"https://3001-orlandoorop-talleresven-0vbxfnqltsi.ws-us67.gitpod.io",
-      
+      // urlBase:"https://3001-orlandoorop-talleresven-af1untbtaxa.ws-us69.gitpod.io",
+
 
       taller: [],
       service: [],
@@ -53,6 +53,29 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(`Error: ${error}`);
         }
       },
+
+      ///funcion para actualziar taller///
+      updateTaller : async (taller) =>{
+        let store = getStore();
+        try {
+          let response = await fetch (`${store.urlBase}/api/taller/${taller.taller_id}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${store.token}`,
+            },
+            body: JSON.stringify(taller),
+          });
+          if (response.ok){
+             //getActions().getTaller()
+            return true;
+          }
+          return false;
+        } catch (error) {
+          console.log(`Error: ${error}`)
+        }
+      },
+
       ////funcion para registrar un servicio///
       registerService : async (service) =>{
         let store = getStore();
@@ -66,6 +89,51 @@ const getState = ({ getStore, getActions, setStore }) => {
             body: JSON.stringify(service),
           });
           if (response.ok){
+            return true;
+          }
+          return false;
+        } catch (error) {
+          console.log(`Error: ${error}`)
+        }
+      },
+      
+      ///funcion para actualziar servicio///
+      updateService : async (service) =>{
+        let store = getStore();
+        try {
+          let response = await fetch (`${store.urlBase}/api/service/update`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${store.token}`,
+            },
+            body: JSON.stringify(service),
+          });
+          if (response.ok){
+             getActions().getTaller()
+            return true;
+          }
+          return false;
+        } catch (error) {
+          console.log(`Error: ${error}`)
+        }
+      },
+
+      ///funcion para actualziar servicio///
+      deleteService : async (service) =>{
+        let store = getStore();
+        console.log(service)
+        try {
+          let response = await fetch (`${store.urlBase}/api/services/${service}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${store.token}`,
+            },
+            // body: JSON.stringify(service),
+          });
+          if (response.ok){
+             getActions().getService()
             return true;
           }
           return false;

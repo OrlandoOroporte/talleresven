@@ -15,9 +15,11 @@ from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash, check_password_hash      # importo generate y cheack de la libreria werkzeug.security
 from base64 import b64encode                                                   # importo b64encode desde la libreria base64
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
+import cloudinary.uploader as uploader 
 
-api = Blueprint('api', __name__)                # declaro que voy a utilizar api en las rutas
+api = Blueprint('api', __name__)               
 
+VALID_FORMATS = ["image/png", "image/jpg", "image/jpeg"]
 
 @api.route('/hello', methods=['POST', 'GET'])
 def handle_hello():
@@ -54,7 +56,7 @@ def add_user():                                 # declaro mi funcion para agrega
             password = set_password(password, salt)                                # antes de registrar el usuario, hasheo mi contrase;a 
             print (f"debo guardar al usuario con el pass: ${password}")            # imprimo el mensaje y paso el codigo 200 (Ok)
             request_user = User(name = name, email=email, numero=numero, avatar=avatar, password=password, salt=salt)   # Instancio mi variable request_user
-            db.session.add(request_user)                                            # inicio la session en BD con los datos de usuario
+            db.session.add(request_user)                                           # inicio la session en BD con los datos de usuario
             
             try:                                    # realizo un try except            
                 db.session.commit()                 # subo los cambios en BD
@@ -144,13 +146,14 @@ def add_taller():                               # declaro mi funcion para agrega
         direccion = body.get('direccion', None)         # declaro una variable email, y guardo el emial en ella y en caso de no conseguirla la creo en None    
         rif = body.get('rif', None)
         razon_social = body.get('razon_social', None)   # declaro una variable password, y guardo la contraseña en ella y en caso de no conseguirla la creo en None
+        logo = body.get('logo', None)
         user_id = get_jwt_identity()                    # guardo el id del usuario en la variable user_id
         # hacemos las Validaciones 
-        if direccion is None or rif is None or razon_social is None:               # verifico si existe una propiedad email 
-            print ('debe enviar el payload completo'), 400  # en caso de dar error imprimo el mensaje y paso el codigo (400 Bad Request)
+        if direccion is None or rif is None or razon_social is None:   
+                   return('debe enviar el payload completo'), 400  # en caso de dar error imprimo el mensaje y paso el codigo (400 Bad Request)
         else:
-            print (f"debo guardar al taller"), 200       # imprimo el mensaje y paso el codigo 200 (Ok)
-            request_taller = Taller(direccion = direccion, rif=rif, razon_social=razon_social, user_id=user_id)   # Instancio mi variable request_user
+            print (f"debo guardar al taller")     # imprimo el mensaje y paso el codigo 200 (Ok)
+            request_taller = Taller(direccion = direccion, rif=rif, razon_social=razon_social, logo = logo, user_id=user_id)   # Instancio mi variable request_user
             db.session.add(request_taller)                                            # inicio la session en BD con los datos de usuario
             
             try:                                    # realizo un try except            
@@ -187,6 +190,8 @@ def update_taller(taller_id=None):                     # declaro una funcion par
                 if update_taller.rif != body.get('rif'):                # si el rif del taller es diferente guardo el rif
                    update_taller.rif = body["rif"]                      # guardo el nuevo rif 
                 update_taller.razon_social = body["razon_social"]       # guardo la nueva razon social 
+                if body.get('logo') is not None: 
+                    update_taller.logo = body["logo"]                    # guardo el nuevo logo
 
                 try:
                     db.session.commit()                                 # guardo los cambios en BD
@@ -267,7 +272,6 @@ def update_service():                                       # defino la funcion 
  
         service_id = body.get('service_id')                 # declaro una variable service_id y guardo el id del servicio
 
-
         if service_id is None:                                           # verifico si el usuario coloco el id del servicio
             return jsonify("Debe indicar el id del servicio"), 400       # en el caso que no, retorno un mensaje de error con el codigo 400 (Bad request)
         if service_id is not None:
@@ -281,9 +285,12 @@ def update_service():                                       # defino la funcion 
                 return jsonify("No se encontro el taller"), 404          # en caso de no traer nada, se retorno un mensaje de error con el codigo 404
             else:
                 
-                if "" != body.get('name'):
+                if "" != body.get('name'):                              # verifico si el nombre vino vacio no hagas nada
                    update_service.name = body.get('name')
                 update_service.precio = body.get('price')
+                update_service.descripcion = body.get('descripcion')
+                if "" != body.get('image'):
+                    update_service.image = body.get('image')
 
                 try:
                     db.session.commit()                                  # subo los cambios a BD
@@ -312,4 +319,36 @@ def get_services(service_id = None):
             else:
                 return jsonify(service.serialize()), 200
     return jsonify([]), 405
+
+###### Creando la ruta para eliminar los servicios #####
+
+@api.route('/services/<int:service_id>', methods=['DELETE'])
+@jwt_required()
+def deleteService(service_id = None):
+
+    if request.method == 'DELETE':
+        if service_id is None:
+            return jsonify({"Error":"Debes especificar el id"}), 400
+              
+        if service_id is not None:
+            user_id = get_jwt_identity()                                 # guardo el id de mi usuario en la variable user_id         
+            delete_service = Servicio.query.get(service_id)              # consulto la BD y me traigo el servicio por el ID
+            taller = Taller.query.get(delete_service.taller_id)          # consulto la BD y me traigo la informacion del taller
+            if taller.user_id != user_id:                                # verifico si el id de usuario coincide con id de usuario del taller
+                return jsonify('usted no tiene permiso becerro'), 401    # en caso de no coincidir, retorno un mensaje de error con el codigo 401 (Unauthorized)
+            
+            if delete_service is None:
+                return jsonify({"Error":"No se consiguio el servicio"}), 404
+            else:
+                db.session.delete(delete_service)
+
+            try:
+                db.session.commit()
+                return jsonify([]), 202
+            except Exception as error:
+                print(error.args)
+                db.session.rollback()
+                return jsonify({"message":f"Error:{error.args}"}),500
+    
+    return jsonify([]),405
 

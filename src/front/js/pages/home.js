@@ -8,43 +8,7 @@ export const Home = () => {
 
   return (
     <>
-    {/* <div className="container-fluid">
-      <nav className="navbar bg-light">
-        <Link className="navbar-brand" to="/">
-          <img
-            src={logo_taller}
-            alt="Logo"
-            width="50"
-            height="50"
-            className="d-inline-block align-text-top"
-          />
-          <h6>TalleresVenAPP</h6>
-        </Link>
-        <ul className="nav justify-content-end">
-          <li className="nav-item">
-            <Link className="nav-link active" aria-current="page" to="/worksheet">
-              Talleres
-            </Link>
-          </li>
-          <li className="nav-item">
-            <Link className="nav-link" to="/services">
-              Servicios
-            </Link>
-          </li>
-		  <li className="nav-item dropdown">
-          <Link className="nav-link dropdown-toggle" to="/" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Usuarios
-          </Link>
-          <ul className="dropdown-menu">
-            <li><Link className="dropdown-item" to="/register">Registro</Link></li>
-            <li><Link className="dropdown-item" to="/login">Iniciar Sesión</Link></li>
-            <li><hr className="dropdown-divider"/></li>
-            <li><Link className="dropdown-item" to="/">Something else here</Link></li>
-          </ul>
-        </li>
-        </ul>
-      </nav>
-    </div> */}
+  
     <div className="container-fluid">
     <div className="row col-12 justify-content-center">
       <div
@@ -56,7 +20,7 @@ export const Home = () => {
           <div className="carousel-item active">
             <img
               src="https://pbs.twimg.com/media/DwezUrmWsAI9bv8.jpg"
-              className="d-block w-100 "
+              className="d-block"
               alt="..."
             />
           </div>
@@ -64,12 +28,12 @@ export const Home = () => {
             <img
               src="https://www.leioamotor.es/uploads/cms/con_contenido/plataforma_2/01/28/88/images/carga%20de%20aire%20acondicionado.jpg"
               alt="..."
-              className="d-block w-100 "
+              className="d-block "
             />
           </div>
           <div className="carousel-item">
             <img src="http://serviciosautomotrices.mx/wp-content/uploads/2020/04/WhatsApp-Image-2020-04-14-at-5.58.56-PM-e1586906593786.jpeg"
-            className="d-block w-100"
+            className="d-block "
              alt="..." />
           </div>
         </div>
@@ -101,21 +65,5 @@ export const Home = () => {
     </div>
     </div>
     </>
-
-    // <div classNameName="text-center mt-5">
-    // 	<h1>Hello Rigo!!</h1>
-    // 	<p>
-    // 		<img src={rigoImageUrl} />
-    // 	</p>
-    // 	<div classNameName="alert alert-info">
-    // 		{store.message || "Loading message from the backend (make sure your python backend is running)..."}
-    // 	</div>
-    // 	<p>
-    // 		This boilerplate comes with lots of documentation:{" "}
-    // 		<a href="https://github.com/4GeeksAcademy/react-flask-hello/tree/95e0540bd1422249c3004f149825285118594325/docs">
-    // 			Read documentation
-    // 		</a>
-    // 	</p>
-    // </div>
   );
 };

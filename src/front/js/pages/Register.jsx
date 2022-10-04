@@ -1,7 +1,8 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
-import "../../styles/index.css";
+import Swal from 'sweetalert2'
+
 
 export const Register = () => {
   let initialState = {
@@ -25,25 +26,54 @@ export const Register = () => {
       let response = await actions.userRegister(userRegister);
       if (response) {
         setUserRegister({ initialState });
-        alert("Se ha resgitrado con exito");
+        const Toast = Swal.mixin({
+          toast: true,
+          position: 'top-end',
+          showConfirmButton: false,
+          timer: 3000,
+          timerProgressBar: true,
+          didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+          }
+        })
+        
+        Toast.fire({
+          icon: 'success',
+          title: 'Signed in successfully'
+        })
         navigate("/login")
       } else {
-        alert("algo salio mal, intetalo de nuevo");
+        Swal.fire({
+          icon: 'error',
+          title: 'Oops...',
+          text: 'Algo salio mal, intentalo de nuevo!',
+          
+        })
+ 
       }
     } else {
-      alert("Todos los campos son obligatorios");
+      Swal.fire({
+        title: 'Error!',
+        text: 'Todos los campos son necesarios',
+        icon: 'error',
+        confirmButtonText: 'Intentalo de nuevo'
+      })
+      
     }
   };
 
   return (
     <>
+
       <div className="container">
-        <div className="row col-8 justify-content-center">
+      <div className="d-flex">
+        <div className="row col-8 justify-content-center pt-4 ">
           <h1 className="text-center">Registrarse</h1>
           <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="exampleInputEmail1" className="form-label">
-                Email address
+                Email:
               </label>
               <input
                 type="email"
@@ -53,14 +83,10 @@ export const Register = () => {
                 name="email"
                 value={userRegister.email}
               />
-              
-              <div id="emailHelp" className="form-text">
-                We'll never share your email with anyone else.
-              </div>
             </div>
             <div className="mb-3">
               <label htmlFor="exampleInputPassword1" className="form-label">
-                Password
+                Contraseña:
               </label>
               <input
                 type="password"
@@ -72,7 +98,7 @@ export const Register = () => {
             </div>
             <div className="mb-3">
               <label htmlFor="exampleInputPassword1" className="form-label">
-                Name
+                Nombre:
               </label>
               <input
                 type="text"
@@ -84,7 +110,7 @@ export const Register = () => {
             </div>
             <div className="mb-3">
               <label htmlFor="exampleInputPassword1" className="form-label">
-                Numero
+                Numero Telefonico:
               </label>
               <input
                 type="text"
@@ -95,22 +121,21 @@ export const Register = () => {
                 value={userRegister.numero}
               />
             </div>
-            <div className="mb-3 form-check">
-              <input
-                type="checkbox"
-                className="form-check-input"
-                id="exampleCheck1"
-              />
-              <label className="form-check-label" htmlFor="exampleCheck1">
-                Check me out
-              </label>
-            </div>
             <button type="submit" className="btn btn-primary">
-              Submit
+              Registrase ahora 
             </button>
           </form>
         </div>
+        <div className="ps-4 pt-5">
+      <img
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpFn9yxtJNcGHpbwXZf0EPw8o0FeTzLpgNZg&usqp=CAU"
+              className="img-register"
+              alt="..."
+            />
+        </div>
+        </div>
       </div>
+    
     </>
   );
 };

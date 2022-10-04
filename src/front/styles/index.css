@@ -3,11 +3,13 @@
 */
 .d-block{
     height: 500px;
+    width: 1300px;
 }
 .card {
     width: 18rem;
     margin-top: 15px;
     margin-left: 30px;
+    padding: 0px;
 }
 .card-father {
     display: flex;
@@ -21,4 +23,13 @@ width: 286px;
 .logo{
 width: 75px;
 height: 75px;
+}
+.img-register{
+    width: 400px;
+    height: 400px;
+}
+
+.profile-img{
+    width: 200px;
+    height: 200px;
 }
