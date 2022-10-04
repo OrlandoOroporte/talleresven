@@ -146,13 +146,14 @@ def add_taller():                               # declaro mi funcion para agrega
         direccion = body.get('direccion', None)         # declaro una variable email, y guardo el emial en ella y en caso de no conseguirla la creo en None    
         rif = body.get('rif', None)
         razon_social = body.get('razon_social', None)   # declaro una variable password, y guardo la contraseña en ella y en caso de no conseguirla la creo en None
+        logo = body.get('logo', None)
         user_id = get_jwt_identity()                    # guardo el id del usuario en la variable user_id
         # hacemos las Validaciones 
         if direccion is None or rif is None or razon_social is None:   
                    return('debe enviar el payload completo'), 400  # en caso de dar error imprimo el mensaje y paso el codigo (400 Bad Request)
         else:
             print (f"debo guardar al taller")     # imprimo el mensaje y paso el codigo 200 (Ok)
-            request_taller = Taller(direccion = direccion, rif=rif, razon_social=razon_social, user_id=user_id)   # Instancio mi variable request_user
+            request_taller = Taller(direccion = direccion, rif=rif, razon_social=razon_social, logo = logo, user_id=user_id)   # Instancio mi variable request_user
             db.session.add(request_taller)                                            # inicio la session en BD con los datos de usuario
             
             try:                                    # realizo un try except            
@@ -189,6 +190,8 @@ def update_taller(taller_id=None):                     # declaro una funcion par
                 if update_taller.rif != body.get('rif'):                # si el rif del taller es diferente guardo el rif
                    update_taller.rif = body["rif"]                      # guardo el nuevo rif 
                 update_taller.razon_social = body["razon_social"]       # guardo la nueva razon social 
+                if body.get('logo') is not None: 
+                    update_taller.logo = body["logo"]                    # guardo el nuevo logo
 
                 try:
                     db.session.commit()                                 # guardo los cambios en BD
@@ -269,7 +272,6 @@ def update_service():                                       # defino la funcion 
  
         service_id = body.get('service_id')                 # declaro una variable service_id y guardo el id del servicio
 
-
         if service_id is None:                                           # verifico si el usuario coloco el id del servicio
             return jsonify("Debe indicar el id del servicio"), 400       # en el caso que no, retorno un mensaje de error con el codigo 400 (Bad request)
         if service_id is not None:
@@ -320,7 +322,6 @@ def get_services(service_id = None):
 
 ###### Creando la ruta para eliminar los servicios #####
 
-@api.route('/services', methods = ['DELETE'])
 @api.route('/services/<int:service_id>', methods=['DELETE'])
 @jwt_required()
 def deleteService(service_id = None):

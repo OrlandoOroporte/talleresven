@@ -5,12 +5,13 @@ import Swal from "sweetalert2";
 
 const TallerUpdate = ({ modalId, initial }) => {
 
-    const { razon_social, rif, direccion } = initial
+    const { razon_social, rif, direccion, logo } = initial
 
     let initialState = {
         razon_social: razon_social,
         rif: rif,
         direccion: direccion,
+        logo: "",
         taller_id: modalId
     }
     const [tallerUpdate, setTallerUpdate] = useState(initialState)
@@ -129,18 +130,18 @@ const TallerUpdate = ({ modalId, initial }) => {
                                         value={tallerUpdate.direccion}
                                     />
                                 </div>
-                                {/* <div className="mb-3">
+                                <div className="mb-3">
                                     <label htmlFor="recipient-name" className="col-form-label">
-                                        Imagen:
+                                        Logo:
                                     </label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         onChange={handleChange}
-                                        name="image"
-                                        value={tallerUpdate.image}
+                                        name="logo"
+                                        value={tallerUpdate.logo}
                                     />
-                                </div> */}
+                                </div>
                             </form>
                         </div>
                         <div className="modal-footer">

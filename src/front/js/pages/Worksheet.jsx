@@ -10,7 +10,7 @@ import Swal from "sweetalert2";
 
 export const Worksheet = () => {
   const { store, actions } = useContext(Context);
-  let navigate = useNavigate();
+
   useEffect(() => {
     actions.getUserToke();
   }, [store.service, store.taller]);
@@ -102,16 +102,19 @@ export const Worksheet = () => {
           tabIndex="0"
         >
 
-          <div className="container ">
+          <div className="container">
             <div className="card-body">
-              <img src={store.user?.avatar} className="card-img-top" alt="..." />
-              <h5 className="card-title"> {store.user?.name}</h5>
+              <img src={store.user?.avatar} className="card-img-top rounded-circle profile-img" alt="..." />
+              <h5 className="card-title mx-5"> {store.user?.name}</h5>
               <p className="card-text"> <b>Email:</b> {store.user?.email}</p>
               <p className="card-text"><b>Teléfono: </b>{store.user?.numero}</p>
               <br></br>
+              <p className="card-text"><b>Talleres:</b></p>
               {store.user?.taller_id?.length > 0 ? store.user.taller_id.map((taller, index) => (
-                <div key={taller.id}>
-                  <h4 className="card-text">{taller.razon_social}</h4>
+                <div key={taller.id} className="my-5">
+                  <h4 className="card-text mx-4">{taller.razon_social}</h4>
+                  {taller.logo != "" ? <img src={taller.logo} className="card-img-top profile-img rounded-circle" alt="..." />
+                    : <img src="https://images.emojiterra.com/twitter/v13.1/512px/1f464.png" className="card-img-top" alt="..." />}
                   <p className="card-text"><b>RIF:</b>  {taller.rif}</p>
                   <p className="card-text"><b>Ubicación:</b> {taller.direccion}</p>
                   <TallerUpdate modalId={taller.id} initial={taller} />
@@ -133,23 +136,27 @@ export const Worksheet = () => {
                           <br></br>
                           <br></br>
                         </div>
-                      )) : <h4>Usted no tiene servicios registrado</h4>}
+                      )) : <h5 class="alert alert-warning text-center" role="alert">Usted no tiene servicios registrado</h5>}
 
 
                     </div>
                   </div>
 
                 </div>
-              )) : <h4>Usted no posee talleres registrado</h4>}
+              )) : <h5 class="alert alert-warning text-center" role="alert">Usted no posee talleres registrado</h5>}
               <br />
             </div>
-            <div className="container  text-center">
 
-              <TallerRegister />
-
-              <ServiceRegister />
-            </div>
           </div>
+
+
+          <div className="container d-flex  justify-content-center">
+
+            <TallerRegister />
+
+            <ServiceRegister />
+          </div>
+
 
         </div>
         <div
