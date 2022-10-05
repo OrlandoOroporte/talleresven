@@ -6,6 +6,7 @@ import ServiceRegister from "../component/ServiceRegister.jsx";
 import ServiceUpdate from "../component/ServiceUpdate.jsx";
 import TallerUpdate from "../component/TallerUpdate.jsx"
 import Swal from "sweetalert2";
+import UserUpdate from "../component/UserUpdate.jsx";
 
 
 export const Worksheet = () => {
@@ -17,25 +18,73 @@ export const Worksheet = () => {
   //   let rol = "XXXX"
 
   const handleDeleteService = async (service) => {
-    let response = await actions.deleteService(service)
-    if (response) {
-      Swal.fire(
-        '¡Bien Hecho!',
-        '¡Se ha eliminado el servicio con exito!',
-        'success'
-      ).then((result) => {
-        if (result.isConfirmed) {
-          actions.getService();
-        }
 
-      })
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Oops...',
-        text: '¡Ocurrio un error al modificar el servicio!',
-      })
-    }
+    Swal.fire({
+      title: '¿Estás seguro de eliminarlo?',
+      text: "Esta acción no es reversible...",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        let response = await actions.deleteService(service)
+        if (response) {
+          Swal.fire(
+            '¡Bien Hecho!',
+            '¡Se ha eliminado el servicio con exito!',
+            'success'
+          ).then((result) => {
+            if (result.isConfirmed) {
+              actions.getService();
+            }
+
+          })
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '¡Ocurrio un error al modificar el servicio!',
+          })
+        }
+      }
+    })
+  }
+
+  const handleDeleteTaller = async (taller) => {
+
+    Swal.fire({
+      title: '¿Estás seguro de eliminarlo?',
+      text: "Esta acción no es reversible...",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Si, eliminar'
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        let response = await actions.deleteTaller(taller)
+        if (response) {
+          Swal.fire(
+            '¡Bien Hecho!',
+            '¡Se ha eliminado el servicio con exito!',
+            'success'
+          ).then((result) => {
+            if (result.isConfirmed) {
+              actions.getTaller();
+            }
+
+          })
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: '¡Ocurrio un error al modificar el servicio!',
+          })
+        }
+      }
+    })
   }
 
   return (
@@ -108,6 +157,7 @@ export const Worksheet = () => {
               <h5 className="card-title mx-5"> {store.user?.name}</h5>
               <p className="card-text"> <b>Email:</b> {store.user?.email}</p>
               <p className="card-text"><b>Teléfono: </b>{store.user?.numero}</p>
+              <UserUpdate modalId={store.user.id} />
               <br></br>
               <p className="card-text"><b>Talleres:</b></p>
               {store.user?.taller_id?.length > 0 ? store.user.taller_id.map((taller, index) => (
@@ -118,6 +168,9 @@ export const Worksheet = () => {
                   <p className="card-text"><b>RIF:</b>  {taller.rif}</p>
                   <p className="card-text"><b>Ubicación:</b> {taller.direccion}</p>
                   <TallerUpdate modalId={taller.id} initial={taller} />
+                  <button type="button" className="btn btn-danger mx-3" onClick={() => handleDeleteTaller(taller.id)}>
+                    Eliminar
+                  </button>
                   <br />
                   <br />
                   <p className="card-text"><b>Servicios:</b></p>
