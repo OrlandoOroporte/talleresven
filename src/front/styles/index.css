@@ -2,8 +2,12 @@
     General Styles used on every website (Don't Repeat Yourself)
 */
 .d-block{
-    height: 500px;
-    width: 1300px;
+  height: 500px;
+  width: 1300px;
+}
+.margin{
+  margin-bottom: 50px;
+  margin-top: 50px;
 }
 .card {
     width: 18rem;
@@ -42,7 +46,7 @@ height: 75px;
 
 .site-footer
 {
-  background-color:#eaefff;
+  background-color:#f8f9fa;
   padding:20px 0 20px;
   font-size:15px;
   line-height:24px;

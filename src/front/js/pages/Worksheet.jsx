@@ -150,7 +150,7 @@ export const Worksheet = () => {
           </div>
 
 
-          <div className="container d-flex  justify-content-center">
+          <div className="container d-flex  justify-content-center margin">
 
             <TallerRegister />
 
