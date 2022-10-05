@@ -134,7 +134,7 @@ export const Navbar = () => {
                   04/10/2022
                   {myservice.map((myservice, index) => {
                     return (
-                      <Presupuesto key={`${myservice.id}${index}`} name={myservice.name} />
+                      <Presupuesto key={`${myservice.id}${index}`} myservice={myservice} />
                     );
                   })}
                   <div className="card-footer">Total 270 USD</div>

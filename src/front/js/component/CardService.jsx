@@ -1,6 +1,4 @@
 import React, { useContext, useEffect, useState } from "react";
-import PropTypes from "prop-types"
-import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 
 
@@ -20,7 +18,6 @@ const CardService = ({ service }) => {
   }
 useEffect(()=>{findTallerService()},[])
 
-  console.log(taller_id)
   return (
     <>
 
@@ -38,7 +35,6 @@ useEffect(()=>{findTallerService()},[])
           <button  type="button" className="btn btn-link" onClick={()=>actions.setMyservice(service?.id) } >
             <i className="fa-solid fa-cart-plus fa-2x"></i>
           </button>
-          
           </div>
         </div>
       </div>
