@@ -64,7 +64,7 @@ export const Login = () => {
 
   return (
     <>
-      <div className="container">
+      <div className="container margin">
         <div className="d-flex">
           <div className="row col-8 justify-content-center pt-4">
             <h1 className="text-center">Inicia Sesión  </h1>

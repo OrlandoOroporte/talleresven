@@ -9,7 +9,7 @@ export const Home = () => {
   return (
     <>
   
-    <div className="container-fluid">
+    <div className="container-fluid margin">
     <div className="row col-12 justify-content-center">
       <div
         id="carouselExampleControls"

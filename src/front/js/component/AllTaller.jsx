@@ -10,7 +10,7 @@ const AllTaller = (props) => {
     let taller = store.taller
     return (
         <>
-        <div className="contanier">
+        <div className="contanier margin">
             <div className="row col-14"> 
         {taller.map((taller,index)=>{
             return(
