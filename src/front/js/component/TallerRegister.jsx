@@ -44,7 +44,7 @@ export const TallerRegister = () => {
       if (response) {
         Swal.fire(
           '¡Bien Hecho!',
-          '¡Se ha creado el servicio con exito!',
+          '¡Se ha registrado el taller  con exito!',
           'success'
         ).then((result) => {
           if (result.isConfirmed) {

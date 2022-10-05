@@ -33,9 +33,13 @@ useEffect(()=>{findTallerService()},[])
           </div>
           <p className="card-text carservicer">{descripcion}</p>
           <p className="card-text carservicer">{precio}</p>
-          <p className="card-text carservicer" >{taller?.razon_social}
-          <button type="button" className="btn btn-link" onClick={()=>actions.setMyservice(id)}>Link</button>
-          </p>
+          <div className="container d-flex justify-content-between p-0">
+          <h4 className="card-text carservicer" >{taller?.razon_social} </h4>
+          <button  type="button" className="btn btn-link" onClick={()=>actions.setMyservice(service?.id) } >
+            <i className="fa-solid fa-cart-plus fa-2x"></i>
+          </button>
+          
+          </div>
         </div>
       </div>
     </>

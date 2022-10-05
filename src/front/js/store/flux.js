@@ -1,11 +1,13 @@
-const getState = ({ getStore, getActions, setStore }) => {
+import { propTypes } from "react-bootstrap/esm/Image";
+
+const getState = ({ getStore, getActions, setStore, useParams}) => {
   return {
     store: {
       token: localStorage.getItem("token") || "",
       // urlBase:"https://talleresvenapp.herokuapp.com/",
       //  urlBase:process.env.BACKEND_URL,
 
-      urlBase:"https://3001-orlandoorop-talleresven-806fr00ysls.ws-us67.gitpod.io",
+      urlBase:"https://3001-orlandoorop-talleresven-4u1ijnd1svw.ws-us70.gitpod.io",
       
 
 
@@ -275,10 +277,12 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       setMyservice: (id) =>{
         let store = getStore();
-        let listMyservice  = store.service.filter((id) => store.service.id != id);
+        let listMyservice  = store.service.find((item) =>  item.id == id);
+        console.log(listMyservice)
         setStore({
           ...setStore,
-          myservice : listMyservice
+          myservice :[...store.myservice,
+            listMyservice]
         })
       }
 

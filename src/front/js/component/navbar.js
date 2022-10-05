@@ -7,6 +7,8 @@ import Presupuesto from "./Presupuesto.jsx";
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
   let navigate = useNavigate();
+  let myservice = store.myservice;
+  console.log(myservice)
 
   return (
     <>
@@ -119,7 +121,7 @@ export const Navbar = () => {
               >
                 <div className="offcanvas-header">
                   <h5 className="offcanvas-title" id="offcanvasRightLabel">
-                  Servicios Seleccionados
+                    Servicios Seleccionados
                   </h5>
                   <button
                     type="button"
@@ -130,7 +132,12 @@ export const Navbar = () => {
                 </div>
                 <div className="offcanvas-body">
                   04/10/2022
-                  <Presupuesto/>
+                  {myservice.map((myservice, index) => {
+                    return (
+                      <Presupuesto key={`${myservice.id}${index}`} name={myservice.name} />
+                    );
+                  })}
+                  <div className="card-footer">Total 270 USD</div>
                 </div>
               </div>
             </li>
