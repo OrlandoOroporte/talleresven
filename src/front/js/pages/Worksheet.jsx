@@ -153,7 +153,8 @@ export const Worksheet = () => {
 
           <div className="container">
             <div className="card-body">
-              <img src={store.user?.avatar} className="card-img-top rounded-circle profile-img" alt="..." />
+              {store.user?.avatar != null ? <img src={store.user.avatar} className="card-img-top profile-img rounded-circle" alt="..." />
+                    : <img src="https://images.emojiterra.com/twitter/v13.1/512px/1f464.png" className="card-img-top profile-img rounded-circle" alt="..." />}
               <h5 className="card-title mx-5"> {store.user?.name}</h5>
               <p className="card-text"> <b>Email:</b> {store.user?.email}</p>
               <p className="card-text"><b>Teléfono: </b>{store.user?.numero}</p>

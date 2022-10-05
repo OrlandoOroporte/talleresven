@@ -7,7 +7,7 @@ import { Context } from "../store/appContext";
 
 
 const CardService = ({ service }) => {
-  const { store } = useContext(Context);
+  const { store, actions } = useContext(Context);
   const [taller, setTaller] = useState({})
 
   const { name, descripcion, precio, image, id, taller_id} = service
@@ -33,7 +33,9 @@ useEffect(()=>{findTallerService()},[])
           </div>
           <p className="card-text carservicer">{descripcion}</p>
           <p className="card-text carservicer">{precio}</p>
-          <p className="card-text carservicer" >{taller?.razon_social}</p>
+          <p className="card-text carservicer" >{taller?.razon_social}
+          <button type="button" className="btn btn-link" onClick={()=>actions.setMyservice(id)}>Link</button>
+          </p>
         </div>
       </div>
     </>

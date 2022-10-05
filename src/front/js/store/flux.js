@@ -5,12 +5,15 @@ const getState = ({ getStore, getActions, setStore }) => {
       // urlBase:"https://talleresvenapp.herokuapp.com/",
       //  urlBase:process.env.BACKEND_URL,
 
-      urlBase:"https://3001-orlandoorop-talleresven-kpizfysl9j2.ws-us67.gitpod.io",
+      urlBase:"https://3001-orlandoorop-talleresven-806fr00ysls.ws-us67.gitpod.io",
+      
 
 
       taller: [],
       service: [],
-      user:[]
+      user:[],
+      myservice:[]
+
     },
     actions: {
       userRegister: async (user) => {
@@ -269,6 +272,15 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(`Error: ${error}`);
         }
       },
+
+      setMyservice: (id) =>{
+        let store = getStore();
+        let listMyservice  = store.service.filter((id) => store.service.id != id);
+        setStore({
+          ...setStore,
+          myservice : listMyservice
+        })
+      }
 
      
     },
