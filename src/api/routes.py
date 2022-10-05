@@ -85,10 +85,12 @@ def update_user():                                   # declaro la funcion para a
                 return jsonify("No se consiguio informacio de ese user"), 404  # retorno un mensaje de error con el codigo 404 (Not found)
             else:
                 update_user.name = body["name"]          # accedo a la propiedad name y le asigno el name que vino en la solicitud
-                if body.get("email") != update_user.email:
-                    update_user.email = body["email"]    # accedo a la propiedad email y le asigno el email que vino en la solicitud
-                update_user.numero = body["numero"]      # accedo a la propiedad numero y le asigno el numero que vino en la solicitud
-                update_user.avatar = body["avatar"]      # accedo a la propiedad avatar y le asigno el avatar que vino en la solicitud
+                # if body.get("email") != update_user.email:
+                #     update_user.email = body.get("email")    # accedo a la propiedad email y le asigno el email que vino en la solicitud
+                if body.get("numero") is not "":
+                    update_user.numero = body.get("numero")      # accedo a la propiedad numero y le asigno el numero que vino en la solicitud
+                if body.get("avatar") is not "":
+                    update_user.avatar = body.get("avatar")      # accedo a la propiedad avatar y le asigno el avatar que vino en la solicitud
                 try:
                     db.session.commit()                  # guardo los cambios en BD
                     return jsonify(update_user.serialize()), 201  # retorno el usuario modificado con el codigo 201
@@ -352,3 +354,34 @@ def deleteService(service_id = None):
     
     return jsonify([]),405
 
+###### Creando la ruta para eliminar los servicios #####
+
+@api.route('/talleres/<int:taller_id>', methods=['DELETE'])
+@jwt_required()
+def deleteTaller(taller_id = None):
+
+    if request.method == 'DELETE':
+        if taller_id is None:
+            return jsonify({"Error":"Debes especificar el id"}), 400
+              
+        if taller_id is not None:
+            user_id = get_jwt_identity()                                 # guardo el id de mi usuario en la variable user_id         
+            delete_taller = Taller.query.get(taller_id)                  # consulto la BD y me traigo el taller por el ID
+            # taller = Taller.query.get(delete_taller.taller_id)           # consulto la BD y me traigo la informacion del taller
+            if delete_taller.user_id != user_id:                                # verifico si el id de usuario coincide con id de usuario del taller
+                return jsonify('usted no tiene permiso becerro'), 401    # en caso de no coincidir, retorno un mensaje de error con el codigo 401 (Unauthorized)
+            
+            if delete_taller is None:
+                return jsonify({"Error":"No se consiguio el servicio"}), 404
+            else:
+                db.session.delete(delete_taller)
+
+            try:
+                db.session.commit()
+                return jsonify([]), 202
+            except Exception as error:
+                print(error.args)
+                db.session.rollback()
+                return jsonify({"message":f"Error:{error.args}"}),500
+    
+    return jsonify([]),405

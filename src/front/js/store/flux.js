@@ -54,6 +54,28 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+       ///funcion para actualziar user///
+       updateUser : async (user) =>{
+        let store = getStore();
+        try {
+          let response = await fetch (`${store.urlBase}/api/user/update`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${store.token}`,
+            },
+            body: JSON.stringify(user),
+          });
+          if (response.ok){
+             //getActions().getTaller()
+            return true;
+          }
+          return false;
+        } catch (error) {
+          console.log(`Error: ${error}`)
+        }
+      },
+
       ///funcion para actualziar taller///
       updateTaller : async (taller) =>{
         let store = getStore();
@@ -68,6 +90,29 @@ const getState = ({ getStore, getActions, setStore }) => {
           });
           if (response.ok){
              //getActions().getTaller()
+            return true;
+          }
+          return false;
+        } catch (error) {
+          console.log(`Error: ${error}`)
+        }
+      },
+
+      ///funcion para eliminar un taller///
+      deleteTaller : async (taller) =>{
+        let store = getStore();
+        console.log(taller)
+        try {
+          let response = await fetch (`${store.urlBase}/api/talleres/${taller}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${store.token}`,
+            },
+            // body: JSON.stringify(service),
+          });
+          if (response.ok){
+             getActions().getTaller()
             return true;
           }
           return false;
@@ -119,7 +164,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      ///funcion para actualziar servicio///
+      ///funcion para eliminar un servicio///
       deleteService : async (service) =>{
         let store = getStore();
         console.log(service)

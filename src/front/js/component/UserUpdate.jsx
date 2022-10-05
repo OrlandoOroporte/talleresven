@@ -2,36 +2,35 @@ import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
 import Swal from "sweetalert2";
 
+const UserUpdate = ({ modalId, initial }) => {
 
-const TallerUpdate = ({ modalId, initial }) => {
-
-    const { razon_social, rif, direccion } = initial
+    // const { name, email, number } = initial
 
     let initialState = {
-        razon_social: razon_social,
-        rif: rif,
-        direccion: direccion,
-        logo: "",
-        taller_id: modalId
+        name: "",
+        number: "number",
+        avatar: "",
+        user_id: modalId
     }
-    const [tallerUpdate, setTallerUpdate] = useState(initialState)
+
+    const [userUpdate, setUserUpdate] = useState(initialState)
 
     const handleChange = (event) => {
-        setTallerUpdate({
-            ...tallerUpdate,
+        setUserUpdate({
+            ...userUpdate,
             [event.target.name]: event.target.value
         })
     }
 
-    const { actions, store } = useContext(Context)
+    const { actions } = useContext(Context)
 
     const handleSubmit = async (event) => {
 
-        if (tallerUpdate.razon_social.trim() != "") {
-            console.log("debo guardar el servicio")
-            let response = await actions.updateTaller(tallerUpdate)
+        if (userUpdate.name.trim() != "") {
+            console.log("debo guardar el user")
+            let response = await actions.updateUser(userUpdate)
             if (response) {
-                setTallerUpdate(initialState);
+                setUserUpdate(initialState);
                 Swal.fire(
                     '¡Bien Hecho!',
                     '¡Se ha modificado el servicio con exito!',
@@ -46,18 +45,17 @@ const TallerUpdate = ({ modalId, initial }) => {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: '¡Ocurrio un error al modificar el servicio!',
+                    text: '¡Ocurrio un error al modificar el usuario!',
                 })
             }
         } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: '¡El campo razon social no puede estar vacia!',
+                text: '¡El campo nombre no puede estar vacio!',
             })
         }
     }
-
 
     return (
         <>
@@ -95,50 +93,39 @@ const TallerUpdate = ({ modalId, initial }) => {
                             <form >
                                 <div className="mb-3">
                                     <label htmlFor="recipient-name" className="col-form-label">
-                                        Razon Social:
+                                        Nombre:
                                     </label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         onChange={handleChange}
-                                        name="razon_social"
-                                        value={tallerUpdate.razon_social}
+                                        name="name"
+                                        value={userUpdate.name}
+                                    />
+                                </div>
+
+                                <div className="mb-3">
+                                    <label htmlFor="recipient-name" className="col-form-label">
+                                        Número:
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        onChange={handleChange}
+                                        name="numero"
+                                        value={userUpdate.numero}
                                     />
                                 </div>
                                 <div className="mb-3">
                                     <label htmlFor="recipient-name" className="col-form-label">
-                                        RIF:
+                                        Avatar:
                                     </label>
                                     <input
                                         type="text"
                                         className="form-control"
                                         onChange={handleChange}
-                                        name="rif"
-                                        value={tallerUpdate.rif}
-                                    />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="recipient-name" className="col-form-label">
-                                        Ubicación:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        onChange={handleChange}
-                                        name="direccion"
-                                        value={tallerUpdate.direccion}
-                                    />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="recipient-name" className="col-form-label">
-                                        Logo:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        onChange={handleChange}
-                                        name="logo"
-                                        value={tallerUpdate.logo}
+                                        name="avatar"
+                                        value={userUpdate.avatar}
                                     />
                                 </div>
                             </form>
@@ -159,9 +146,8 @@ const TallerUpdate = ({ modalId, initial }) => {
                     </div>
                 </div>
             </div>
-
         </>
-    );
+    )
 }
 
-export default TallerUpdate;
+export default UserUpdate;
