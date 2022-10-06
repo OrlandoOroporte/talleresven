@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo_taller from "../../img/Logo_tallervenapp.png";
 import { Context } from "../store/appContext";
@@ -9,6 +9,10 @@ export const Navbar = () => {
   let navigate = useNavigate();
   let myservice = store.myservice;
   console.log(myservice)
+
+  let price = actions.getTotalPrice();
+  
+  useEffect(()=>{actions.getTotalPrice()},[]);
 
   return (
     <>
@@ -137,7 +141,7 @@ export const Navbar = () => {
                       <Presupuesto key={`${myservice.id}${index}`} myservice={myservice} />
                     );
                   })}
-                  <div className="card-footer">Total 270 USD</div>
+                  <div className="card-footer">Total {price} USD</div>
                 </div>
               </div>
             </li>
