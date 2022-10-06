@@ -1,8 +1,11 @@
 import React, { useContext, useState, useEffect } from "react";
 import { Context } from "../store/appContext";
 import Swal from 'sweetalert2'
+import { useNavigate } from "react-router-dom";
 
 const ServiceRegister = () => {
+
+    let navigate = useNavigate()
 
     let initialState = {
         name: "",

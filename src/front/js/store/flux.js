@@ -1,16 +1,21 @@
-const getState = ({ getStore, getActions, setStore }) => {
+import { propTypes } from "react-bootstrap/esm/Image";
+
+const getState = ({ getStore, getActions, setStore, useParams}) => {
   return {
     store: {
       token: localStorage.getItem("token") || "",
       // urlBase:"https://talleresvenapp.herokuapp.com/",
       //  urlBase:process.env.BACKEND_URL,
 
-      urlBase:"https://3001-orlandoorop-talleresven-kpizfysl9j2.ws-us67.gitpod.io",
+      urlBase:"https://3001-orlandoorop-talleresven-4u1ijnd1svw.ws-us70.gitpod.io",
+      
 
 
       taller: [],
       service: [],
-      user:[]
+      user:[],
+      myservice:[]
+
     },
     actions: {
       userRegister: async (user) => {
@@ -269,6 +274,17 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(`Error: ${error}`);
         }
       },
+
+      setMyservice: (id) =>{
+        let store = getStore();
+        let listMyservice  = store.service.find((item) =>  item.id == id);
+        console.log(listMyservice)
+        setStore({
+          ...setStore,
+          myservice :[...store.myservice,
+            listMyservice]
+        })
+      }
 
      
     },

@@ -1,7 +1,6 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import { useNavigate } from "react-router-dom";
-import { Link } from "react-router-dom";
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 
 export const Login = () => {
