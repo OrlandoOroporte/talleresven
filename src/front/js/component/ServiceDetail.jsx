@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 
 const ServiceDetail = () => {
 
-    const { store } = useContext(Context)
+    const { store, actions } = useContext(Context)
     const [service, setService] = useState({})
 
     let params = useParams();
@@ -37,7 +37,8 @@ const ServiceDetail = () => {
                     <h5 className="card-title">{service?.name}</h5>
                     <p className="card-text">{service?.descripcion}</p>
                     <p className="card-text">{service?.precio}</p>
-                    <a href="#" className="card-link">Presupuesto</a>
+                    <button type="button" className="btn btn-link" onClick={()=>actions.setMyservice(service?.id)}>Link</button>
+                    
                 </div>
             </div>
 

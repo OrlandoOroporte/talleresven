@@ -1,16 +1,21 @@
-const getState = ({ getStore, getActions, setStore }) => {
+import { propTypes } from "react-bootstrap/esm/Image";
+
+const getState = ({ getStore, getActions, setStore, useParams}) => {
   return {
     store: {
       token: localStorage.getItem("token") || "",
       // urlBase:"https://talleresvenapp.herokuapp.com/",
-      urlBase:process.env.BACKEND_URL,
+      //  urlBase:process.env.BACKEND_URL,
 
-      // urlBase:"https://3001-orlandoorop-talleresven-0vbxfnqltsi.ws-us67.gitpod.io",
+      urlBase:"https://3001-orlandoorop-talleresven-4u1ijnd1svw.ws-us70.gitpod.io",
       
+
 
       taller: [],
       service: [],
-      user:[]
+      user:[],
+      myservice:[]
+
     },
     actions: {
       userRegister: async (user) => {
@@ -53,6 +58,74 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(`Error: ${error}`);
         }
       },
+
+       ///funcion para actualziar user///
+       updateUser : async (user) =>{
+        let store = getStore();
+        try {
+          let response = await fetch (`${store.urlBase}/api/user/update`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${store.token}`,
+            },
+            body: JSON.stringify(user),
+          });
+          if (response.ok){
+             //getActions().getTaller()
+            return true;
+          }
+          return false;
+        } catch (error) {
+          console.log(`Error: ${error}`)
+        }
+      },
+
+      ///funcion para actualziar taller///
+      updateTaller : async (taller) =>{
+        let store = getStore();
+        try {
+          let response = await fetch (`${store.urlBase}/api/taller/${taller.taller_id}`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${store.token}`,
+            },
+            body: JSON.stringify(taller),
+          });
+          if (response.ok){
+             //getActions().getTaller()
+            return true;
+          }
+          return false;
+        } catch (error) {
+          console.log(`Error: ${error}`)
+        }
+      },
+
+      ///funcion para eliminar un taller///
+      deleteTaller : async (taller) =>{
+        let store = getStore();
+        console.log(taller)
+        try {
+          let response = await fetch (`${store.urlBase}/api/talleres/${taller}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${store.token}`,
+            },
+            // body: JSON.stringify(service),
+          });
+          if (response.ok){
+             getActions().getTaller()
+            return true;
+          }
+          return false;
+        } catch (error) {
+          console.log(`Error: ${error}`)
+        }
+      },
+
       ////funcion para registrar un servicio///
       registerService : async (service) =>{
         let store = getStore();
@@ -66,6 +139,51 @@ const getState = ({ getStore, getActions, setStore }) => {
             body: JSON.stringify(service),
           });
           if (response.ok){
+            return true;
+          }
+          return false;
+        } catch (error) {
+          console.log(`Error: ${error}`)
+        }
+      },
+      
+      ///funcion para actualziar servicio///
+      updateService : async (service) =>{
+        let store = getStore();
+        try {
+          let response = await fetch (`${store.urlBase}/api/service/update`, {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${store.token}`,
+            },
+            body: JSON.stringify(service),
+          });
+          if (response.ok){
+             getActions().getTaller()
+            return true;
+          }
+          return false;
+        } catch (error) {
+          console.log(`Error: ${error}`)
+        }
+      },
+
+      ///funcion para eliminar un servicio///
+      deleteService : async (service) =>{
+        let store = getStore();
+        console.log(service)
+        try {
+          let response = await fetch (`${store.urlBase}/api/services/${service}`, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              "Authorization": `Bearer ${store.token}`,
+            },
+            // body: JSON.stringify(service),
+          });
+          if (response.ok){
+             getActions().getService()
             return true;
           }
           return false;
@@ -156,6 +274,17 @@ const getState = ({ getStore, getActions, setStore }) => {
           console.log(`Error: ${error}`);
         }
       },
+
+      setMyservice: (id) =>{
+        let store = getStore();
+        let listMyservice  = store.service.find((item) =>  item.id == id);
+        console.log(listMyservice)
+        setStore({
+          ...setStore,
+          myservice :[...store.myservice,
+            listMyservice]
+        })
+      }
 
      
     },

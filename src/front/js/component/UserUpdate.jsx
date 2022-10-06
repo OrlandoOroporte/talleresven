@@ -1,88 +1,86 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import { Context } from "../store/appContext";
-import Swal from 'sweetalert2'
-import { useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
-const ServiceRegister = () => {
+const UserUpdate = ({ modalId, initial }) => {
 
-    let navigate = useNavigate()
+    // const { name, email, number } = initial
 
     let initialState = {
         name: "",
-        price: "",
-        descripcion: "",
-        image: "",
-        taller_id: ""
+        number: "number",
+        avatar: "",
+        user_id: modalId
     }
 
-    const [serviceRegister, setServiceRegister] = useState(initialState)
+    const [userUpdate, setUserUpdate] = useState(initialState)
 
     const handleChange = (event) => {
-        setServiceRegister({
-            ...serviceRegister,
+        setUserUpdate({
+            ...userUpdate,
             [event.target.name]: event.target.value
         })
     }
 
-    const { actions, store } = useContext(Context)
-    const { taller_id } = store.user
-    console.log(taller_id)
-
+    const { actions } = useContext(Context)
 
     const handleSubmit = async (event) => {
-        //event.preventDefault();
-        if (serviceRegister.name.trim() != "" && serviceRegister.price.trim() != "" && serviceRegister.taller_id.trim() != "") {
-            console.log("debo guardar el servicio")
-            let response = await actions.registerService(serviceRegister)
+
+        if (userUpdate.name.trim() != "") {
+            console.log("debo guardar el user")
+            let response = await actions.updateUser(userUpdate)
             if (response) {
-                setServiceRegister({ initialState });
+                setUserUpdate(initialState);
                 Swal.fire(
                     '¡Bien Hecho!',
-                    '¡Se ha creado el servicio con exito!',
+                    '¡Se ha modificado el servicio con exito!',
                     'success'
-                )
-                actions.getService();
-                navigate("/worksheet");
+                ).then((result) => {
+                    if (result.isConfirmed) {
+                        actions.getTaller();
+                    }
+
+                })
             } else {
                 Swal.fire({
                     icon: 'error',
                     title: 'Oops...',
-                    text: '¡Ocurrio un error al crear el servicio!',
+                    text: '¡Ocurrio un error al modificar el usuario!',
                 })
             }
         } else {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: '¡Todos los campos son necesarios!',
+                text: '¡El campo nombre no puede estar vacio!',
             })
         }
     }
-
 
     return (
         <>
             <button
                 type="button"
-                className="btn btn-success mx-3"
+                className="btn btn-success"
                 data-bs-toggle="modal"
-                data-bs-target="#Modal2"
+                data-bs-target={`#exampleModal${modalId}`}
                 data-bs-whatever="@getbootstrap"
             >
-                Agregar servicio
+                Modificar
             </button>
             <div
                 className="modal fade"
-                id="Modal2"
+                id={`exampleModal${modalId}`}
                 tabIndex="-1"
                 aria-labelledby="exampleModalLabel"
                 aria-hidden="true"
             >
+
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
                             <h5 className="modal-title" id="exampleModalLabel">
-                                Complete los campos
+                                Complete los campos para actualizar
                             </h5>
                             <button
                                 type="button"
@@ -102,81 +100,54 @@ const ServiceRegister = () => {
                                         className="form-control"
                                         onChange={handleChange}
                                         name="name"
-                                        value={serviceRegister.name}
+                                        value={userUpdate.name}
                                     />
                                 </div>
-                                <div className="mb-3">
-                                    <label htmlFor="recipient-name" className="col-form-label">
-                                        Descripción:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        onChange={handleChange}
-                                        name="descripcion"
-                                        value={serviceRegister.descripcion}
-                                    />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="recipient-name" className="col-form-label">
-                                        Precio:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        onChange={handleChange}
-                                        name="price"
-                                        value={serviceRegister.price}
-                                    />
-                                </div>
-                                <div className="mb-3">
-                                    <label htmlFor="recipient-name" className="col-form-label">
-                                        Imagen:
-                                    </label>
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        onChange={handleChange}
-                                        name="image"
-                                        value={serviceRegister.image}
-                                    />
-                                </div>
-                                <label htmlFor="recipient-name" className="col-form-label">
-                                    Taller:
-                                </label>
-                                <select className="form-select " aria-label="Default select example" onChange={handleChange} name="taller_id">
-                                    <option value="" >Seleccione un Taller</option>
-                                    {taller_id?.map((item) => {
-                                        return (
-                                            <option key={item.id} value={item.id}>{item.razon_social}</option>
-                                        )
-                                    })}
 
-                                </select>
+                                <div className="mb-3">
+                                    <label htmlFor="recipient-name" className="col-form-label">
+                                        Número:
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        onChange={handleChange}
+                                        name="numero"
+                                        value={userUpdate.numero}
+                                    />
+                                </div>
+                                <div className="mb-3">
+                                    <label htmlFor="recipient-name" className="col-form-label">
+                                        Avatar:
+                                    </label>
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        onChange={handleChange}
+                                        name="avatar"
+                                        value={userUpdate.avatar}
+                                    />
+                                </div>
                             </form>
                         </div>
                         <div className="modal-footer">
                             <button
                                 type="button"
-                                className="btn btn-secondary"
+                                className="btn btn-danger"
                                 data-bs-dismiss="modal"
                             >
-                                Salir
+                                Cancelar
                             </button>
                             <button type="button" className="btn btn-primary" data-bs-dismiss="modal"
                                 onClick={() => handleSubmit()}>
-                                Registrar
+                                Modificar
                             </button>
                         </div>
                     </div>
                 </div>
-
             </div>
-
-
         </>
     )
-
 }
 
-export default ServiceRegister;
+export default UserUpdate;

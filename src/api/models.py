@@ -9,7 +9,7 @@ class User(db.Model):
     name = db.Column(db.String(80), unique=False, nullable=True )
     email = db.Column(db.String(120), unique=True, nullable=False)
     numero = db.Column(db.String(20), unique=False, nullable=True)
-    avatar = db.Column(db.String(150), unique=False, nullable=True)
+    avatar = db.Column(db.String(400), unique=False, nullable=True)
     password = db.Column(db.String(150), unique=False, nullable=False)
     salt = db.Column(db.String(80), unique=False, nullable=False)        # declaro el atributo salt que me va a ayudar a encriptar mi password
     
@@ -36,6 +36,7 @@ class Taller(db.Model):
     direccion = db.Column(db.String(150), unique=False, nullable=True)
     rif = db.Column(db.String(80), unique=True, nullable=True)
     razon_social = db.Column(db.String, unique=False, nullable=True)
+    logo = db.Column(db.String(400),unique=False, nullable=True)
     activo = db.Column(db.Boolean, default=True)                           # cuando se cree el taller por defaul vendra activo y con permiso para publicar
 
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))               ##??????? no es necesario cuando tienes el backref
@@ -50,6 +51,7 @@ class Taller(db.Model):
             "direccion": self.direccion,
             "rif": self.rif,
             "razon_social":self.razon_social,
+            "logo":self.logo,
             "servicio_id":[element.serialize() for element in  self.servicio_id ]
             # do not serialize the password, its a security breach
         }
@@ -64,7 +66,7 @@ class Servicio(db.Model):
     precio = db.Column(db.Integer, unique=False, nullable=False)
     
     taller_id = db.Column(db.Integer, db.ForeignKey('taller.id'))
-
+    
     def __repr__(self):
         return f'<User {self.name}>'
 
