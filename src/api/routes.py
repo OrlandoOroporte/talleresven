@@ -74,8 +74,7 @@ def add_user():                                 # declaro mi funcion para agrega
 def update_user():                                   # declaro la funcion para actulizar el usuario 
     user_id = get_jwt_identity()                     # declaro user_id para extraer del token el id del usuario que hace la solicitud   
     if request.method == 'PUT':                      # valido si el metodo es PUT
-        body = request.json                          # declaro mi variable body y guardo lo que llego en el cuerpo   
-        #validaciones
+        
         if user_id is None:                                      # verifico si el ID de usuario es valido   
             return jsonify("Verifica el ID del usuario"), 400    # retorno un mensaje de error y el codigo 400 (Bad request)  
 
@@ -84,13 +83,14 @@ def update_user():                                   # declaro la funcion para a
             if update_user is None:                              # verifico si el usuario llego vacio
                 return jsonify("No se consiguio informacio de ese user"), 404  # retorno un mensaje de error con el codigo 404 (Not found)
             else:
-                update_user.name = body["name"]          # accedo a la propiedad name y le asigno el name que vino en la solicitud
-                # if body.get("email") != update_user.email:
-                #     update_user.email = body.get("email")    # accedo a la propiedad email y le asigno el email que vino en la solicitud
-                if body.get("numero") is not "":
-                    update_user.numero = body.get("numero")      # accedo a la propiedad numero y le asigno el numero que vino en la solicitud
-                if body.get("avatar") is not "":
-                    update_user.avatar = body.get("avatar")      # accedo a la propiedad avatar y le asigno el avatar que vino en la solicitud
+                if request.form.get("name"):
+                    update_user.name =  request.form.get("name")        # accedo a la propiedad name y le asigno el name que vino en la solicitud
+                
+                if request.form.get("numero") is not "":
+                    update_user.numero = request.form.get("numero")      # accedo a la propiedad numero y le asigno el numero que vino en la solicitud
+                if request.files["avatar"] is not "":
+                    cloudinary_image = uploader.upload(request.files["avatar"])
+                    update_user.avatar=cloudinary_image["url"]
                 try:
                     db.session.commit()                  # guardo los cambios en BD
                     return jsonify(update_user.serialize()), 201  # retorno el usuario modificado con el codigo 201
@@ -175,7 +175,7 @@ def add_taller():                               # declaro mi funcion para agrega
 @jwt_required()                                        # protego mi ruta para que solo el usuario pued modificar los datos del taller
 def update_taller(taller_id=None):                     # declaro una funcion para tomar el taller id y hacer validaciones
     if request.method == 'PUT':                        # valido si el metodo es PUT (actualizar)
-        body = request.json                            # guardo en la variable body el cuerpo de la solicitud
+        form = request.form                         # guardo en la variable body el cuerpo de la solicitud
 
         if taller_id is None:                                     # valido si colocaron el id en la ruta 
             return jsonify("Debe colocar el id en ruta"),404      # en ese caso retorno un mensaje de error con el codigo 404 (Bad request)
@@ -188,12 +188,12 @@ def update_taller(taller_id=None):                     # declaro una funcion par
                 return jsonify('Unautorizate user'), 401   # retorno un mensaje de error usuario no autorizado 
 
             else:
-                update_taller.direccion = body["direccion"]             # guardo en la direccion nueva 
-                if update_taller.rif != body.get('rif'):                # si el rif del taller es diferente guardo el rif
-                   update_taller.rif = body["rif"]                      # guardo el nuevo rif 
-                update_taller.razon_social = body["razon_social"]       # guardo la nueva razon social 
-                if body.get('logo') is not None: 
-                    update_taller.logo = body["logo"]                    # guardo el nuevo logo
+                update_taller.direccion = form.get("direccion")             # guardo en la direccion nueva 
+                if update_taller.rif != form.get('rif'):                # si el rif del taller es diferente guardo el rif
+                   update_taller.rif = form.get("rif")                      # guardo el nuevo rif 
+                update_taller.razon_social = form.get("razon_social")       # guardo la nueva razon social 
+                if request.files['logo'] is not None: 
+                    update_taller.logo = request.files["logo"]                    # guardo el nuevo logo
 
                 try:
                     db.session.commit()                                 # guardo los cambios en BD

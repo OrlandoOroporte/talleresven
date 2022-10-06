@@ -207,3 +207,9 @@ height: 75px;
     font-weight:600
   }
 }
+
+.carousel-inner > .item > img,
+.carousel-inner > .item > a > img {
+  width: 70%;
+  margin: auto;
+}

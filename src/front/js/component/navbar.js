@@ -11,8 +11,11 @@ export const Navbar = () => {
   console.log(myservice)
 
   let price = actions.getTotalPrice();
+  let hoy = actions.fecha();
+
   
   useEffect(()=>{actions.getTotalPrice()},[]);
+  useEffect(()=>{actions.fecha()},[]);
 
   return (
     <>
@@ -135,12 +138,12 @@ export const Navbar = () => {
                   ></button>
                 </div>
                 <div className="offcanvas-body">
-                  04/10/2022
-                  {myservice.map((myservice, index) => {
+                  <div className="text-end">{hoy}</div>
+                  <p>{myservice.map((myservice, index) => {
                     return (
                       <Presupuesto key={`${myservice.id}${index}`} myservice={myservice} />
                     );
-                  })}
+                  })}</p>
                   <div className="card-footer">Total {price} USD</div>
                 </div>
               </div>

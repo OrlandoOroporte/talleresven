@@ -1,4 +1,4 @@
-import { propTypes } from "react-bootstrap/esm/Image";
+
 
 const getState = ({ getStore, getActions, setStore, useParams }) => {
   return {
@@ -8,7 +8,7 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
       //  urlBase:process.env.BACKEND_URL,
 
       urlBase:
-        "https://3001-orlandoorop-talleresven-4u1ijnd1svw.ws-us70.gitpod.io",
+        "https://3001-orlandoorop-talleresven-e62a76qhusi.ws-us70.gitpod.io",
 
       taller: [],
       service: [],
@@ -64,13 +64,12 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
           let response = await fetch(`${store.urlBase}/api/user/update`, {
             method: "PUT",
             headers: {
-              "Content-Type": "application/json",
+             
               Authorization: `Bearer ${store.token}`,
             },
-            body: JSON.stringify(user),
+            body: user,
           });
           if (response.ok) {
-            //getActions().getTaller()
             return true;
           }
           return false;
@@ -304,6 +303,15 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
         }
         return sum
       },
+      fecha: () => {
+        let hoy = new Date();
+        let dia = hoy.getDate();
+        let mes = hoy.getMonth() + 1;
+        let agnio = hoy.getFullYear();
+        let formato = dia + "-" + mes + "-" + agnio;
+        return formato
+
+      }
     },
   };
 };

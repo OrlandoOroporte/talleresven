@@ -22,13 +22,24 @@ const UserUpdate = ({ modalId, initial }) => {
         })
     }
 
+    const handelImage = (event) => {
+        setUserUpdate({
+            ...userUpdate,
+            avatar: event.target.files[0]
+        })
+    }
+
     const { actions } = useContext(Context)
 
     const handleSubmit = async (event) => {
+        const formData = new FormData()
+        formData.append("name",userUpdate.name)
+        formData.append("numero",userUpdate.number)
+        formData.append("avatar",userUpdate.avatar)
 
         if (userUpdate.name.trim() != "") {
             console.log("debo guardar el user")
-            let response = await actions.updateUser(userUpdate)
+            let response = await actions.updateUser(formData)
             if (response) {
                 setUserUpdate(initialState);
                 Swal.fire(
@@ -121,11 +132,11 @@ const UserUpdate = ({ modalId, initial }) => {
                                         Avatar:
                                     </label>
                                     <input
-                                        type="text"
+                                        type="file"
                                         className="form-control"
-                                        onChange={handleChange}
+                                        onChange={handelImage}
                                         name="avatar"
-                                        value={userUpdate.avatar}
+                                        // value={userUpdate.avatar}
                                     />
                                 </div>
                             </form>
