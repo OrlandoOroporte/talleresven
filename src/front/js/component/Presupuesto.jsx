@@ -23,7 +23,7 @@ console.log(myservice, "desde el card")
         <div className="container">
         <div className="row">
         <ul className="list-group list-group-flush">
-        <li className="list-group-item">{name} {taller?.razon_social} {precio}USD</li>
+        <li className="list-group-item">{name} {taller?.razon_social} {precio} USD</li>
 
 </ul>
 </div>
