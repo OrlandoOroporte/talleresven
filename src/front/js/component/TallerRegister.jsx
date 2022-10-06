@@ -150,7 +150,7 @@ export const TallerRegister = () => {
                     Logo:
                   </label>
                   <input
-                    type="text"
+                    type="file"
                     className="form-control"
                     id="recipient-name"
                     onChange={handleChange}
