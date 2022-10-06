@@ -10,8 +10,8 @@ const AllService = (props) => {
     console.log(store.service)
     return (
         <>
-            <div className="container">
-                <div className="row">
+            <div className="container margin" >
+                <div className="row col-14">
                     {store.service.map((item) => {
                         return (
                             <CardService key={item.id} service={item} />

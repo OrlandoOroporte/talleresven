@@ -189,21 +189,21 @@ export const Worksheet = () => {
                           <br></br>
                           <br></br>
                         </div>
-                      )) : <h5 class="alert alert-warning text-center" role="alert">Usted no tiene servicios registrado</h5>}
+                      )) : <h5 className="alert alert-warning text-center" role="alert">Usted no tiene servicios registrado</h5>}
 
 
                     </div>
                   </div>
 
                 </div>
-              )) : <h5 class="alert alert-warning text-center" role="alert">Usted no posee talleres registrado</h5>}
+              )) : <h5 className="alert alert-warning text-center" role="alert">Usted no posee talleres registrado</h5>}
               <br />
             </div>
 
           </div>
 
 
-          <div className="container d-flex  justify-content-center">
+          <div className="container d-flex  justify-content-center margin">
 
             <TallerRegister />
 
