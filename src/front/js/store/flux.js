@@ -3,8 +3,8 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
     store: {
       token: localStorage.getItem("token") || "",
       // urlBase:"https://talleresvenapp.herokuapp.com/",
-        urlBase: process.env.BACKEND_URL,
-      // urlBase:"https://3001-orlandoorop-talleresven-s09g6tjibrv.ws-us70.gitpod.io",
+        // urlBase: process.env.BACKEND_URL,
+      urlBase:"https://3001-orlandoorop-talleresven-45xabpm81g8.ws-us70.gitpod.io",
 
       taller: [],
       service: [],
@@ -75,11 +75,11 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
       },
 
       ///funcion para actualziar taller///
-      updateTaller: async (taller) => {
+      updateTaller: async (taller,taller_id) => {
         let store = getStore();
         try {
           let response = await fetch(
-            `${store.urlBase}/api/taller/${taller.taller_id}`,
+            `${store.urlBase}/api/taller/${taller_id}`,
             {
               method: "PUT",
               headers: {
@@ -152,7 +152,7 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
           let response = await fetch(`${store.urlBase}/api/service/update`, {
             method: "PUT",
             headers: {
-              // "Content-Type": "application/json",
+              
               Authorization: `Bearer ${store.token}`,
             },
             body: service,
