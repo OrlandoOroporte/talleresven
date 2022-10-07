@@ -128,7 +128,7 @@ export const Register = () => {
         </div>
         <div className="ps-4 pt-5">
       <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQpFn9yxtJNcGHpbwXZf0EPw8o0FeTzLpgNZg&usqp=CAU"
+              src="https://www.apeseg.org.pe/wp-content/uploads/2019/11/REVISION-WEB.png"
               className="img-register"
               alt="..."
             />
