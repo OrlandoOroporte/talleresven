@@ -103,7 +103,7 @@ export const Worksheet = () => {
           >
             Perfil
           </button>
-          <button
+          {/* <button
             className="nav-link"
             id="nav-services-tab"
             data-bs-toggle="tab"
@@ -114,8 +114,8 @@ export const Worksheet = () => {
             aria-selected="false"
           >
             Servicios
-          </button>
-          <button
+          </button> */}
+          {/* <button
             className="nav-link"
             id="nav-contact-tab"
             data-bs-toggle="tab"
@@ -126,7 +126,7 @@ export const Worksheet = () => {
             aria-selected="false"
           >
             Citas
-          </button>
+          </button> */}
           <button
             className="nav-link"
             id="nav-disabled-tab"
@@ -138,7 +138,7 @@ export const Worksheet = () => {
             aria-selected="false"
             disabled
           >
-            Disabled
+            Citas Solitadas "proximamente"
           </button>
         </div>
       </nav>

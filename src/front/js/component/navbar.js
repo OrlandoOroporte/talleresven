@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo_taller from "../../img/Logo_tallervenapp.png";
 import { Context } from "../store/appContext";
 import Presupuesto from "./Presupuesto.jsx";
+import Reloj from "./Reloj.jsx";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
@@ -141,12 +142,12 @@ export const Navbar = () => {
                   ></button>
                 </div>
                 <div className="offcanvas-body">
-                  <div className="text-end">{hoy} {hora}</div>
-                  <p>{myservice.map((myservice, index) => {
+                  <div className="text-end">{hoy} <Reloj/></div>
+                  {myservice.map((myservice, index) => {
                     return (
                       <Presupuesto key={`${myservice.id}${index}`} myservice={myservice} />
                     );
-                  })}</p>
+                  })}
                   <div className="card-footer">Total {price} USD</div>
                 </div>
               </div>

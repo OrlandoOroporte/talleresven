@@ -3,7 +3,8 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
     store: {
       token: localStorage.getItem("token") || "",
       // urlBase:"https://talleresvenapp.herokuapp.com/",
-      urlBase: process.env.BACKEND_URL,
+      // urlBase: process.env.BACKEND_URL,
+      urlBase:"https://3001-orlandoorop-talleresven-s09g6tjibrv.ws-us70.gitpod.io",
 
       taller: [],
       service: [],
@@ -54,7 +55,7 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
       ///funcion para actualziar user///
       updateUser: async (user) => {
         let store = getStore();
-        console.log(user, "*******************************");
+        
         try {
           let response = await fetch(`${store.urlBase}/api/user/update`, {
             method: "PUT",
@@ -203,7 +204,7 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
             },
           });
           let data = await response.json();
-          console.log(response);
+    
           if (response.ok) {
             setStore({
               ...store,

@@ -36,7 +36,7 @@ const ServiceRegister = () => {
 
     const { actions, store } = useContext(Context)
     const { taller_id } = store.user
-    console.log(taller_id)
+   
 
 
     const handleSubmit = async (event) => {
@@ -47,7 +47,7 @@ const ServiceRegister = () => {
         formData.append("image", serviceRegister.image)
 
         if (serviceRegister.name.trim() != "" && serviceRegister.price.trim() != "" && serviceRegister.taller_id.trim() != "") {
-            console.log("debo guardar el servicio")
+            
             let response = await actions.registerService(formData)
             if (response) {
                 setServiceRegister({ initialState });

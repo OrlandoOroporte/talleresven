@@ -38,7 +38,7 @@ const UserUpdate = ({ modalId, initial }) => {
         formData.append("avatar",userUpdate.avatar)
 
         if (userUpdate.name.trim() != "") {
-            console.log("debo guardar el user")
+            
             let response = await actions.updateUser(formData)
             if (response) {
                 setUserUpdate(initialState);

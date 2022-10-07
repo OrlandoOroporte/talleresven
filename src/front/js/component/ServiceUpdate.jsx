@@ -40,7 +40,7 @@ const ServiceUpdate = ({ modalId, initial }) => {
 
         if (serviceUpdate.name.trim() != "") {
             console.log("debo guardar el servicio")
-            let response = await actions.updateService(serviceUpdate)
+            let response = await actions.updateService(formData)
             if (response) {
                 //setServiceUpdate(initialState);
                 Swal.fire(

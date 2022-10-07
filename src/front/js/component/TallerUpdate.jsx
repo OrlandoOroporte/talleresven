@@ -41,7 +41,7 @@ const TallerUpdate = ({ modalId, initial }) => {
 
         if (tallerUpdate.razon_social.trim() != "") {
             
-            let response = await actions.updateTaller(tallerUpdate)
+            let response = await actions.updateTaller(formData)
             if (response) {
                 setTallerUpdate(initialState);
                 Swal.fire(
