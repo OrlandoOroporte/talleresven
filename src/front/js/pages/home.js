@@ -20,21 +20,21 @@ export const Home = () => {
               <div className="carousel-inner">
                 <div className="carousel-item active">
                   <img
-                    src="https://http2.mlstatic.com/D_NQ_NP_761668-MLV50305151478_062022-C.jpg "
+                    src="https://www.onbizz.com/images/espacio/arte/cca5d01799c63f44f772865776ce677d.jpg "
                     className="d-block"
                     alt="..."
                   />
                 </div>
                 <div className="carousel-item">
                   <img
-                    src="https://www.leioamotor.es/uploads/cms/con_contenido/plataforma_2/01/28/88/images/carga%20de%20aire%20acondicionado.jpg"
+                    src="https://http2.mlstatic.com/D_NQ_NP_726088-MLV50574443469_072022-C.jpg"
                     alt="..."
                     className="d-block "
                   />
                 </div>
                 <div className="carousel-item">
                   <img
-                    src="http://serviciosautomotrices.mx/wp-content/uploads/2020/04/WhatsApp-Image-2020-04-14-at-5.58.56-PM-e1586906593786.jpeg"
+                    src="https://pbs.twimg.com/media/FbgadWgXoAMrHSK?format=jpg&name=large"
                     className="d-block "
                     alt="..."
                   />
