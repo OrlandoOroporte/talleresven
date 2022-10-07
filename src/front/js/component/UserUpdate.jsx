@@ -8,7 +8,7 @@ const UserUpdate = ({ modalId, initial }) => {
 
     let initialState = {
         name: "",
-        number: "number",
+        number: "",
         avatar: "",
         user_id: modalId
     }
@@ -33,12 +33,12 @@ const UserUpdate = ({ modalId, initial }) => {
 
     const handleSubmit = async (event) => {
         const formData = new FormData()
-        formData.append("name",userUpdate.name)
-        formData.append("numero",userUpdate.number)
-        formData.append("avatar",userUpdate.avatar)
+        formData.append("name", userUpdate.name)
+        formData.append("numero", userUpdate.number)
+        formData.append("avatar", userUpdate.avatar)
 
         if (userUpdate.name.trim() != "") {
-            
+
             let response = await actions.updateUser(formData)
             if (response) {
                 setUserUpdate(initialState);
@@ -74,23 +74,23 @@ const UserUpdate = ({ modalId, initial }) => {
                 type="button"
                 className="btn btn-success"
                 data-bs-toggle="modal"
-                data-bs-target={`#exampleModal${modalId}`}
+                data-bs-target={`#exampleModalUU${modalId}`}
                 data-bs-whatever="@getbootstrap"
             >
                 Modificar
             </button>
             <div
                 className="modal fade"
-                id={`exampleModal${modalId}`}
+                id={`exampleModalUU${modalId}`}
                 tabIndex="-1"
-                aria-labelledby="exampleModalLabel"
+                aria-labelledby="exampleModalUULabel"
                 aria-hidden="true"
             >
 
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">
+                            <h5 className="modal-title" id="exampleModalUULabel">
                                 Complete los campos para actualizar
                             </h5>
                             <button
@@ -136,7 +136,7 @@ const UserUpdate = ({ modalId, initial }) => {
                                         className="form-control"
                                         onChange={handelImage}
                                         name="avatar"
-                                        // value={userUpdate.avatar}
+                                    // value={userUpdate.avatar}
                                     />
                                 </div>
                             </form>

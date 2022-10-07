@@ -34,13 +34,13 @@ const TallerUpdate = ({ modalId, initial }) => {
 
     const handleSubmit = async (event) => {
         const formData = new FormData()
-        formData.append("razon_social",tallerUpdate.razon_social)
-        formData.append("rif",tallerUpdate.rif)
-        formData.append("direccion",tallerUpdate.direccion)
-        formData.append("logo",tallerUpdate.logo)
+        formData.append("razon_social", tallerUpdate.razon_social)
+        formData.append("rif", tallerUpdate.rif)
+        formData.append("direccion", tallerUpdate.direccion)
+        formData.append("logo", tallerUpdate.logo)
 
         if (tallerUpdate.razon_social.trim() != "") {
-            
+
             let response = await actions.updateTaller(formData)
             if (response) {
                 setTallerUpdate(initialState);
@@ -77,23 +77,23 @@ const TallerUpdate = ({ modalId, initial }) => {
                 type="button"
                 className="btn btn-success"
                 data-bs-toggle="modal"
-                data-bs-target={`#exampleModal${modalId}`}
+                data-bs-target={`#exampleModalTU${modalId}`}
                 data-bs-whatever="@getbootstrap"
             >
                 Modificar
             </button>
             <div
                 className="modal fade"
-                id={`exampleModal${modalId}`}
+                id={`exampleModalTU${modalId}`}
                 tabIndex="-1"
-                aria-labelledby="exampleModalLabel"
+                aria-labelledby="exampleModalTULabel"
                 aria-hidden="true"
             >
 
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">
+                            <h5 className="modal-title" id="exampleModalTULabel">
                                 Complete los campos para actualizar
                             </h5>
                             <button
@@ -150,7 +150,7 @@ const TallerUpdate = ({ modalId, initial }) => {
                                         className="form-control"
                                         onChange={handelImage}
                                         name="logo"
-                                        // value={tallerUpdate.logo}
+                                    // value={tallerUpdate.logo}
                                     />
                                 </div>
                             </form>

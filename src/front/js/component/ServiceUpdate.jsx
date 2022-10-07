@@ -33,10 +33,10 @@ const ServiceUpdate = ({ modalId, initial }) => {
 
     const handleSubmit = async (event) => {
         const formData = new FormData()
-        formData.append("name",serviceUpdate.name)
-        formData.append("price",serviceUpdate.price)
-        formData.append("descripcion",serviceUpdate.descripcion)
-        formData.append("image",serviceUpdate.image)
+        formData.append("name", serviceUpdate.name)
+        formData.append("price", serviceUpdate.price)
+        formData.append("descripcion", serviceUpdate.descripcion)
+        formData.append("image", serviceUpdate.image)
 
         if (serviceUpdate.name.trim() != "") {
             console.log("debo guardar el servicio")
@@ -80,23 +80,23 @@ const ServiceUpdate = ({ modalId, initial }) => {
                 type="button"
                 className="btn btn-success"
                 data-bs-toggle="modal"
-                data-bs-target={`#exampleModal${modalId}`}
+                data-bs-target={`#exampleModalSU${modalId}`}
                 data-bs-whatever="@getbootstrap"
             >
                 Modificar
             </button>
             <div
                 className="modal fade"
-                id={`exampleModal${modalId}`}
+                id={`exampleModalSU${modalId}`}
                 tabIndex="-1"
-                aria-labelledby="exampleModalLabel"
+                aria-labelledby="exampleModalSULabel"
                 aria-hidden="true"
             >
 
                 <div className="modal-dialog">
                     <div className="modal-content">
                         <div className="modal-header">
-                            <h5 className="modal-title" id="exampleModalLabel">
+                            <h5 className="modal-title" id="exampleModalSULabel">
                                 Complete los campos para actualizar
                             </h5>
                             <button
@@ -153,7 +153,7 @@ const ServiceUpdate = ({ modalId, initial }) => {
                                         className="form-control"
                                         onChange={handelImage}
                                         name="image"
-                                        // value={serviceUpdate.image}
+                                    // value={serviceUpdate.image}
                                     />
                                 </div>
                             </form>
