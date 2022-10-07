@@ -52,7 +52,8 @@ class Taller(db.Model):
             "rif": self.rif,
             "razon_social":self.razon_social,
             "logo":self.logo,
-            "servicio_id":[element.serialize() for element in  self.servicio_id ]
+            "servicio_id":[element.serialize() for element in  self.servicio_id ],
+            "user_id":self.user_id
             # do not serialize the password, its a security breach
         }
         

@@ -40,20 +40,20 @@ export const TallerRegister = () => {
       ...tallerRegister,
       logo: event.target.files[0]
     }
-      
+
     )
-  } 
+  }
   const { actions } = useContext(Context)
 
   const handleSubmit = async (event) => {
     const formData = new FormData()
-    formData.append("razon_social",tallerRegister.razon_social)
-    formData.append("rif",tallerRegister.rif)
-    formData.append("direccion",tallerRegister.direccion)
-    formData.append("logo",tallerRegister.logo)
-  
+    formData.append("razon_social", tallerRegister.razon_social)
+    formData.append("rif", tallerRegister.rif)
+    formData.append("direccion", tallerRegister.direccion)
+    formData.append("logo", tallerRegister.logo)
+
     if (tallerRegister.razon_social != "" && tallerRegister.rif != "" && tallerRegister.direccion != "") {
-      let response = await actions.userRegisterTaller(tallerRegister)
+      let response = await actions.userRegisterTaller(formData)
       if (response) {
         Swal.fire(
           '¡Bien Hecho!',
@@ -168,7 +168,7 @@ export const TallerRegister = () => {
                     id="recipient-name"
                     onChange={handelImage}
                     name="logo"
-                    // value={tallerRegister.logo}
+                  // value={tallerRegister.logo}
                   />
                 </div>
               </form>

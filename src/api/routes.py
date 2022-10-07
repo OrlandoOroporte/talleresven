@@ -72,31 +72,23 @@ def add_user():                                 # declaro mi funcion para agrega
 @api.route('/user/update', methods=['PUT'])                 # creo mi ruta para actualizar  
 @jwt_required()
 def update_user():                                   # declaro la funcion para actulizar el usuario 
-    user_id = get_jwt_identity()                     # declaro user_id para extraer del token el id del usuario que hace la solicitud   
+    user_update = User.query.get(get_jwt_identity())                    # declaro user_id para extraer del token el id del usuario que hace la solicitud   
     if request.method == 'PUT':                      # valido si el metodo es PUT
         
-        if user_id is None:                                      # verifico si el ID de usuario es valido   
-            return jsonify("Verifica el ID del usuario"), 400    # retorno un mensaje de error y el codigo 400 (Bad request)  
+        if user_update is None:                         # valido si el usuario existe
+            return jsonify('El usuario no existe'), 400
 
-        if user_id is not None:
-            update_user = User.query.get(user_id)                # consulto en bd y me traigo el usuario por el id   
-            if update_user is None:                              # verifico si el usuario llego vacio
-                return jsonify("No se consiguio informacio de ese user"), 404  # retorno un mensaje de error con el codigo 404 (Not found)
-            else:
-                if request.form.get("name"):
-                    update_user.name =  request.form.get("name")        # accedo a la propiedad name y le asigno el name que vino en la solicitud
-                
-                if request.form.get("numero") is not "":
-                    update_user.numero = request.form.get("numero")      # accedo a la propiedad numero y le asigno el numero que vino en la solicitud
-                if request.file["avatar"] is not "":
-                    cloudinary_image = uploader.upload(request.files["avatar"])
-                    update_user.avatar=cloudinary_image["url"]
-                try:
-                    db.session.commit()                  # guardo los cambios en BD
-                    return jsonify(update_user.serialize()), 201  # retorno el usuario modificado con el codigo 201
-                except Exception as error:               # en caso de error 
-                    print(error.args)                    # imprimo el error 
-                    return jsonify(f"Error interno del servidor{error.args}"), 500    # imprimo el error con el codigo 500 (Internal server error) 
+        image_file = request.files["avatar"]
+        cloudinary_image = uploader.upload(request.files["avatar"])
+        user_update.avatar=cloudinary_image["url"]
+        print(user_update.serialize())
+        
+        try:
+            db.session.commit()                  # guardo los cambios en BD
+            return jsonify([]), 201  # retorno el usuario modificado con el codigo 201
+        except Exception as error:               # en caso de error 
+            print(error.args)                    # imprimo el error 
+            return jsonify(f"Error interno del servidor{error.args}"), 500    # imprimo el error con el codigo 500 (Internal server error) 
         return jsonify([]), 200                          # retorno un jsonify 200 Ok   ?????
     return jsonify ([]), 405                             # retorno un jsonify vacio con el codigo 405 (metodo no permitido)
 
@@ -144,14 +136,17 @@ def login():                                        # defino mi funcion llamada 
 @jwt_required()
 def add_taller():                               # declaro mi funcion para agregar el taller
     if request.method == 'POST':   
+        print(request.files)
         form = request.form              
         direccion = form.get('direccion', None)         # declaro una variable email, y guardo el emial en ella y en caso de no conseguirla la creo en None    
         rif = form.get('rif', None)
         razon_social = form.get('razon_social', None)   # declaro una variable password, y guardo la contraseña en ella y en caso de no conseguirla la creo en None
         logo = request.files['logo']
         upload_logo = uploader.upload(logo)
-        user_id = get_jwt_identity()                    # guardo el id del usuario en la variable user_id
-       
+        user_id = get_jwt_identity()    
+        
+        
+
         if direccion is None or rif is None or razon_social is None:   
                    return('debe enviar el payload completo'), 400  # en caso de dar error imprimo el mensaje y paso el codigo (400 Bad Request)
         else:
@@ -239,18 +234,19 @@ def add_service():                                  # declaro mi funcion para ag
         descripcion = form.get('descripcion', None)
         image = request.files['image']
         upload_image = uploader.upload(image)
-        taller_id = body.get('taller_id', None)
-        user_id = get_jwt_identity()              # extraigo el id del usuario y lo guardo en user_id
-        taller = Taller.query.get(taller_id)      # consulto la bd y me traigo la informacion del taller y la guardo en taller
-        if taller.user_id != user_id:             # pregunto si el taller pertenece al usario actual
+        # taller_id = form.get('taller_id', None)
+           
+        taller = Taller.query.get(get_jwt_identity())    
+       
+        if taller.user_id != get_jwt_identity():             # pregunto si el taller pertenece al usario actual
             return jsonify('usted no tiene permiso becerro'), 401     # retorno un mensaje de error "sin autorizacion"
-    
+
         # hacemos las Validaciones 
-        if name is None or price is None or taller_id is None:               # verifico si existe una propiedad email, price o taller_id
+        if name is None or price is None:               # verifico si existe una propiedad email, price o taller_id
             return jsonify('debe enviar el payload completo'), 400           # en caso de dar error imprimo el mensaje y paso el codigo (400 Bad Request)
         else:
             print (f"debo guardar al servicio")        
-            request_service = Servicio(name = name, precio=price, descripcion=descripcion, image=upload_image["url"], taller_id=taller_id)   # Instancio mi variable request_user
+            request_service = Servicio(name = name, precio=price, descripcion=descripcion, image=upload_image["url"], taller_id=taller.user_id)   # Instancio mi variable request_user
             db.session.add(request_service)                                              # inicio la session en BD con los datos de usuario
             
             try:                                    # realizo un try except            

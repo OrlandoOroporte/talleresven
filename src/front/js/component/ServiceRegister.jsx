@@ -41,14 +41,14 @@ const ServiceRegister = () => {
 
     const handleSubmit = async (event) => {
         const formData = new FormData()
-        formData.append("name",serviceRegister.name)
-        formData.append("price",serviceRegister.price)
-        formData.append("descripcion",serviceRegister.descripcion)
-        formData.append("image",serviceRegister.image)
-   
+        formData.append("name", serviceRegister.name)
+        formData.append("price", serviceRegister.price)
+        formData.append("descripcion", serviceRegister.descripcion)
+        formData.append("image", serviceRegister.image)
+
         if (serviceRegister.name.trim() != "" && serviceRegister.price.trim() != "" && serviceRegister.taller_id.trim() != "") {
             console.log("debo guardar el servicio")
-            let response = await actions.registerService(serviceRegister)
+            let response = await actions.registerService(formData)
             if (response) {
                 setServiceRegister({ initialState });
                 Swal.fire(
@@ -153,7 +153,7 @@ const ServiceRegister = () => {
                                         className="form-control"
                                         onChange={handelImage}
                                         name="image"
-                                        // value={serviceRegister.image}
+                                    // value={serviceRegister.image}
                                     />
                                 </div>
                                 <label htmlFor="recipient-name" className="col-form-label">

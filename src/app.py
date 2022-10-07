@@ -11,9 +11,9 @@ from api.models import db
 from api.routes import api
 from api.admin import setup_admin
 from api.commands import setup_commands
-from flask_jwt_extended import JWTManager           # importamos JWTManager de la liberia Flask
+from flask_jwt_extended import JWTManager    
+from datetime import timedelta    
 
-#from models import Person
 
 ENV = os.getenv("FLASK_ENV")
 static_file_dir = os.path.join(os.path.dirname(os.path.realpath(__file__)), '../public/')
@@ -31,7 +31,7 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 app.config['JWT_SECRET_KEY']=os.getenv('FLASK_APP_KEY')         #configurando mi palabra secreta
 jwt=JWTManager(app) 
-
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(hours=1)
 app.config.from_mapping(
     CLOUDINARY_URL=os.environ.get('CLOUDINARY_URL')
 )

@@ -1,15 +1,9 @@
-
-
 const getState = ({ getStore, getActions, setStore, useParams }) => {
   return {
     store: {
       token: localStorage.getItem("token") || "",
       // urlBase:"https://talleresvenapp.herokuapp.com/",
-      //  urlBase:process.env.BACKEND_URL,
-
-      urlBase:
-        "https://3001-orlandoorop-talleresven-ypsmx6olpxf.ws-us70.gitpod.io",
-        
+      urlBase: process.env.BACKEND_URL,
 
       taller: [],
       service: [],
@@ -39,12 +33,11 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
 
       userRegisterTaller: async (taller) => {
         let store = getStore();
-        console.log(taller, "desde el actions");
         try {
           let response = await fetch(`${store.urlBase}/api/taller`, {
             method: "POST",
+
             headers: {
-              // "Content-Type": "application/json",
               Authorization: `Bearer ${store.token}`,
             },
             body: taller,
@@ -61,12 +54,13 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
       ///funcion para actualziar user///
       updateUser: async (user) => {
         let store = getStore();
+        console.log(user, "*******************************");
         try {
           let response = await fetch(`${store.urlBase}/api/user/update`, {
             method: "PUT",
             headers: {
               // mode: "no-cors",
-              "Authorization" : `Bearer ${store.token}`,
+              Authorization: `Bearer ${store.token}`,
             },
             body: user,
           });
@@ -137,7 +131,6 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
           let response = await fetch(`${store.urlBase}/api/service`, {
             method: "POST",
             headers: {
-              // "Content-Type": "application/json",
               Authorization: `Bearer ${store.token}`,
             },
             body: service,
@@ -295,14 +288,12 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
 
       getTotalPrice: () => {
         let store = getStore();
-        let price = store.myservice.map(
-          (item) => (item.precio)
-        );
+        let price = store.myservice.map((item) => item.precio);
         let sum = 0;
         for (let i = 0; i < price.length; i++) {
           sum += price[i];
         }
-        return sum
+        return sum;
       },
       fecha: () => {
         let hoy = new Date();
@@ -313,26 +304,23 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
         // let min = hoy.getMinutes();
         // let sec = hoy.getSeconds();
         let formato = dia + "-" + mes + "-" + agnio;
-        return formato
-
+        return formato;
       },
       reloj: () => {
         let hora = new Date().toLocaleTimeString();
         // // let myinterval = setInterval(hora,1000);
-        return hora 
+        return hora;
 
         // let ahora = new Date();
         // setInterval(()=>{
         // let hora = ahora.getHours();
         // let min = ahora.getMinutes();
         // let sec = ahora.getSeconds();
-        // return 
+        // return
         // })
-      
-      }
+      },
     },
   };
 };
 
 export default getState;
- 
