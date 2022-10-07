@@ -2,9 +2,9 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
   return {
     store: {
       token: localStorage.getItem("token") || "",
-      // urlBase:"https://talleresvenapp.herokuapp.com/",
-        // urlBase: process.env.BACKEND_URL,
-      urlBase:"https://3001-orlandoorop-talleresven-45xabpm81g8.ws-us70.gitpod.io",
+    
+        urlBase: process.env.BACKEND_URL,
+      
 
       taller: [],
       service: [],
