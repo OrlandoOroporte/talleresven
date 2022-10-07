@@ -46,10 +46,10 @@ export const Home = () => {
             <div className="card border border-0">
               <div className="card-body">
                 <h4>Publica con nosotros:</h4>
-                <p text-primary><i className="fa fa-twitter"></i>   @talleresvenapp</p>
-                <p><i className="fa-solid fa-envelope"></i> talleresvenapp@gmail.com</p>
-                <p><i className="fa fa-facebook"></i>  TalleresVenApp</p>
-                <p><i className="fa-brands fa-instagram"></i> @talleresvenapp</p>
+                <p className="text-primary"><i className="fa fa-twitter"></i>   @talleresvenapp</p>
+                <p className="text-primary"><i className="fa-solid fa-envelope"></i> talleresvenapp@gmail.com</p>
+                <p className="text-primary"><i className="fa fa-facebook"></i>  TalleresVenApp</p>
+                <p className="text-primary"><i className="fa-brands fa-instagram"></i> @talleresvenapp</p>
               </div>
             </div>
             </div>
