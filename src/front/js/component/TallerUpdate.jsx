@@ -23,12 +23,24 @@ const TallerUpdate = ({ modalId, initial }) => {
         })
     }
 
+    const handelImage = (event) => {
+        setTallerUpdate({
+            ...tallerUpdate,
+            logo: event.target.files[0]
+        })
+    }
+
     const { actions, store } = useContext(Context)
 
     const handleSubmit = async (event) => {
+        const formData = new FormData()
+        formData.append("razon_social",tallerUpdate.razon_social)
+        formData.append("rif",tallerUpdate.rif)
+        formData.append("direccion",tallerUpdate.direccion)
+        formData.append("logo",tallerUpdate.logo)
 
         if (tallerUpdate.razon_social.trim() != "") {
-            console.log("debo guardar el servicio")
+            
             let response = await actions.updateTaller(tallerUpdate)
             if (response) {
                 setTallerUpdate(initialState);
@@ -134,11 +146,11 @@ const TallerUpdate = ({ modalId, initial }) => {
                                         Logo:
                                     </label>
                                     <input
-                                        type="text"
+                                        type="file"
                                         className="form-control"
-                                        onChange={handleChange}
+                                        onChange={handelImage}
                                         name="logo"
-                                        value={tallerUpdate.logo}
+                                        // value={tallerUpdate.logo}
                                     />
                                 </div>
                             </form>

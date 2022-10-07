@@ -123,8 +123,8 @@ const UserUpdate = ({ modalId, initial }) => {
                                         type="text"
                                         className="form-control"
                                         onChange={handleChange}
-                                        name="numero"
-                                        value={userUpdate.numero}
+                                        name="number"
+                                        value={userUpdate.number}
                                     />
                                 </div>
                                 <div className="mb-3">

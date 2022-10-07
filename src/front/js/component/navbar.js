@@ -8,14 +8,17 @@ export const Navbar = () => {
   const { store, actions } = useContext(Context);
   let navigate = useNavigate();
   let myservice = store.myservice;
-  console.log(myservice)
 
   let price = actions.getTotalPrice();
   let hoy = actions.fecha();
+  let hora  = actions.reloj();
 
   
   useEffect(()=>{actions.getTotalPrice()},[]);
   useEffect(()=>{actions.fecha()},[]);
+  useEffect(()=>{actions.reloj()},[]);
+  
+  
 
   return (
     <>
@@ -138,7 +141,7 @@ export const Navbar = () => {
                   ></button>
                 </div>
                 <div className="offcanvas-body">
-                  <div className="text-end">{hoy}</div>
+                  <div className="text-end">{hoy} {hora}</div>
                   <p>{myservice.map((myservice, index) => {
                     return (
                       <Presupuesto key={`${myservice.id}${index}`} myservice={myservice} />

@@ -8,7 +8,8 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
       //  urlBase:process.env.BACKEND_URL,
 
       urlBase:
-        "https://3001-orlandoorop-talleresven-e62a76qhusi.ws-us70.gitpod.io",
+        "https://3001-orlandoorop-talleresven-ypsmx6olpxf.ws-us70.gitpod.io",
+        
 
       taller: [],
       service: [],
@@ -43,10 +44,10 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
           let response = await fetch(`${store.urlBase}/api/taller`, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+              // "Content-Type": "application/json",
               Authorization: `Bearer ${store.token}`,
             },
-            body: JSON.stringify(taller),
+            body: taller,
           });
           if (response.ok) {
             return true;
@@ -64,8 +65,8 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
           let response = await fetch(`${store.urlBase}/api/user/update`, {
             method: "PUT",
             headers: {
-             
-              Authorization: `Bearer ${store.token}`,
+              // mode: "no-cors",
+              "Authorization" : `Bearer ${store.token}`,
             },
             body: user,
           });
@@ -87,10 +88,10 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
             {
               method: "PUT",
               headers: {
-                "Content-Type": "application/json",
+                // "Content-Type": "application/json",
                 Authorization: `Bearer ${store.token}`,
               },
-              body: JSON.stringify(taller),
+              body: taller,
             }
           );
           if (response.ok) {
@@ -136,10 +137,10 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
           let response = await fetch(`${store.urlBase}/api/service`, {
             method: "POST",
             headers: {
-              "Content-Type": "application/json",
+              // "Content-Type": "application/json",
               Authorization: `Bearer ${store.token}`,
             },
-            body: JSON.stringify(service),
+            body: service,
           });
           if (response.ok) {
             return true;
@@ -157,10 +158,10 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
           let response = await fetch(`${store.urlBase}/api/service/update`, {
             method: "PUT",
             headers: {
-              "Content-Type": "application/json",
+              // "Content-Type": "application/json",
               Authorization: `Bearer ${store.token}`,
             },
-            body: JSON.stringify(service),
+            body: service,
           });
           if (response.ok) {
             getActions().getTaller();
@@ -308,12 +309,30 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
         let dia = hoy.getDate();
         let mes = hoy.getMonth() + 1;
         let agnio = hoy.getFullYear();
+        // let hora = hoy.getHours();
+        // let min = hoy.getMinutes();
+        // let sec = hoy.getSeconds();
         let formato = dia + "-" + mes + "-" + agnio;
         return formato
 
+      },
+      reloj: () => {
+        let hora = new Date().toLocaleTimeString();
+        // // let myinterval = setInterval(hora,1000);
+        return hora 
+
+        // let ahora = new Date();
+        // setInterval(()=>{
+        // let hora = ahora.getHours();
+        // let min = ahora.getMinutes();
+        // let sec = ahora.getSeconds();
+        // return 
+        // })
+      
       }
     },
   };
 };
 
 export default getState;
+ 

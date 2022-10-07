@@ -21,10 +21,22 @@ const ServiceUpdate = ({ modalId, initial }) => {
             [event.target.name]: event.target.value
         })
     }
+    const handelImage = (event) => {
+        setServiceUpdate({
+            ...serviceUpdate,
+            image: event.target.files[0]
+        })
+    }
+
 
     const { actions, store } = useContext(Context)
 
     const handleSubmit = async (event) => {
+        const formData = new FormData()
+        formData.append("name",serviceUpdate.name)
+        formData.append("price",serviceUpdate.price)
+        formData.append("descripcion",serviceUpdate.descripcion)
+        formData.append("image",serviceUpdate.image)
 
         if (serviceUpdate.name.trim() != "") {
             console.log("debo guardar el servicio")
@@ -137,11 +149,11 @@ const ServiceUpdate = ({ modalId, initial }) => {
                                         Imagen:
                                     </label>
                                     <input
-                                        type="text"
+                                        type="file"
                                         className="form-control"
-                                        onChange={handleChange}
+                                        onChange={handelImage}
                                         name="image"
-                                        value={serviceUpdate.image}
+                                        // value={serviceUpdate.image}
                                     />
                                 </div>
                             </form>

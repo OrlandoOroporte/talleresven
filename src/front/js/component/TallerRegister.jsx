@@ -1,6 +1,7 @@
 import React, { useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import Swal from 'sweetalert2'
+import { Form } from "react-bootstrap";
 
 export const TallerRegister = () => {
   let initialState = {
@@ -33,11 +34,24 @@ export const TallerRegister = () => {
     setTallerRegister(initialState);
 
   }
+
+  const handelImage = (event) => {
+    setTallerRegister({
+      ...tallerRegister,
+      logo: event.target.files[0]
+    }
+      
+    )
+  } 
   const { actions } = useContext(Context)
 
   const handleSubmit = async (event) => {
-    console.log("me ejecuto")
-    // event.preventDefault();
+    const formData = new FormData()
+    formData.append("razon_social",tallerRegister.razon_social)
+    formData.append("rif",tallerRegister.rif)
+    formData.append("direccion",tallerRegister.direccion)
+    formData.append("logo",tallerRegister.logo)
+  
     if (tallerRegister.razon_social != "" && tallerRegister.rif != "" && tallerRegister.direccion != "") {
       let response = await actions.userRegisterTaller(tallerRegister)
       if (response) {
@@ -152,9 +166,9 @@ export const TallerRegister = () => {
                     type="file"
                     className="form-control"
                     id="recipient-name"
-                    onChange={handleChange}
+                    onChange={handelImage}
                     name="logo"
-                    value={tallerRegister.logo}
+                    // value={tallerRegister.logo}
                   />
                 </div>
               </form>

@@ -23,6 +23,16 @@ const ServiceRegister = () => {
             [event.target.name]: event.target.value
         })
     }
+    const handelImage = (event) => {
+        setServiceRegister({
+            ...serviceRegister,
+            image: event.target.files[0]
+        })
+    }
+
+
+
+
 
     const { actions, store } = useContext(Context)
     const { taller_id } = store.user
@@ -30,7 +40,12 @@ const ServiceRegister = () => {
 
 
     const handleSubmit = async (event) => {
-        //event.preventDefault();
+        const formData = new FormData()
+        formData.append("name",serviceRegister.name)
+        formData.append("price",serviceRegister.price)
+        formData.append("descripcion",serviceRegister.descripcion)
+        formData.append("image",serviceRegister.image)
+   
         if (serviceRegister.name.trim() != "" && serviceRegister.price.trim() != "" && serviceRegister.taller_id.trim() != "") {
             console.log("debo guardar el servicio")
             let response = await actions.registerService(serviceRegister)
@@ -134,11 +149,11 @@ const ServiceRegister = () => {
                                         Imagen:
                                     </label>
                                     <input
-                                        type="text"
+                                        type="file"
                                         className="form-control"
-                                        onChange={handleChange}
+                                        onChange={handelImage}
                                         name="image"
-                                        value={serviceRegister.image}
+                                        // value={serviceRegister.image}
                                     />
                                 </div>
                                 <label htmlFor="recipient-name" className="col-form-label">

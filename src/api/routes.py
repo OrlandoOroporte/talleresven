@@ -88,7 +88,7 @@ def update_user():                                   # declaro la funcion para a
                 
                 if request.form.get("numero") is not "":
                     update_user.numero = request.form.get("numero")      # accedo a la propiedad numero y le asigno el numero que vino en la solicitud
-                if request.files["avatar"] is not "":
+                if request.file["avatar"] is not "":
                     cloudinary_image = uploader.upload(request.files["avatar"])
                     update_user.avatar=cloudinary_image["url"]
                 try:
@@ -143,19 +143,20 @@ def login():                                        # defino mi funcion llamada 
 @api.route('/taller', methods=['POST'])         # creo mi ruta para user
 @jwt_required()
 def add_taller():                               # declaro mi funcion para agregar el taller
-    if request.method == 'POST':                # pregunto si el metodo es POST
-        body = request.json                     # guardo el cuerpo de la solicitud en la variable body
-        direccion = body.get('direccion', None)         # declaro una variable email, y guardo el emial en ella y en caso de no conseguirla la creo en None    
-        rif = body.get('rif', None)
-        razon_social = body.get('razon_social', None)   # declaro una variable password, y guardo la contraseña en ella y en caso de no conseguirla la creo en None
-        logo = body.get('logo', None)
+    if request.method == 'POST':   
+        form = request.form              
+        direccion = form.get('direccion', None)         # declaro una variable email, y guardo el emial en ella y en caso de no conseguirla la creo en None    
+        rif = form.get('rif', None)
+        razon_social = form.get('razon_social', None)   # declaro una variable password, y guardo la contraseña en ella y en caso de no conseguirla la creo en None
+        logo = request.files['logo']
+        upload_logo = uploader.upload(logo)
         user_id = get_jwt_identity()                    # guardo el id del usuario en la variable user_id
-        # hacemos las Validaciones 
+       
         if direccion is None or rif is None or razon_social is None:   
                    return('debe enviar el payload completo'), 400  # en caso de dar error imprimo el mensaje y paso el codigo (400 Bad Request)
         else:
             print (f"debo guardar al taller")     # imprimo el mensaje y paso el codigo 200 (Ok)
-            request_taller = Taller(direccion = direccion, rif=rif, razon_social=razon_social, logo = logo, user_id=user_id)   # Instancio mi variable request_user
+            request_taller = Taller(direccion = direccion, rif=rif, razon_social=razon_social, logo = upload_logo["url"], user_id=user_id)   # Instancio mi variable request_user
             db.session.add(request_taller)                                            # inicio la session en BD con los datos de usuario
             
             try:                                    # realizo un try except            
@@ -193,8 +194,9 @@ def update_taller(taller_id=None):                     # declaro una funcion par
                    update_taller.rif = form.get("rif")                      # guardo el nuevo rif 
                 update_taller.razon_social = form.get("razon_social")       # guardo la nueva razon social 
                 if request.files['logo'] is not None: 
-                    update_taller.logo = request.files["logo"]                    # guardo el nuevo logo
-
+                    cloudinary_image = uploader.upload(request.files["logo"])
+                    update_taller.logo = cloudinary_image["url"]  
+                                   
                 try:
                     db.session.commit()                                 # guardo los cambios en BD
                     return jsonify(update_taller.serialize()), 202      # retorno lo que se esta guardando con el codigo 202 (acepted)             
@@ -230,17 +232,15 @@ def get_talleres(taller_id=None):                           # declaro la funcion
 @api.route('/service', methods=['POST'])          # creo mi ruta para user
 @jwt_required()
 def add_service():                                  # declaro mi funcion para agregar el taller
-    if request.method == 'POST':                  # pregunto si el metodo es POST
-        body = request.json                       # guardo el cuerpo de la solicitud en la variable body
-        name = body.get('name', None)             # declaro una variable email, y guardo el emial en ella y en caso de no conseguirla la creo en None    
-        price = body.get('price', None)
-        descripcion = body.get('descripcion', None)
-        image = body.get('image', None)
+    if request.method == 'POST':      
+        form = request.form            # pregunto si el metodo es POST             
+        name = form.get('name', None)             # declaro una variable email, y guardo el emial en ella y en caso de no conseguirla la creo en None    
+        price = form.get('price', None)
+        descripcion = form.get('descripcion', None)
+        image = request.files['image']
+        upload_image = uploader.upload(image)
         taller_id = body.get('taller_id', None)
-        
-
         user_id = get_jwt_identity()              # extraigo el id del usuario y lo guardo en user_id
-        # user = User.query.filter_by(id=user_id).one_or_none()
         taller = Taller.query.get(taller_id)      # consulto la bd y me traigo la informacion del taller y la guardo en taller
         if taller.user_id != user_id:             # pregunto si el taller pertenece al usario actual
             return jsonify('usted no tiene permiso becerro'), 401     # retorno un mensaje de error "sin autorizacion"
@@ -250,7 +250,7 @@ def add_service():                                  # declaro mi funcion para ag
             return jsonify('debe enviar el payload completo'), 400           # en caso de dar error imprimo el mensaje y paso el codigo (400 Bad Request)
         else:
             print (f"debo guardar al servicio")        
-            request_service = Servicio(name = name, precio=price, descripcion=descripcion, image=image, taller_id=taller_id)   # Instancio mi variable request_user
+            request_service = Servicio(name = name, precio=price, descripcion=descripcion, image=upload_image["url"], taller_id=taller_id)   # Instancio mi variable request_user
             db.session.add(request_service)                                              # inicio la session en BD con los datos de usuario
             
             try:                                    # realizo un try except            
