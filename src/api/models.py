@@ -35,7 +35,7 @@ class Taller(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     direccion = db.Column(db.String(150), unique=False, nullable=True)
     rif = db.Column(db.String(80), unique=True, nullable=True)
-    razon_social = db.Column(db.String, unique=False, nullable=True)
+    razon_social = db.Column(db.String(80), unique=False, nullable=True)
     logo = db.Column(db.String(400),unique=False, nullable=True)
     activo = db.Column(db.Boolean, default=True)                           # cuando se cree el taller por defaul vendra activo y con permiso para publicar
 

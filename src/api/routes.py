@@ -54,7 +54,7 @@ def add_user():                                 # declaro mi funcion para agrega
         else:
             salt = b64encode(os.urandom(32)).decode('utf-8')                       # creo el salt en base a b64code aleatorio
             password = set_password(password, salt)                                # antes de registrar el usuario, hasheo mi contrase;a 
-            print (f"debo guardar al usuario con el pass: ${password}")            # imprimo el mensaje y paso el codigo 200 (Ok)
+                   # imprimo el mensaje y paso el codigo 200 (Ok)
             request_user = User(name = name, email=email, numero=numero, avatar=avatar, password=password, salt=salt)   # Instancio mi variable request_user
             db.session.add(request_user)                                           # inicio la session en BD con los datos de usuario
             
@@ -81,7 +81,7 @@ def update_user():                                   # declaro la funcion para a
         image_file = request.files["avatar"]
         cloudinary_image = uploader.upload(request.files["avatar"])
         user_update.avatar=cloudinary_image["url"]
-        print(user_update.serialize())
+        
         
         try:
             db.session.commit()                  # guardo los cambios en BD
@@ -100,7 +100,7 @@ def update_user():                                   # declaro la funcion para a
 def get_user():
     user = User.query.get(get_jwt_identity())
     if user is not None:
-        print(user.serialize())
+       
         return jsonify(user.serialize()), 200
     else: 
         return jsonify("user not found"), 404 
@@ -118,8 +118,7 @@ def login():                                        # defino mi funcion llamada 
         login_user = User.query.filter_by(email=email).one_or_none()       # hago una consulta a la BD y me traigo el usuario que corresponda al emial y usuario
         if login_user:                                           # en caso de exisitir el usuario      
             if check_password(login_user.password, password, login_user.salt):    # verifico si la contrase;a que me pasaron coincide con el hash
-                print("este pana tiene permiso")                 # imprimo un mensaje que se tiene permiso
-                ###CREAR Y RESPONDER EL TOKEN###   
+                print("este pana tiene permiso")        ###CREAR Y RESPONDER EL TOKEN###   
                 created_token = create_access_token(identity= login_user.id)
                 return jsonify({'token': created_token}), 200    # y retorno un mensaje usted esta logeado con el codigo 200 ok
             else:
@@ -136,7 +135,7 @@ def login():                                        # defino mi funcion llamada 
 @jwt_required()
 def add_taller():                               # declaro mi funcion para agregar el taller
     if request.method == 'POST':   
-        print(request.files)
+
         form = request.form              
         direccion = form.get('direccion', None)         # declaro una variable email, y guardo el emial en ella y en caso de no conseguirla la creo en None    
         rif = form.get('rif', None)
@@ -148,9 +147,9 @@ def add_taller():                               # declaro mi funcion para agrega
         
 
         if direccion is None or rif is None or razon_social is None:   
-                   return('debe enviar el payload completo'), 400  # en caso de dar error imprimo el mensaje y paso el codigo (400 Bad Request)
+            return('debe enviar el payload completo'), 400  # en caso de dar error imprimo el mensaje y paso el codigo (400 Bad Request)
         else:
-            print (f"debo guardar al taller")     # imprimo el mensaje y paso el codigo 200 (Ok)
+            # imprimo el mensaje y paso el codigo 200 (Ok)
             request_taller = Taller(direccion = direccion, rif=rif, razon_social=razon_social, logo = upload_logo["url"], user_id=user_id)   # Instancio mi variable request_user
             db.session.add(request_taller)                                            # inicio la session en BD con los datos de usuario
             
@@ -224,12 +223,12 @@ def get_talleres(taller_id=None):                           # declaro la funcion
 
 ############ Creando la ruta para registrar servicio##########
 
-@api.route('/service', methods=['POST'])          # creo mi ruta para user
+@api.route('/service', methods=['POST'])         
 @jwt_required()
-def add_service():                                  # declaro mi funcion para agregar el taller
+def add_service():                                 
     if request.method == 'POST':      
-        form = request.form            # pregunto si el metodo es POST             
-        name = form.get('name', None)             # declaro una variable email, y guardo el emial en ella y en caso de no conseguirla la creo en None    
+        form = request.form                  
+        name = form.get('name', None)             
         price = form.get('price', None)
         descripcion = form.get('descripcion', None)
         image = request.files['image']
@@ -237,15 +236,14 @@ def add_service():                                  # declaro mi funcion para ag
         # taller_id = form.get('taller_id', None)
            
         taller = Taller.query.get(get_jwt_identity())    
-       
+        print(taller.user_id != get_jwt_identity(),"*****************************************************")
         if taller.user_id != get_jwt_identity():             # pregunto si el taller pertenece al usario actual
             return jsonify('usted no tiene permiso becerro'), 401     # retorno un mensaje de error "sin autorizacion"
 
         # hacemos las Validaciones 
         if name is None or price is None:               # verifico si existe una propiedad email, price o taller_id
             return jsonify('debe enviar el payload completo'), 400           # en caso de dar error imprimo el mensaje y paso el codigo (400 Bad Request)
-        else:
-            print (f"debo guardar al servicio")        
+        else:     
             request_service = Servicio(name = name, precio=price, descripcion=descripcion, image=upload_image["url"], taller_id=taller.user_id)   # Instancio mi variable request_user
             db.session.add(request_service)                                              # inicio la session en BD con los datos de usuario
             

@@ -3,8 +3,7 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
     store: {
       token: localStorage.getItem("token") || "",
       // urlBase:"https://talleresvenapp.herokuapp.com/",
-        // urlBase: process.env.BACKEND_URL,
-      urlBase:"https://3001-orlandoorop-talleresven-45xabpm81g8.ws-us70.gitpod.io",
+      urlBase: process.env.BACKEND_URL,
 
       taller: [],
       service: [],
@@ -55,7 +54,7 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
       ///funcion para actualziar user///
       updateUser: async (user) => {
         let store = getStore();
-        
+
         try {
           let response = await fetch(`${store.urlBase}/api/user/update`, {
             method: "PUT",
@@ -75,7 +74,7 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
       },
 
       ///funcion para actualziar taller///
-      updateTaller: async (taller,taller_id) => {
+      updateTaller: async (taller, taller_id) => {
         let store = getStore();
         try {
           let response = await fetch(
@@ -152,7 +151,6 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
           let response = await fetch(`${store.urlBase}/api/service/update`, {
             method: "PUT",
             headers: {
-              
               Authorization: `Bearer ${store.token}`,
             },
             body: service,
@@ -204,7 +202,7 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
             },
           });
           let data = await response.json();
-    
+
           if (response.ok) {
             setStore({
               ...store,
