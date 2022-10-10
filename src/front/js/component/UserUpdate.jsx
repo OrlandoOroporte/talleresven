@@ -44,7 +44,7 @@ const UserUpdate = ({ modalId, initial }) => {
                 setUserUpdate(initialState);
                 Swal.fire(
                     '¡Bien Hecho!',
-                    '¡Se ha modificado el servicio con exito!',
+                    '¡Se ha modificado el usuario con exito!',
                     'success'
                 ).then((result) => {
                     if (result.isConfirmed) {

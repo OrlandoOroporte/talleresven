@@ -16,6 +16,7 @@ const ServiceRegister = () => {
     }
 
     const [serviceRegister, setServiceRegister] = useState(initialState)
+    const [show, setShow] = useState(false);
 
     const handleChange = (event) => {
         setServiceRegister({
@@ -30,6 +31,14 @@ const ServiceRegister = () => {
         })
     }
 
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    const handleHook = () => {
+        setTallerRegister(initialState);
+    
+      };
+    
+
 
 
 
@@ -41,10 +50,11 @@ const ServiceRegister = () => {
 
     const handleSubmit = async (event) => {
         const formData = new FormData()
-        formData.append("name", serviceRegister.name)
+        formData.append("name",serviceRegister.name)
         formData.append("price", serviceRegister.price)
         formData.append("descripcion", serviceRegister.descripcion)
         formData.append("image", serviceRegister.image)
+        
 
         if (serviceRegister.name.trim() != "" && serviceRegister.price.trim() != "" && serviceRegister.taller_id.trim() != "") {
             
@@ -55,9 +65,14 @@ const ServiceRegister = () => {
                     '¡Bien Hecho!',
                     '¡Se ha creado el servicio con exito!',
                     'success'
-                )
-                actions.getService();
-                navigate("/worksheet");
+                ).then((result)=>{
+                    if(result.isConfirmed){
+                        setServiceRegister(initialState)
+                        actions.getService()
+                    }
+                })
+                
+               
             } else {
                 Swal.fire({
                     icon: 'error',
@@ -83,6 +98,7 @@ const ServiceRegister = () => {
                 data-bs-toggle="modal"
                 data-bs-target="#Modal2"
                 data-bs-whatever="@getbootstrap"
+                onClick={handleShow}
             >
                 Agregar servicio
             </button>
@@ -175,6 +191,7 @@ const ServiceRegister = () => {
                                 type="button"
                                 className="btn btn-secondary"
                                 data-bs-dismiss="modal"
+                                onClick={()=>handleHook}
                             >
                                 Salir
                             </button>
