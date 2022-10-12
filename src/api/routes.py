@@ -184,13 +184,17 @@ def update_taller(taller_id=None):                     # declaro una funcion par
 
             else:
                 update_taller.direccion = form.get("direccion")             # guardo en la direccion nueva 
-                if update_taller.rif != form.get('rif'):                # si el rif del taller es diferente guardo el rif
+                if update_taller.rif != form.get('rif'):                    # si el rif del taller es diferente guardo el rif
                    update_taller.rif = form.get("rif")                      # guardo el nuevo rif 
-                update_taller.razon_social = form.get("razon_social")       # guardo la nueva razon social 
-                if request.files['logo'] is not None: 
-                    cloudinary_image = uploader.upload(request.files["logo"])
-                    update_taller.logo = cloudinary_image["url"]  
-                                   
+                if update_taller.razon_social != form.get("razon_social"):
+                    update_taller.razon_social = form.get("razon_social")       # guardo la nueva razon social 
+                if request.files.get("logo") is None: 
+                    update_taller.logo = form.get("logo")
+                else:
+                    cloudinary_image =  uploader.upload(request.files.get("logo"))
+                    update_taller.logo = cloudinary_image["url"]    
+
+
                 try:
                     db.session.commit()                                 # guardo los cambios en BD
                     return jsonify(update_taller.serialize()), 202      # retorno lo que se esta guardando con el codigo 202 (acepted)             

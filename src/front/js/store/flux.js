@@ -77,8 +77,7 @@ const getState = ({ getStore, getActions, setStore, useParams }) => {
       updateTaller: async (taller, taller_id) => {
         let store = getStore();
         try {
-          let response = await fetch(
-            `${store.urlBase}/api/taller/${taller_id}`,
+          let response = await fetch(`${store.urlBase}/api/taller/${taller_id}`,
             {
               method: "PUT",
               headers: {

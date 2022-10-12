@@ -5,13 +5,13 @@ import Swal from "sweetalert2";
 
 const TallerUpdate = ({ modalId, initial }) => {
 
-    const { razon_social, rif, direccion } = initial
+    const { razon_social, rif, direccion, logo } = initial
 
     let initialState = {
         razon_social: razon_social,
         rif: rif,
         direccion: direccion,
-        logo: "",
+        logo: logo,
         taller_id: modalId
     }
     const [tallerUpdate, setTallerUpdate] = useState(initialState)
@@ -28,6 +28,7 @@ const TallerUpdate = ({ modalId, initial }) => {
             ...tallerUpdate,
             logo: event.target.files[0]
         })
+
     }
 
     const { actions, store } = useContext(Context)
@@ -39,9 +40,10 @@ const TallerUpdate = ({ modalId, initial }) => {
         formData.append("direccion", tallerUpdate.direccion)
         formData.append("logo", tallerUpdate.logo)
 
+
         if (tallerUpdate.razon_social.trim() != "") {
 
-            let response = await actions.updateTaller(formData,tallerUpdate.taller_id)
+            let response = await actions.updateTaller(formData, tallerUpdate.taller_id)
             if (response) {
                 setTallerUpdate(initialState);
                 Swal.fire(
